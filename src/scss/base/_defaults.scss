@@ -126,3 +126,14 @@ input, button, textarea{
         $y: $y - 36px;
     }
 }
+
+.main {
+    @include desktop {
+        max-width: 1200px;
+        padding: 0 rem(20px);
+    }
+    @include mobile {
+        padding: 0 rem(5px);
+        min-width: 350px;
+    }
+}

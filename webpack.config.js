@@ -1,18 +1,18 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const router = require('./src/js/routes');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // entry file
   // https://webpack.js.org/configuration/entry-context/#entry
   entry: {
     app: './src/js/frontend/app.js',
-    home: './src/js/frontend/home.js',
-    setting: './src/js/frontend/setting.js',
-    interview: './src/js/frontend/interview.js',
-    report: './src/js/frontend/report.js',
-    customQuestion: './src/js/frontend/customQuestion.js',
+    login: './src/js/frontend/controller/login.js',
+    main: './src/js/frontend/controller/main.js',
+    detail: './src/js/frontend/controller/detail.js',
+    form: './src/js/frontend/controller/form.js',
+    mypage: './src/js/frontend/controller/mypage.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
   // https://webpack.js.org/configuration/output/#outputpath
@@ -23,34 +23,38 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/template/index.html',
-      chunks: ['app', 'home'],
+      template: 'src/index.html',
+      chunks: ['app', 'main'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'setting.html',
-      template: 'src/template/setting.html',
-      chunks: ['app', 'setting'],
+      filename: 'login.html',
+      template: 'src/template/login.html',
+      chunks: ['app', 'login'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'interview.html',
-      template: 'src/template/interview.html',
-      chunks: ['app', 'interview'],
+      filename: 'form.html',
+      template: 'src/template/form.html',
+      chunks: ['app', 'form'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'report.html',
-      template: 'src/template/report.html',
-      chunks: ['app', 'report'],
+      filename: 'detail.html',
+      template: 'src/template/detail.html',
+      chunks: ['app', 'mypage'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'customQuestion.html',
-      template: 'src/template/customQuestion.html',
-      chunks: ['app', 'customQuestion'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'test.html',
-      template: 'src/template/test.html',
+      filename: 'mypage.html',
+      template: 'src/template/mypage.html',
+      chunks: ['app', 'mypage'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, 'src/images'),
+          to: path.join(__dirname, 'public/images'),
+        },
+      ],
+    }),
   ],
   // https://webpack.js.org/configuration/module
   module: {
@@ -93,27 +97,35 @@ module.exports = {
     open: true,
     // https://webpack.js.org/configuration/dev-server/#devserverport
     port: 'auto',
-    proxy: [
-      {
-        context: router.news,
-        target: 'http://localhost:3000/',
+    proxy: {
+      '/': {
+        target: 'http://localhost:3001/',
+        pathRewrite: { '^/': '/' },
       },
-      {
-        context: router.interview,
-        target: 'http://localhost:3000/',
-      },
-      {
-        context: router.questionList,
-        target: 'http://localhost:3000/',
-      },
-      {
-        context: router.user,
-        target: 'http://localhost:3000/',
-      },
-    ],
+    },
   },
   // 디버깅용이기 때문에 개발할 때만 필요하고 배포할 땐 필요가 없다.
   devtool: 'source-map',
   // https://webpack.js.org/configuration/mode
   mode: 'development',
 };
+
+// proxy routers
+// [
+// {
+//   context: router.news,
+//   target: 'http://localhost:3000/',
+// },
+// {
+//   context: router.interview,
+//   target: 'http://localhost:3000/',
+// },
+// {
+//   context: router.questionList,
+//   target: 'http://localhost:3000/',
+// },
+// {
+//   context: router.user,
+//   target: 'http://localhost:3000/',
+// },
+// ],
