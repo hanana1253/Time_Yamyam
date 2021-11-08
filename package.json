@@ -30,7 +30,6 @@
     "live-server": "^1.2.1",
     "nodemon": "^2.0.14",
     "normalize.css": "^8.0.1",
-    "open-graph-scraper": "^4.10.0",
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",
     "sass": "^1.43.2",
