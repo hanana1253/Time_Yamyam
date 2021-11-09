@@ -12,6 +12,7 @@ module.exports = {
     main: './src/js/frontend/controller/main.js',
     detail: './src/js/frontend/controller/detail.js',
     form: './src/js/frontend/controller/form.js',
+    approval: './src/js/frontend/controller/approval.js',
     mypage: './src/js/frontend/controller/mypage.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
@@ -35,6 +36,11 @@ module.exports = {
       filename: 'form.html',
       template: 'src/template/form.html',
       chunks: ['app', 'form'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'approval.html',
+      template: 'src/template/approval.html',
+      chunks: ['app', 'approval'],
     }),
     new HtmlWebpackPlugin({
       filename: 'detail.html',
