@@ -13,7 +13,6 @@
     "start:backend": "nodemon server"
   },
   "devDependencies": {
-    "eslint": "^7.2.0",
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
@@ -21,6 +20,7 @@
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.5.0",
+    "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",

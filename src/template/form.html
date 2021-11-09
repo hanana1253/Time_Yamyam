@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시간 먹는 하마</title>
+  </head>
+  <body>
+    <header></header>
+    <main class="main">
+      <h2 class="title">1. 스터디 그룹을 생성해 주세요</h2>
+      <p class="due-date"></p>
+
+      <fieldset>
+        <label class="questions" for="group-name">2. 스터디 그룹명</label>
+        <input type="text" name="group-name" id="group-name" />
+      </fieldset>
+
+      <fieldset>
+        <label class="questions" for="group-introduction">3. 스터디 그룹을 소개해주세요.</label>
+        <input type="text" name="group-introduction" id="group-introduction" />
+      </fieldset>
+
+      <fieldset>
+        <label class="questions" for="hash-tag">4. 해시태그</label>
+        <input type="text" name="hash-tag" id="hash-tag" />
+        <div class="tag-container"></div>
+      </fieldset>
+
+      <fieldset>
+        <label class="questions" for="duration">5. 진행 기간</label>
+        <select name="duration" id="duration">
+          <option value="1주">1주</option>
+          <option value="2주">2주</option>
+          <option value="3주">3주</option>
+          <option value="4주">4주</option>
+          <option value="5주">5주</option>
+          <option value="6주">6주</option>
+          <option value="7주">7주</option>
+          <option value="8주">8주</option>
+          <option value="9주">9주</option>
+          <option value="10주">10주</option>
+        </select>
+      </fieldset>
+
+      <h3 class="questions">6. 인증 요일</h3>
+      <fieldset>
+        <div>
+          <input type="checkbox" name="date-checker" id="monday" />
+          <label for="monday">월</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="tuesday" />
+          <label for="tuesday">화</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="wednesday" />
+          <label for="wednesday">수</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="thursday" />
+          <label for="thursday">목</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="friday" />
+          <label for="friday">금</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="saturday" />
+          <label for="saturday">토</label>
+        </div>
+        <div>
+          <input type="checkbox" name="date-checker" id="sunday" />
+          <label for="sunday">일</label>
+        </div>
+      </fieldset>
+
+      <h3 class="questions">7. 참여레벨</h3>
+      <fieldset>
+        <div class="enter-level">
+          <input type="radio" name="level" id="1" value="1" />
+          <label for="1">1</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="2" value="2" />
+          <label for="2">2</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="3" value="3" />
+          <label for="3">3</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="4" value="4" />
+          <label for="1">4</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="5" value="5" />
+          <label for="5">5</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="6" value="6" />
+          <label for="1">6</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="7" value="7" />
+          <label for="7">7</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="8" value="8" />
+          <label for="8">8</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="9" value="9" />
+          <label for="9">9</label>
+        </div>
+        <div class="enter-level">
+          <input type="radio" name="level" id="10" value="10" />
+          <label for="10">10</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label for="approval-method">8. 인증 방법</label>
+        <textarea
+          name="approval-method"
+          id="approval-method"
+          cols="30"
+          rows="10"
+          placeholder="ex. 포스팅 url 공유, 사진 인증"
+        ></textarea>
+      </fieldset>
+
+      <div class="button-group">
+        <button type="submit" class="submit">등록</button>
+        <button type="button" class="cancel">취소</button>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
