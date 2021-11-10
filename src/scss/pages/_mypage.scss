@@ -1,0 +1,19 @@
+@use '../utils' as *;
+
+.mypage {
+  // temp
+  background-color: $primary;
+}
+
+.user-info {
+  &__hippo {
+    background-color: $white;
+    background-image: url(../images/hama-sprite.png);
+    background-repeat: no-repeat;
+    background-size: auto rem(250px);
+    background-position-x: 10px;
+    width: rem(250px);
+    height: rem(250px);
+    border-radius: 50%;
+  }
+}
