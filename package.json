@@ -10,7 +10,7 @@
     "clean": "rimraf -rf css",
     "serve": "live-server --port=3000",
     "start:frontend": "webpack serve",
-    "start:backend": "nodemon server"
+    "start:backend": "nodemon src/js/backend/server"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
@@ -39,6 +39,8 @@
     "webpack-dev-server": "^4.4.0"
   },
   "dependencies": {
-    "mini-css-extract-plugin": "^2.4.4"
+    "express": "^4.17.1",
+    "mini-css-extract-plugin": "^2.4.4",
+    "firebase-admin": "^10.0.0"
   }
 }
