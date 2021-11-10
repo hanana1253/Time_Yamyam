@@ -1,12 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>시간 먹는 하마</title>
-</head>
-<body>
-  
-</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시간 먹는 하마</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">시간 먹는 하마</h1>
+      <img class="header__logo" src="#" alt="로고" />
+    </header>
+    <nav class="nav">
+      <button class="nav__button">하마버튼</button>
+      <ul class="nav__links">
+        <li><a class="nav__item" href="#">홈으로</a></li>
+        <li><a class="nav__item" href="#">스터디그룹 만들기</a></li>
+        <li><a class="nav__item" href="#">마이페이지</a></li>
+        <li><a class="nav__item" href="#">인증글쓰기</a></li>
+        <li><a class="nav__item" href="#">알림</a></li>
+        <li><a class="nav__item" href="#">닫기</a></li>
+      </ul>
+    </nav>
+    <main class="main">
+      <div role="tablist" aria-label="스터디그룹" class="view-tablist">
+        <button role="tab" aria-selected="true" aria-controls="all-groups" id="all-tab" tabindex="0">
+          전체 스터디
+        </button>
+        <button role="tab" aria-selected="false" aria-controls="my-groups" id="my-tab" tabindex="-1">
+          나의 스터디
+        </button>
+      </div>
+      <div class="all-groups" id="all-groups" role="tabpanel" tabindex="0" aria-labelledby="all-tab">
+        <div class="all-groups__filters">
+          <select name="filters-level">
+            <option value="0">레벨</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <select name="filters-weeks">
+            <option value="0">기간</option>
+            <option value="1">1주</option>
+            <option value="2">2주</option>
+            <option value="3">3주</option>
+            <option value="4">4주</option>
+            <option value="5">5주</option>
+            <option value="6">6주</option>
+            <option value="7">7주</option>
+            <option value="8">8주</option>
+            <option value="9">9주</option>
+            <option value="10">10주</option>
+          </select>
+          <select name="filters-days">
+            <option value="7">요일</option>
+            <option value="0">일</option>
+            <option value="1">월</option>
+            <option value="2">화</option>
+            <option value="3">수</option>
+            <option value="4">목</option>
+            <option value="5">금</option>
+            <option value="6">토</option>
+          </select>
+        </div>
+        <ul class="all-groups__list">
+          <!-- <li class="all-groups__item">
+            <h3>study group title</h3>
+            <figure><img src="#" alt="" /></figure>
+            <p>00부터 시작</p>
+            <ul>
+              <li>레벨</li>
+              <li>횟수</li>
+              <li>요일</li>
+              <li>기간</li>
+            </ul>
+          </li> -->
+        </ul>
+        <div class="confirm">
+          <!-- <h3>study group title</h3>
+          <figure><img src="#" alt="" /></figure>
+          <p>description</p>
+          <p>auth-des</p>
+          <p>00부터 시작</p>
+          <div class="detail-info">
+            <h4>주의사항</h4>
+          </div>
+          <button class="confirm__button">참여</button>
+          <button class="confirm__button--cancel">취소</button> -->
+        </div>
+      </div>
+      <div class="my-groups" id="my-groups" role="tabpanel" tabindex="0" aria-labelledby="my-tab" hidden >
+          <ul class="my-groups__list">
+            <!-- <li class="my-groups__item">
+              <h3>study group title</h3>
+              <figure><img src="#" alt="" /></figure>
+              <p>00부터 시작</p>
+              <div>span으로 레벨,주#회,요일,기간 넣어줄 것</div>
+            </li> -->
+          </ul>
+      </div>
+    </main>
+    <div class="overlay"></div>
+  </body>
 </html>
