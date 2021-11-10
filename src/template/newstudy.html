@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>시간 먹는 하마</title>
   </head>
-  <body>
+  <body class="form-body">
     <header class="header">
       <h1>시간 먹는 하마</h1>
       <img src="#" alt="로고" />
@@ -24,111 +24,131 @@
       </ul>
     </nav>
 
-    <main class="main">
-      <h2 class="title">스터디 그룹을 생성해 주세요</h2>
-      <p class="due-date"></p>
-
-      <div>
-        <label class="questions" for="group-name">스터디 그룹명</label>
-        <input type="text" name="group-name" id="group-name" />
-      </div>
-
-      <div>
-        <label class="questions" for="group-introduction">스터디 그룹을 소개해주세요.</label>
-        <input type="text" name="group-introduction" id="group-introduction" />
-      </div>
-
-      <div>
-        <label class="questions" for="hash-tag">해시태그</label>
-        <input type="text" name="hash-tag" id="hash-tag" />
-        <!-- 동적 -->
-        <ul class="tag-container">
-          <li>
-            <span></span>
-          </li>
-        </ul>
-      </div>
-
-      <span class="questions">참여레벨</span>
-      <div class="range-bar">
-        <input type="range" min="1" max="10" step="1" value="1" name="enter-level" id="enter-level" />
-      </div>
-      <ul class="range-label">
-        <li class="active">1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
-      </ul>
-
-      <span class="questions">진행 기간</span>
-      <div class="range-bar">
-        <input type="range" min="1" max="10" step="1" value="1" name="enter-level" id="enter-level" />
-      </div>
-      <ul class="range-label">
-        <li class="active">1주</li>
-        <li>2주</li>
-        <li>3주</li>
-        <li>4주</li>
-        <li>5주</li>
-        <li>6주</li>
-        <li>7주</li>
-        <li>8주</li>
-        <li>9주</li>
-        <li>10주</li>
-      </ul>
-
-      <span class="questions">인증 요일</span>
-      <ul>
-        <li>
-          <input type="checkbox" name="date-checker" id="monday" />
-          <label for="monday">월</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="tuesday" />
-          <label for="tuesday">화</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="wednesday" />
-          <label for="wednesday">수</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="thursday" />
-          <label for="thursday">목</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="friday" />
-          <label for="friday">금</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="saturday" />
-          <label for="saturday">토</label>
-        </li>
-        <li>
-          <input type="checkbox" name="date-checker" id="sunday" />
-          <label for="sunday">일</label>
-        </li>
-      </ul>
-
-      <div>
-        <label for="approval-method">인증 방법</label>
-        <textarea
-          name="approval-method"
-          id="approval-method"
-          cols="30"
-          rows="10"
-          placeholder="ex. 포스팅 url 공유, 사진 인증"
-        ></textarea>
-      </div>
-
-      <div class="button-group">
-        <button type="submit" class="submit">등록</button>
-        <button type="button" class="cancel">취소</button>
+    <main class="main form-main">
+      <div class="form-container">
+        <h2 class="posting-title">스터디 그룹을 생성해 주세요</h2>
+        <p class="due-date"></p>
+        <div>
+          <label class="questions" for="group-name">스터디 그룹명</label>
+          <input class="group-name" type="text" name="group-name" id="group-name" />
+        </div>
+        <div>
+          <label class="questions" for="group-introduction">스터디 그룹을 소개해주세요.</label>
+          <input class="group-introduction" type="text" name="group-introduction" id="group-introduction" />
+        </div>
+        <div>
+          <label class="questions" for="hash-tag">해시태그</label>
+          <input class="hash-tag" type="text" name="hash-tag" id="hash-tag" />
+          <!-- 동적 -->
+          <ul class="tag-container">
+            <li>
+              <span></span>
+            </li>
+          </ul>
+        </div>
+        <div class="enter-range">
+          <span class="questions">참여레벨</span>
+          <div class="range-bar">
+            <input
+              class="range-bar__input"
+              type="range-bar__input"
+              min="1"
+              max="10"
+              step="1"
+              value="1"
+              name="enter-level"
+              id="enter-level"
+            />
+          </div>
+          <ul class="range-label">
+            <li class="active selected">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+          </ul>
+        </div>
+        <div class="duration-range">
+          <span class="questions">진행 기간</span>
+          <div class="range-bar">
+            <input
+              class="range-bar__input"
+              type="range-bar__input"
+              min="1"
+              max="10"
+              step="1"
+              value="1"
+              name="duration"
+              id="duration"
+            />
+          </div>
+          <ul class="range-label">
+            <li class="active">1주</li>
+            <li>2주</li>
+            <li>3주</li>
+            <li>4주</li>
+            <li>5주</li>
+            <li>6주</li>
+            <li>7주</li>
+            <li>8주</li>
+            <li>9주</li>
+            <li>10주</li>
+          </ul>
+        </div>
+        <div class="checkbox-container">
+          <span class="questions authorization">인증 요일</span>
+          <ul>
+            <li class="mon">
+              <input class="date" type="checkbox" name="date-checker" id="monday" />
+              <label for="monday">월</label>
+            </li>
+            <li class="tue">
+              <input class="date" type="checkbox" name="date-checker" id="tuesday" />
+              <label for="tuesday">화</label>
+            </li>
+            <li class="wed">
+              <input class="date" checked type="checkbox" name="date-checker" id="wednesday" />
+              <label for="wednesday">수</label>
+            </li>
+            <li class="thur">
+              <input class="date" type="checkbox" name="date-checker" id="thursday" />
+              <label for="thursday">목</label>
+            </li>
+            <li class="fri">
+              <input class="date" type="checkbox" name="date-checker" id="friday" />
+              <label for="friday">금</label>
+            </li>
+            <li class="sat">
+              <input class="date" type="checkbox" name="date-checker" id="saturday" />
+              <label for="saturday">토</label>
+            </li>
+            <li class="sun">
+              <input class="date" type="checkbox" name="date-checker" id="sunday" />
+              <label for="sunday">일</label>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <span class="questions">인증방법</span>
+          <label for="approval-method"></label>
+          <textarea
+            class="text-content"
+            name="approval-method"
+            id="approval-method"
+            cols="30"
+            rows="10"
+            placeholder="ex. 포스팅 url 공유, 사진 인증"
+          ></textarea>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="submit">등록</button>
+          <button type="button" class="cancel">취소</button>
+        </div>
       </div>
     </main>
     <div class="overlay"></div>
