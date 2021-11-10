@@ -10,9 +10,9 @@ module.exports = {
     app: './src/js/frontend/app.js',
     login: './src/js/frontend/controller/login.js',
     main: './src/js/frontend/controller/main.js',
-    detail: './src/js/frontend/controller/detail.js',
-    form: './src/js/frontend/controller/form.js',
-    approval: './src/js/frontend/controller/approval.js',
+    group: './src/js/frontend/controller/group.js',
+    newstudy: './src/js/frontend/controller/newstudy.js',
+    posting: './src/js/frontend/controller/posting.js',
     mypage: './src/js/frontend/controller/mypage.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
@@ -34,17 +34,17 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'form.html',
-      template: 'src/template/form.html',
-      chunks: ['app', 'form'],
+      template: 'src/template/newstudy.html',
+      chunks: ['app', 'newstudy'],
     }),
     new HtmlWebpackPlugin({
       filename: 'approval.html',
-      template: 'src/template/approval.html',
-      chunks: ['app', 'approval'],
+      template: 'src/template/posting.html',
+      chunks: ['app', 'posting'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'detail.html',
-      template: 'src/template/detail.html',
+      filename: 'group.html',
+      template: 'src/template/group.html',
       chunks: ['app', 'mypage'],
     }),
     new HtmlWebpackPlugin({

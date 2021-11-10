@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시간 먹는 하마</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1>시간 먹는 하마</h1>
+      <img src="#" alt="로고" />
+    </header>
+    <nav class="navigation">
+      <button class="nav-btn">하마버튼</button>
+      <ul class="nav-links">
+        <li><a href="#">홈으로</a></li>
+        <li><a href="#">스터디그룹 만들기</a></li>
+        <li><a href="#">마이페이지</a></li>
+        <li><a href="#">인증글쓰기</a></li>
+        <li><a href="#">알림</a></li>
+        <li><a href="#">닫기</a></li>
+      </ul>
+    </nav>
+    <main class="main">
+      <h2 class="title">인증 글을 올려주세요</h2>
+
+      <div>
+        <label class="questions" for="group-list">스터디 그룹을 설정해주세요.</label>
+        <select name="group-list" id="group-list">
+          <!-- 동적생성 -->
+          <option value="자바스크립트 뽀개기">자바스크립트 뽀개기</option>
+          <option value="알고리즘신이 되어보자">알고리즘신이 되어보자</option>
+          <option value="html/css">html/css</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="questions" for="approval-title">인증 글의 제목을 입력해주세요</label>
+        <input type="text" name="approval-title" id="approval-title" />
+      </div>
+
+      <div>
+        <label class="questions" for="url">URL을 입력해주세요 (optional)</label>
+        <input type="url" name="url" id="url" />
+      </div>
+
+      <div>
+        <label class="questions" for="choose-image">사진을 등록해주세요 (optional)</label>
+        <input type="file" name="choose-image" id="choose-image" accept="image/*" />
+      </div>
+
+      <div>
+        <label for="text-content">내용을 입력해주세요 (optional)</label>
+        <textarea name="text-content" id="text-content" cols="30" rows="10"></textarea>
+      </div>
+    </main>
+    <div class="overlay"></div>
+  </body>
+</html>
