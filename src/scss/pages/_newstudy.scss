@@ -132,19 +132,24 @@
 .checkbox-container ul {
   display: flex;
 }
+.checkbox-container .authorization {
+  padding: 0;
+}
 .checkbox-container label {
-  display: block;
-  position: relative;
-  padding: 5px rem(15px);
+  display: flex;
+  width: rem(50px);
+  height: rem(50px);
   margin: 0 rem(10px);
-  background: $primary;
-  border-radius: 100px;
-  text-align: center;
-  color: $white;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   font-size: rem(22px);
 }
-
+.date:checked ~ label {
+  background: $primary;
+  color: $white;
+}
 .text-content {
   width: 100%;
   max-width: rem(800px);
