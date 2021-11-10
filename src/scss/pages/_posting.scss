@@ -8,8 +8,7 @@
 .form-container {
   background: $white;
   border-radius: rem(10px);
-  padding-right: rem(20px);
-  padding-left: rem(20px);
+  padding: 0 rem(120px);
 }
 .form-container div {
   padding-bottom: rem(40px);
@@ -38,23 +37,24 @@
 .url,
 .approval-title {
   width: 100%;
-  max-width: rem(800px);
-  height: rem(50px);
+  height: rem(70px);
 
   @include mobile {
     height: rem(30px);
   }
 }
 .upload-btn {
-  border: 3px solid $primary;
+  display: block;
+  margin-bottom: rem(30px);
+  padding: rem(10px) 0;
   border-radius: rem(10px);
   background-color: $primary;
   color: $white;
+  text-align: center;
   width: rem(200px);
 }
 .text-content {
   width: 100%;
-  max-width: rem(800px);
   resize: none;
 }
 .button-group {

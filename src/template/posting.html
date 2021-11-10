@@ -45,8 +45,15 @@
         <div>
           <span class="questions">사진을 등록해주세요 (optional)</span>
           <label class="upload-btn" for="choose-image">사진 업로드</label>
-          <input class="a11y-hidden" type="file" name="choose-image" id="choose-image" accept="image/*" />
-          <!-- <img class="upload-img" src="#" alt="upload-img" /> -->
+          <input
+            class="a11y-hidden chosen-image"
+            type="file"
+            name="choose-image"
+            id="choose-image"
+            accept="image/*"
+            multiple
+          />
+          <img class="upload-img" src="#" alt="upload-img" />
         </div>
         <div>
           <label class="questions" for="text-content">내용을 입력해주세요 (optional)</label>
