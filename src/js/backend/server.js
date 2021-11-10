@@ -1,7 +1,13 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./secretKey.json');
-// console.log(express);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+const auth = admin.auth();
 
 const generateNextStudyId = (() => {
   let num = 0;
@@ -13,42 +19,35 @@ const generateNextPostingId = (() => {
   return () => num++;
 })();
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-const db = admin.firestore();
-const auth = admin.auth();
-
 const app = express();
 const PORT = 9999;
+
 app.use(express.static('public'));
 app.use(express.json());
 
 // Get '/' { user: {uid: ""} 또는 null }
-app.get('/', async (req, res) => {
-  const { user } = req.body;
-  const studyDB = await db.collection('studyGroups').get();
-  studyDB.forEach(doc => {
-    console.log(doc.data().userList);
-  });
-  res.send('ok');
-});
+// app.get('/', async (req, res) => {
+//   const { user } = req.body;
+//   const studyDB = await db.collection('studyGroups').get();
+//   studyDB.forEach(doc => {
+//     console.log(doc.data().userList);
+//   });
+//   res.send('ok');
+// });
 
 // GET '/study/:id' { user: { uid: "dfkjdkf" } }
 // user정보로 가입되어있는 스터디인 경우 finishedDate 비교 후 처리
-// user정보로 가입되어있으면 페이지 조회가 가능하고, 해당 스터디의 상세페이지 렌더링
 app.get('/study/:id', async (req, res) => {
   const { user } = req.body;
   const { id } = req.params;
   const studyDB = db.collection('studyGroups').doc(`${id}`);
-  const result = await studyDB.get();
+  const targetStudy = await studyDB.get();
   const now = new Date();
-  if (now > result.data().finishDate.toDate() && !result.data().isFinished) {
+  if (now > targetStudy.data().finishDate.toDate() && !targetStudy.data().isFinished) {
     studyDB.update({
       isFinished: true,
     });
-    result.data().userList.forEach(async user => {
+    targetStudy.data().userList.forEach(async user => {
       const userData = await user.get();
       const pointDB = db.collection('points').doc(`${userData.data().uid}`);
       const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
@@ -58,6 +57,8 @@ app.get('/study/:id', async (req, res) => {
       });
     });
   }
+
+  // 스터디 피드들을 보여줘야 함 응답으로
   res.send();
 });
 
@@ -150,17 +151,18 @@ app.post('/posting', async (req, res) => {
   res.send('success');
 });
 
-app.post('/point', async (req, res) => {
-  // req.headers에서 uid를 받아서 req.body의 user 대신 넣어주기
-  const { user, newPoint } = req.body;
-  const pointDB = db.collection('points').doc(`${user.uid}`);
-  const record = { diff: newPoint.diff, msg: newPoint.msg, date: new Date() };
-  await pointDB.update({
-    total: admin.firestore.FieldValue.increment(newPoint.diff),
-    history: admin.firestore.FieldValue.arrayUnion(record),
-  });
-  res.send('success');
-});
+// post 말고 get요청으로 만들기 (마이페이지용)
+// app.post('/point', async (req, res) => {
+//   // req.headers에서 uid를 받아서 req.body의 user 대신 넣어주기
+//   const { user, newPoint } = req.body;
+//   const pointDB = db.collection('points').doc(`${user.uid}`);
+//   const record = { diff: newPoint.diff, msg: newPoint.msg, date: new Date() };
+//   await pointDB.update({
+//     total: admin.firestore.FieldValue.increment(newPoint.diff),
+//     history: admin.firestore.FieldValue.arrayUnion(record),
+//   });
+//   res.send('success');
+// });
 
 // PATCH '/study/:id' { user :{ uid: ""} }
 app.patch('/study/:id', async (req, res) => {
@@ -177,14 +179,14 @@ app.patch('/study/:id', async (req, res) => {
   res.send('success');
 });
 
-// DELETE '/study/:studyGroupId' { user :{ uid: ""} }
-app.delete('/study/:studyGroupId', async (req, res) => {
+// DELETE '/study/:id' { user :{ uid: ""} }
+app.delete('/study/:id', async (req, res) => {
   const { user } = req.body;
-  const { studyGroupId } = req.params;
+  const { id } = req.params;
   const userDB = db.collection('users').doc(user.uid);
-  const studyDB = db.collection('studyGroups').doc(`${studyGroupId + ''}`);
+  const studyDB = db.collection('studyGroups').doc(`${id + ''}`);
   await userDB.update({
-    studygroup: admin.firestore.FieldValue.arrayRemove(studyDB),
+    studyGroup: admin.firestore.FieldValue.arrayRemove(studyDB),
   });
   await studyDB.update({
     userList: admin.firestore.FieldValue.arrayRemove(userDB),
