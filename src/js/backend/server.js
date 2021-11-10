@@ -32,6 +32,25 @@ app.post('/signup', async (req, res) => {
   res.send(user.uid);
 });
 
+// POST '/study' { creator: 유저인증id, newStudy: 새로운 스터디 객체 }
+app.post('/study', async (req, res) => {
+  const { creator, newStudy } = req.body;
+  console.log(newStudy);
+  const studyDB = db.collection('studyGroups').doc(`${newStudy.id}`);
+  const test = await studyDB.set(newStudy);
+  res.send(test);
+});
+
+// POST '/posting' { creator: 유저인증id, newStudy: 새로운 스터디 객체 }
+app.post('/posting', async (req, res) => {
+  const { creator, newStudy } = req.body;
+  console.log(newStudy);
+  const studyDB = db.collection('studyGroups').doc(`${newStudy.id}`);
+  const test = await studyDB.set(newStudy);
+  res.send(test);
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is listening at http://localhost:${PORT}.`);
 });
