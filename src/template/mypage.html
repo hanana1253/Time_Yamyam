@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마이페이지</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1>시간 먹는 하마</h1>
+      <img src="#" alt="로고" />
+    </header>
+    <nav class="nav">
+      <button class="nav__button">하마버튼</button>
+      <ul class="nav__links">
+        <li><a class="nav__item" href="#">홈으로</a></li>
+        <li><a class="nav__item" href="#">스터디그룹 만들기</a></li>
+        <li><a class="nav__item" href="#">마이페이지</a></li>
+        <li><a class="nav__item" href="#">인증글쓰기</a></li>
+        <li><a class="nav__item" href="#">알림</a></li>
+        <li><a class="nav__item" href="#">닫기</a></li>
+      </ul>
+    </nav>
+    <main class="main mypage">
+      <div class="mypage__header">
+        <h2 class="mypage__header__title">마이페이지</h2>
+        <a href="#" class="mypage__header__button"><box-icon name="cog"></box-icon></a>
+      </div>
+      <div class="mypage__content">
+        <div class="user-info">
+          <div>
+            <div class="user-info__hippo"></div>
+            <span class="user-info__nickname">닉네임</span>
+          </div>
+          <div>
+            <span class="user-info__level">레벨1</span>
+            <a href="#" class="user-info__point">
+              2000p
+              <box-icon type="solid" name="right-arrow"></box-icon>
+            </a>
+          </div>
+        </div>
+        <div class="user-study">
+          <section>
+            <h3>참여중인 스터디</h3>
+            <ul class="study-list inprogress-study">
+              <li>
+                <a href="#">
+                  <div class="study-info">
+                    <div class="study-info__name">
+                      <span class="study-info__name--label">스터디 이름</span>
+                      <span class="study-info__name--content">자바스크립트 뿌시기</span>
+                    </div>
+                    <div class="study-info__description">
+                      <span class="study-info__description--label">스터디 설명</span>
+                      <span class="study-info__description--content"
+                        >화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span
+                      >
+                    </div>
+                    <div class="study-info__days">
+                      <span class="study-info__days--label">인증 요일</span>
+                      <ul class="study-info__days--content">
+                        <li>화요일</li>
+                        <li>목요일</li>
+                      </ul>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>대기중인 스터디</h3>
+            <ul class="study-list waiting-study">
+              <li>
+                <a href="#">
+                  <div class="study-info">
+                    <div class="study-info__name">
+                      <span class="study-info__name--label">스터디 이름</span>
+                      <span class="study-info__name--content">자바스크립트 뿌시기</span>
+                    </div>
+                    <div class="study-info__description">
+                      <span class="study-info__description--label">스터디 설명</span>
+                      <span class="study-info__description--content"
+                        >화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span
+                      >
+                    </div>
+                    <div class="study-info__days">
+                      <span class="study-info__days--label">인증 요일</span>
+                      <ul class="study-info__days--content">
+                        <li>화요일</li>
+                        <li>목요일</li>
+                      </ul>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>종료된 스터디</h3>
+            <ul class="study-list close-study">
+              <li>
+                <a href="#">
+                  <div class="study-info">
+                    <div class="study-info__name">
+                      <span class="study-info__name--label">스터디 이름</span>
+                      <span class="study-info__name--content">자바스크립트 뿌시기</span>
+                    </div>
+                    <div class="study-info__description">
+                      <span class="study-info__description--label">스터디 설명</span>
+                      <span class="study-info__description--content"
+                        >화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span
+                      >
+                    </div>
+                    <div class="study-info__days">
+                      <span class="study-info__days--label">인증 요일</span>
+                      <ul class="study-info__days--content">
+                        <li>화요일</li>
+                        <li>목요일</li>
+                      </ul>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+    <div class="overlay"></div>
+  </body>
+</html>
