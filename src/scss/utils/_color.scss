@@ -1,13 +1,14 @@
 //  기본 색상 --------------------------------------------------------- /
 $white: #ffffff;
 $black: #0b0c0d;
-$purple : #BABBFF;
-$darkpurple: #5D5FEF;
-$pink : #E9BCD0;
-$darkpink: #EC6498;
+$purple: #babbff;
+$darkpurple: #5d5fef;
+$pink: #e9bcd0;
+$darkpink: #ec6498;
 
 $darkgray1: rgba($white, 0.92); // text-white
 $darkgray2: rgba($white, 0.65); // text-gray
 $darkgray3: rgba($white, 0.5); // tab-bg-gray
 $lightblack: rgba($black, 0.9); // bg-black
 $primary: $darkpurple;
+$basic-gradient: 90deg, $purple 5.21%, $pink 98.67%;
