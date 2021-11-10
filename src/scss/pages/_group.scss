@@ -1,0 +1,146 @@
+@use '../base' as *;
+@use '../utils' as *;
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.navigation {
+  background-color: red;
+  display: none;
+}
+
+.group {
+  height: 100vh;
+  width: 100vw;
+
+  button.active {
+    color: black;
+    font-weight: 700;
+  }
+
+  button {
+    color: gray;
+    font-weight: 700;
+  }
+
+  &-feed {
+    &__item {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      height: rem(326px);
+      width: 100%;
+      max-width: rem(500px);
+      background-color: #f0eeee;
+    }
+
+    &__image {
+      background-color: #fffafa;
+      height: 56%;
+    }
+  }
+
+  @include mobile {
+    padding: rem(20px) rem(30px) 0 rem(30px);
+
+    &-title {
+      display: none;
+    }
+
+    &-tabList {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: rem(10px);
+      //   padding: rem(20px) rem(10px);
+      padding: 0 0 rem(20px) 0;
+    }
+
+    &-tab {
+      font-size: rem(16px);
+      border: none;
+      background-color: $white;
+      padding: rem(10px);
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-teamFeed,
+    &-myFeed {
+      //   display: flex;
+      //   flex-flow: column;
+      &__list {
+        margin: rem(10px) 0 0 0;
+        display: flex;
+        gap: rem(17px);
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+
+    &-feed {
+      &__title {
+        padding: rem(15px);
+        font-size: rem(18px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+
+      &__date {
+        margin: rem(33px) 0 0 0;
+        padding: 0 0 0 rem(15px);
+      }
+
+      &__author {
+        padding: 0 0 0 rem(15px);
+      }
+
+      &__likes {
+        display: flex;
+        gap: rem(5px);
+        position: absolute;
+        bottom: rem(20px);
+        right: rem(10px);
+
+        button {
+          border: 0;
+          background-color: #f0eeee;
+          padding: 0;
+          font-size: rem(26px);
+          color: black;
+        }
+
+        .bxs-heart {
+          color: red;
+        }
+      }
+    }
+    .likes-number {
+      line-height: 100%;
+      font-size: rem(26px);
+    }
+  }
+
+  @include desktop {
+    padding: rem(53px) 0 0 rem(63px);
+    position: relative;
+
+    &-title {
+      font-size: rem(36px);
+      font-weight: 700;
+    }
+
+    &-tabList {
+      position: absolute;
+      top: 0;
+      right: rem(10px);
+    }
+  }
+}
