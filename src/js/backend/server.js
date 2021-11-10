@@ -44,7 +44,7 @@ app.get('/study/:id', async (req, res) => {
   const studyDB = db.collection('studyGroups').doc(`${id}`);
   const result = await studyDB.get();
   const now = new Date();
-  if (now > result.data().finishDate.toDate()) {
+  if (now > result.data().finishDate.toDate() && !result.data().isFinished) {
     studyDB.update({
       isFinished: true,
     });
