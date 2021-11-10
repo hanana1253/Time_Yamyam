@@ -33,12 +33,12 @@ module.exports = {
       chunks: ['app', 'login'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'form.html',
+      filename: 'newstudy.html',
       template: 'src/template/newstudy.html',
       chunks: ['app', 'newstudy'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'approval.html',
+      filename: 'posting.html',
       template: 'src/template/posting.html',
       chunks: ['app', 'posting'],
     }),
