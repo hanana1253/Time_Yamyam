@@ -26,11 +26,11 @@ app.post('/signup', async (req, res) => {
     photoURL: 'http://www.example.com/12345678/photo.png',
     disabled: false,
   });
+  const userDB = db.collection('users').doc(user.uid);
+  await userDB.set({ email, nickname });
   console.log(user.uid);
   res.send(user.uid);
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is listening at http://localhost:${PORT}.`);
