@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시간 먹는 하마</title>
+  </head>
+  <body>
+    <header></header>
+
+    <main class="main">
+      <h2 class="title">인증 글을 올려주세요</h2>
+
+      <fieldset>
+        <label class="questions" for="group-list">1. 스터디 그룹을 설정해주세요.</label>
+        <select name="group-list" id="group-list">
+          <!-- 동적생성 -->
+          <option value="자바스크립트 뽀개기">자바스크립트 뽀개기</option>
+          <option value="알고리즘신이 되어보자">알고리즘신이 되어보자</option>
+          <option value="html/css">html/css</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <label class="questions" for="approval-title">2. 인증 글의 제목을 입력해주세요</label>
+        <input type="text" name="approval-title" id="approval-title" />
+      </fieldset>
+
+      <fieldset>
+        <label class="questions" for="url">3. URL을 입력해주세요 (optional)</label>
+        <input type="url" name="url" id="url" />
+      </fieldset>
+
+      <fieldset>
+        <div class="image-button">
+          <label class="questions" for="choose-image">4. 사진을 등록해주세요 (optional)</label>
+          <input type="file" name="choose-image" id="choose-image" accept="image/*" />
+          선택
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label for="text-content">5. 내용을 입력해주세요 (optional)</label>
+        <textarea name="text-content" id="text-content" cols="30" rows="10"></textarea>
+      </fieldset>
+    </main>
+    <footer></footer>
+  </body>
+</html>
