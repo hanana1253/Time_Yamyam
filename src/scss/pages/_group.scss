@@ -1,0 +1,11 @@
+@use '../base' as *;
+@use '../utils' as *;
+
+.navigation {
+  background-color: red;
+  display: none;
+}
+
+.group {
+  padding: 0;
+}
