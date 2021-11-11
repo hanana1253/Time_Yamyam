@@ -2,7 +2,7 @@
 @use '../utils/' as *;
 
 .header {
-  width: 100vw;
+  width: 100%;
   padding: rem(7px) rem(20px);
   display: flex;
   gap: 10px;
