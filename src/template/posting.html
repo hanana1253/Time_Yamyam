@@ -8,9 +8,12 @@
   </head>
   <body class="form-body">
     <header class="header">
-      <h1>시간 먹는 하마</h1>
-      <img src="#" alt="로고" />
+      <div class="title">
+        <h1>시간 먹는 하마</h1>
+      </div>
+      <div class="logo"><img src="../images/logo.png" alt="로고" /></div>
     </header>
+
     <nav class="navigation">
       <button class="nav-btn">하마버튼</button>
       <ul class="nav-links">
@@ -67,8 +70,9 @@
             accept="image/*"
             multiple
           />
-          <div class="img-controller">
-            <img class="upload-img" src="#" alt="upload-img" />
+          <div class="drop-zone">
+            <span class="drop-zone__prompt">사진을 드래그해주세요</span>
+            <input type="file" name="myFile" class="drop-zone__input" multiple />
           </div>
         </div>
         <div>

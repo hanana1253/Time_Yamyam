@@ -38,57 +38,73 @@
 .hash-tag {
   width: 100%;
   height: rem(70px);
+  padding: rem(10px);
+  font-size: rem(20px);
+  border: none;
+  border-bottom: 1px solid $lightblack;
 
   @include mobile {
     height: rem(30px);
   }
 }
+.new-value {
+  margin-top: 30px;
+  opacity: 0.7;
+}
 .range-bar {
+  width: 75%;
+  margin-top: rem(20px);
   position: relative;
-  // width: 1000px;
-  max-width: rem(550px);
-  height: rem(7px);
+
   &__input {
+    -webkit-appearance: none;
     width: 100%;
-    position: absolute;
-    top: 2px;
-    height: 0;
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      @include rangeThumb;
-    }
-    &::-moz-range-thumb {
-      @include rangeThumb;
-    }
+    height: rem(20px);
+    background-image: linear-gradient(90deg, rgb(117, 252, 117) 60%, rgb(214, 214, 214) 60%);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: 12px;
+    box-shadow: 0px 1px 10px 1px $lightblack;
+  }
 
-    &::-ms-thumb {
-      @include rangeThumb;
-    }
-
-    &::-webkit-slider-runnable-track {
-      @include rangeTrack;
-    }
-    &::-moz-range-track {
-      @include rangeTrack;
-    }
-
-    &::-ms-tranck {
-      @include rangeTrack;
-    }
-
-    &:focus {
-      background: none;
-      outline: none;
-    }
-    &::-ms-track {
-      width: 100%;
-      cursor: pointer;
-      background: transparent;
-      border-color: transparent;
-      color: transparent;
-    }
+  &__input:hover {
+    opacity: 1;
+  }
+  &__input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 40px;
+    height: 40px;
+    background: $white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  &__input::-moz-range-thumb {
+    width: 40px;
+    height: 40px;
+    background: $white;
+    border-radius: 50%;
+    cursor: pointer;
   }
 }
+.range-bar::after {
+  content: '10';
+  color: $lightblack;
+  font-size: rem(16px);
+  position: absolute;
+  left: 95%;
+  top: 30%;
+}
+.range-bar::before {
+  content: '1';
+  color: $lightblack;
+  font-size: rem(16px);
+  position: absolute;
+  left: 5%;
+  top: 30%;
+}
+
 .range-labels {
   margin: rem(18px) rem(-41px) 0;
   padding: 0;
@@ -152,6 +168,7 @@
   width: 100%;
   resize: none;
   font-size: rem(20px);
+  padding: rem(20px);
 }
 .button-group {
   text-align: center;
