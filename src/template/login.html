@@ -8,51 +8,52 @@
   </head>
   <body>
     <header class="header">
-      <h1>시간 먹는 하마</h1>
-      <img src="#" alt="로고" />
+      <div class="title">
+        <h1>시간 먹는 하마</h1>
+      </div>
+      <div class="logo"><img src="../images/logo.png" alt="로고" /></div>
     </header>
     <main>
-      <form class="form signin" novalidate>
-        <div class="title">SIGN IN</div>
+      <form class="auth-form login">
+        <h2 class="title">로그인</h2>
         <div class="input-container">
-          <input type="text" id="signin-userid" name="userid" required autocomplete="off" />
-          <label for="signin-userid">email</label>
+          <input type="text" id="email" name="email" required autocomplete="off" />
+          <label for="email">이메일</label>
           <div class="error"></div>
         </div>
         <div class="input-container">
-          <input type="password" id="signin-password" name="password" required autocomplete="off" />
-          <label for="signin-password">Password</label>
+          <input type="password" id="login-password" name="password" required autocomplete="off" />
+          <label for="login-password">비밀번호</label>
           <div class="error"></div>
         </div>
-        <button class="signin button" disabled>SIGN IN</button>
-        <div class="link">Not a member? <a href="javascript:void(0);">Sign up now</a></div>
+        <button type="submit" class="login button" disabled>로그인</button>
+        <button type="button" class="signup button toggle-btn">회원가입으로</button>
       </form>
 
-      <form class="form signup hidden" novalidate>
-        <div class="title">SIGN UP</div>
+      <form class="auth-form signup hidden">
+        <h2 class="title">회원가입</h2>
         <div class="input-container">
-          <input type="text" id="signup-userid" name="userid" required autocomplete="off" />
-          <label for="signup-userid">email</label>
+          <input type="text" id="email" name="email" required autocomplete="off" />
+          <label for="email">이메일</label>
           <div class="error"></div>
         </div>
-        <div class="error-message"></div>
         <div class="input-container">
-          <input type="text" id="signup-name" name="username" required autocomplete="off" />
-          <label for="signup-name">Name</label>
+          <input type="text" id="nickname" name="nickname" required autocomplete="off" />
+          <label for="nickname">닉네임</label>
           <div class="error"></div>
         </div>
         <div class="input-container">
           <input type="password" id="signup-password" name="password" required autocomplete="off" />
-          <label for="signup-password">Password</label>
+          <label for="signup-password">비밀번호</label>
           <div class="error"></div>
         </div>
         <div class="input-container">
           <input type="password" id="signup-confirm-password" name="confirm-password" required autocomplete="off" />
-          <label for="signup-confirm-password">Confirm Password</label>
+          <label for="signup-confirm-password">비밀번호 확인</label>
           <div class="error"></div>
         </div>
-        <button class="signup button" disabled>SIGN UP</button>
-        <div class="link">Already a member? <a href="#">Sign in</a></div>
+        <button type="submit" class="signup button" disabled>회원가입</button>
+        <button type="button" class="login button toggle-btn">로그인으로</button>
       </form>
     </main>
   </body>
