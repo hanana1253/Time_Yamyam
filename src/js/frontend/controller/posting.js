@@ -10,8 +10,6 @@ const uploadFile = e => {
   reader.onload = event => {
     const img = document.querySelector('.upload-img');
     img.setAttribute('src', event.target.result);
-    img.setAttribute('width', 400);
-    img.setAttribute('height', 650);
     console.log(event.target.result);
   };
   reader.readAsDataURL(e.target.files[0]);

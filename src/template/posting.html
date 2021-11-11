@@ -26,7 +26,7 @@
       <div class="form-container">
         <h2 class="posting-title">인증 글을 올려주세요</h2>
         <div>
-          <label class="questions" for="group-list">스터디 그룹을 설정해주세요.</label>
+          <label class="questions a11y-hidden" for="group-list">스터디 그룹을 설정해주세요.</label>
           <select class="group-list" name="group-list" id="group-list">
             <!-- 동적생성 -->
             <option value="자바스크립트 뽀개기">자바스크립트 뽀개기</option>
@@ -35,16 +35,30 @@
           </select>
         </div>
         <div>
-          <label class="questions" for="approval-title">인증 글의 제목을 입력해주세요</label>
-          <input class="approval-title" type="text" name="approval-title" id="approval-title" autocomplete="false" />
+          <label class="questions a11y-hidden" for="approval-title">인증 글의 제목을 입력해주세요</label>
+          <input
+            class="approval-title"
+            type="text"
+            name="approval-title"
+            id="approval-title"
+            autocomplete="false"
+            placeholder="인증 글의 제목을 입력해주세요"
+          />
         </div>
         <div>
-          <label class="questions" for="url">URL을 입력해주세요 (optional)</label>
-          <input class="url" type="url" name="url" id="url" autocomplete="false" />
+          <label class="questions a11y-hidden" for="url">URL을 입력해주세요 (optional)</label>
+          <input
+            class="url"
+            type="url"
+            name="url"
+            id="url"
+            autocomplete="false"
+            placeholder="URL을 입력해주세요 (optional)"
+          />
         </div>
         <div>
-          <span class="questions">사진을 등록해주세요 (optional)</span>
-          <label class="upload-btn" for="choose-image">사진 업로드</label>
+          <span class="questions a11y-hidden">사진을 등록해주세요 (optional)</span>
+          <label class="upload-btn" for="choose-image" aria-placeholder="사진을 등록해주세요">사진 업로드</label>
           <input
             class="a11y-hidden chosen-image"
             type="file"
@@ -53,11 +67,20 @@
             accept="image/*"
             multiple
           />
-          <img class="upload-img" src="#" alt="upload-img" />
+          <div class="img-controller">
+            <img class="upload-img" src="#" alt="upload-img" />
+          </div>
         </div>
         <div>
-          <label class="questions" for="text-content">내용을 입력해주세요 (optional)</label>
-          <textarea class="text-content" name="text-content" id="text-content" cols="30" rows="10"></textarea>
+          <label class="questions a11y-hidden" for="text-content">내용을 입력해주세요 (optional)</label>
+          <textarea
+            class="text-content"
+            name="text-content"
+            id="text-content"
+            cols="30"
+            rows="10"
+            placeholder="내용을 입력해주세요 (optional)"
+          ></textarea>
         </div>
 
         <div class="button-group">

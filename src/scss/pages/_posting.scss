@@ -9,6 +9,10 @@
   background: $white;
   border-radius: rem(10px);
   padding: 0 rem(120px);
+
+  @include mobile {
+    padding: 0 rem(30px);
+  }
 }
 .form-container div {
   padding-bottom: rem(40px);
@@ -38,6 +42,10 @@
 .approval-title {
   width: 100%;
   height: rem(70px);
+  padding: rem(10px);
+  font-size: rem(20px);
+  border: none;
+  border-bottom: 1px solid $lightblack;
 
   @include mobile {
     height: rem(30px);
@@ -52,6 +60,23 @@
   color: $white;
   text-align: center;
   width: rem(200px);
+
+  @include mobile {
+    margin: 0 auto rem(30px);
+  }
+}
+.img-controller {
+  text-align: center;
+  border: 1px;
+}
+.upload-img {
+  width: rem(400px);
+  height: rem(600px);
+
+  @include mobile {
+    width: rem(240px);
+    height: rem(300px);
+  }
 }
 .text-content {
   width: 100%;
@@ -69,6 +94,10 @@
   border-radius: 10px;
   color: $white;
   font-size: rem(20px);
+
+  @include mobile {
+    width: rem(60px);
+  }
 }
 .submit {
   background: $primary;

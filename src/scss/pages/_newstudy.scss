@@ -8,8 +8,7 @@
 .form-container {
   background: $white;
   border-radius: rem(10px);
-  padding-right: rem(20px);
-  padding-left: rem(20px);
+  padding: 0 rem(120px);
 }
 .form-container div {
   padding-bottom: rem(40px);
@@ -20,8 +19,8 @@
   padding: rem(50px);
   text-align: center;
   @include mobile {
-    font-size: rem(22px);
-    padding: rem(30px) rem(22px);
+    font-size: rem(16px);
+    padding: rem(3px) rem(10px);
   }
 }
 .questions {
@@ -38,7 +37,7 @@
 .group-introduction,
 .hash-tag {
   width: 100%;
-  height: rem(50px);
+  height: rem(70px);
 
   @include mobile {
     height: rem(30px);
@@ -46,7 +45,7 @@
 }
 .range-bar {
   position: relative;
-  width: 1000px;
+  // width: 1000px;
   max-width: rem(550px);
   height: rem(7px);
   &__input {
@@ -97,7 +96,7 @@
   & > li {
     position: relative;
     float: left;
-    width: rem(90px);
+    // width: rem(90px);
     text-align: center;
     color: white;
     font-size: rem(16px);
@@ -166,6 +165,11 @@
   border-radius: 10px;
   color: $white;
   font-size: rem(20px);
+
+  @include mobile {
+    width: rem(80px);
+    height: rem(40px);
+  }
 }
 .submit {
   background: $primary;
