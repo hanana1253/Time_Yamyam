@@ -7,7 +7,6 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-const auth = admin.auth();
 
 const generateNextStudyId = (() => {
   let num = 0;
@@ -20,7 +19,7 @@ const generateNextPostingId = (() => {
 })();
 
 const app = express();
-const PORT = 9999;
+const PORT = 3001;
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -57,33 +56,25 @@ app.get('/study/:id', async (req, res) => {
       });
     });
   }
-<<<<<<< HEAD
 
-=======
-  
-  // 인증글 
->>>>>>> develop
+  // 인증글
   // 스터디 피드들을 보여줘야 함 응답으로
   res.send();
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
 app.post('/signup', async (req, res) => {
-  const { email, nickname, password } = req.body;
-  const user = await auth.createUser({
-    email,
-    password,
-    photoURL: 'http://www.example.com/12345678/photo.png',
-  });
+  const { email, nickname, uid } = req.body;
 
-  const pointsDB = db.collection('points').doc(user.uid);
+  const pointsDB = db.collection('points').doc(uid);
+  const userDB = db.collection('users').doc(uid);
+
   await pointsDB.set({ total: 50, history: [{ date: new Date(), point: 50, category: '회원가입' }] });
-
-  const userDB = db.collection('users').doc(user.uid);
   await userDB.set({ email, nickname, point: pointsDB, studyGroup: [] });
 
-  res.send(user.uid);
+  res.send('success');
 });
+
 // POST '/study' { user: 유저 uid를 갖는 객체, newStudy: 새로운 스터디 객체 }
 // newStudy = {
 //   title: str,
@@ -99,24 +90,20 @@ app.post('/signup', async (req, res) => {
 app.post('/study', async (req, res) => {
   const { user, newStudy } = req.body;
   const leader = db.collection('users').doc(user.uid);
-
   const createDate = new Date();
-  const expireDate = new Date();
-  expireDate.setDate(createDate.getDate() + 7);
-  const finishDate = new Date();
-  finishDate.setDate(createDate.getDate() + 7 + newStudy.duration * 7);
 
   const id = generateNextStudyId();
-  const userList = [leader];
   const studyDB = db.collection('studyGroups').doc(`${id}`);
+
   await studyDB.set({
     ...newStudy,
     createDate,
-    expireDate,
-    finishDate,
+    expireDate: new Date(new Date().setDate(createDate.getDate() + 7)),
+    finishDate: new Date(new Date().setDate(createDate.getDate() + 7 + newStudy.duration * 7)),
     leader,
-    userList,
+    userList: [leader],
     isFinished: false,
+    postingList: [],
   });
   res.send('success');
 });
@@ -141,13 +128,15 @@ app.post('/posting', async (req, res) => {
   const id = generateNextPostingId();
   const author = db.collection('users').doc(user.uid);
   const createDate = new Date();
-  const studyGroup = db.collection('studyGroups').doc(newPosting.studyGroupId);
+  const studyGroupDB = db.collection('studyGroups').doc(newPosting.studyGroupId);
   const postingDB = db.collection('postings').doc(`${id}`);
-  await postingDB.set({ ...newPosting, author, createDate, studyGroup, likes: 0, id });
-
   const pointDB = db.collection('points').doc(`${user.uid}`);
   const POSTING_POINT = 10;
   const record = { point: POSTING_POINT, category: '인증추가점수', date: new Date() };
+  await postingDB.set({ ...newPosting, author, createDate, studyGroupDB, likes: 0, id });
+  await studyGroupDB.update({
+    postingList: admin.firestore.FieldValue.arrayUnion(postingDB),
+  });
   await pointDB.update({
     total: admin.firestore.FieldValue.increment(record.point),
     history: admin.firestore.FieldValue.arrayUnion(record),
