@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
     <title>시간 먹는 하마 (상세 페이지)</title>
   </head>
   <body>
     <header class="header">
-      <h1>시간 먹는 하마</h1>
-      <img src="#" alt="로고" />
+      <div class="title">
+        <h1>시간 먹는 하마</h1>
+      </div>
+      <div class="logo"><img src="../images/logo.png" alt="로고" /></div>
     </header>
     <nav class="navigation">
       <button class="nav-btn">하마버튼</button>
@@ -24,38 +26,47 @@
       </ul>
     </nav>
     <main class="main group">
-      <h2 class="group-title">자바스크립트 뿌시기</h2>
       <div class="group-tabs">
-        <div role="tablist" class="group-tabList" aria-label="Sample Tabs">
-          <button class="group-tab" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" tabindex="0">
-            팀원 피드보기
-          </button>
-          <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">
-            나의 피드보기
-          </button>
-          <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1">
-            상세 설명
-          </button>
+        <div class="tab-header">
+          <h2 class="group-title">자바스크립트 뿌시기</h2>
+          <div role="tablist" class="group-tabList" aria-label="Sample Tabs">
+            <button
+              class="group-tab active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-1"
+              id="tab-1"
+              tabindex="0"
+            >
+              팀원 피드보기
+            </button>
+            <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">
+              나의 피드보기
+            </button>
+            <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1">
+              상세 설명
+            </button>
+          </div>
         </div>
         <div class="group-teamFeed" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
           <div class="filters">
             <select class="filters-weeks">
-              <!-- <option value="1">1주차</option>
-                <option value="2">2주차</option>
-                <option value="3">3주차</option> -->
+              <option value="1">1주차</option>
+              <option value="2">2주차</option>
+              <option value="3">3주차</option>
             </select>
             <select class="filters-days">
-              <!-- <option value="0">일요일</option>
-                <option value="1">월요일</option>
-                <option value="2">화요일</option> -->
+              <option value="0">일요일</option>
+              <option value="1">월요일</option>
+              <option value="2">화요일</option>
             </select>
             <!-- 나의 피드 보기 시, hidden 클래스 추가  -->
             <select class="filters-member">
-              <!-- <option value="nickname">nickname</option> -->
+              <option value="nickname">nickname</option>
             </select>
           </div>
           <ul class="group-teamFeed__list">
-            <!-- <li class="group-feed__item" data-id="1">
+            <li class="group-feed__item" data-id="1">
               <figure class="group-feed__image">
                 <img src="" alt="" />
               </figure>
@@ -65,10 +76,24 @@
               <div class="group-feed__likes">
                 <div class="likes-number">2</div>
                 <button>
-                  <box-icon name="heart" class="likes-icon" type="solid"></box-icon>
+                  <i class="bx bx-heart"></i>
                 </button>
               </div>
-            </li> -->
+            </li>
+            <li class="group-feed__item" data-id="1">
+              <figure class="group-feed__image">
+                <img src="" alt="" />
+              </figure>
+              <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
+              <p class="group-feed__date">2021.11.01</p>
+              <p class="group-feed__author">작성자 ID</p>
+              <div class="group-feed__likes">
+                <div class="likes-number">2</div>
+                <button>
+                  <i class="bx bx-heart"></i>
+                </button>
+              </div>
+            </li>
           </ul>
         </div>
         <div class="group-myFeed" id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" hidden>

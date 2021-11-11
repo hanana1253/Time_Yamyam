@@ -8,8 +8,10 @@
   </head>
   <body class="form-body">
     <header class="header">
-      <h1>시간 먹는 하마</h1>
-      <img src="#" alt="로고" />
+      <div class="title">
+        <h1>시간 먹는 하마</h1>
+      </div>
+      <div class="logo"><img src="../images/logo.png" alt="로고" /></div>
     </header>
 
     <nav class="navigation">
@@ -29,16 +31,22 @@
         <h2 class="posting-title">스터디 그룹을 생성해 주세요</h2>
         <p class="due-date"></p>
         <div>
-          <label class="questions" for="group-name">스터디 그룹명</label>
-          <input class="group-name" type="text" name="group-name" id="group-name" />
+          <label class="questions a11y-hidden" for="group-name">스터디 그룹명</label>
+          <input class="group-name" type="text" name="group-name" id="group-name" placeholder="스터디 그룹명" />
         </div>
         <div>
-          <label class="questions" for="group-introduction">스터디 그룹을 소개해주세요.</label>
-          <input class="group-introduction" type="text" name="group-introduction" id="group-introduction" />
+          <label class="questions a11y-hidden" for="group-introduction">스터디 그룹을 소개해주세요.</label>
+          <input
+            class="group-introduction"
+            type="text"
+            name="group-introduction"
+            id="group-introduction"
+            placeholder="스터디 그룹을 소개해주세요."
+          />
         </div>
         <div>
-          <label class="questions" for="hash-tag">해시태그</label>
-          <input class="hash-tag" type="text" name="hash-tag" id="hash-tag" />
+          <label class="questions a11y-hidden" for="hash-tag">해시태그</label>
+          <input class="hash-tag" type="text" name="hash-tag" id="hash-tag" placeholder="해시태그" />
           <!-- 동적 -->
           <ul class="tag-container">
             <li>
@@ -51,14 +59,15 @@
           <div class="range-bar">
             <input
               class="range-bar__input"
-              type="range-bar__input"
-              min="1"
+              type="range"
+              min="0"
               max="10"
-              step="1"
-              value="1"
+              value="0"
               name="enter-level"
               id="enter-level"
             />
+            <output class="level-output" name="level" for="enter-level"></output>
+            <p class="new-value">Value: <span class="value"></span></p>
           </div>
           <ul class="range-label">
             <li class="active selected">1</li>
@@ -78,7 +87,7 @@
           <div class="range-bar">
             <input
               class="range-bar__input"
-              type="range-bar__input"
+              type="range"
               min="1"
               max="10"
               step="1"

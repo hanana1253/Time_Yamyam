@@ -6,9 +6,18 @@ $darkpurple: #5d5fef;
 $pink: #e9bcd0;
 $darkpink: #ec6498;
 
+$basic-gradient: 90deg, $purple 5.21%, $pink 98.67%;
+
+$light-red: #ff99c8;
+$light-orange: #fec8c3;
+$light-yellow: #fcf6bd;
+$light-green: #d0f4de;
+$light-blue: #a9def9;
+$light-navy: #c7d0f9;
+$light-violet: #e4c1f9;
+
 $darkgray1: rgba($white, 0.92); // text-white
 $darkgray2: rgba($white, 0.65); // text-gray
 $darkgray3: rgba($white, 0.5); // tab-bg-gray
 $lightblack: rgba($black, 0.9); // bg-black
 $primary: $darkpurple;
-$basic-gradient: 90deg, $purple 5.21%, $pink 98.67%;
