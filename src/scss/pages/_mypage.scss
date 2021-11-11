@@ -1,0 +1,86 @@
+@use '../utils' as *;
+
+.mypage {
+  // temp
+  // background-color: $primary;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid $black;
+    padding: 20px 5px;
+    font-size: rem(25px);
+    font-weight: bold;
+  }
+
+  &__content {
+    padding: 0 rem(10px);
+
+    @include desktop {
+      display: flex;
+      gap: rem(60px);
+      padding-top: rem(10px);
+    }
+  }
+}
+
+.user-info {
+  text-align: center;
+  font-size: rem(20px);
+
+  @include desktop {
+    width: 60%;
+    order: 1;
+  }
+
+  &__inner {
+    position: sticky;
+    top: rem(25px);
+  }
+
+  &__inner::before {
+    content: '';
+    display: block;
+    background-color: $white;
+    background-image: url(../images/hama-sprite.png);
+    background-repeat: no-repeat;
+    background-size: auto rem(250px);
+    background-position-x: 10px;
+    width: rem(250px);
+    height: rem(250px);
+    border-radius: 50%;
+    margin: rem(25px) auto;
+  }
+
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(40px);
+    padding: 0 rem(2vw);
+  }
+
+  &__point {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.user-study {
+  @include mobile {
+    padding-top: 30px;
+  }
+
+  h3 {
+    font-size: rem(20px);
+    font-weight: bold;
+  }
+}
+
+.study-list {
+  margin-bottom: rem(40px);
+
+  & > li {
+    margin-bottom: rem(20px);
+  }
+}
