@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <title>시간 먹는 하마 (상세 페이지)</title>
   </head>
   <body>
@@ -26,7 +28,7 @@
       </ul>
     </nav>
     <main class="main group">
-      <div class="group-tabs">
+      <div class="group-tabs swiper">
         <div class="tab-header">
           <h2 class="group-title">자바스크립트 뿌시기</h2>
           <div role="tablist" class="group-tabList" aria-label="Sample Tabs">
@@ -48,153 +50,155 @@
             </button>
           </div>
         </div>
-        <div class="group-teamFeed" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1" hidden>
-          <div class="filters">
-            <select class="filters-weeks">
-              <option value="1">1주차</option>
-              <option value="2">2주차</option>
-              <option value="3">3주차</option>
-            </select>
-            <select class="filters-days">
-              <option value="0">일요일</option>
-              <option value="1">월요일</option>
-              <option value="2">화요일</option>
-            </select>
-            <!-- 나의 피드 보기 시, hidden 클래스 추가  -->
-            <select class="filters-member">
-              <option value="nickname">nickname</option>
-            </select>
-          </div>
-          <ul class="group-teamFeed__list">
-            <li class="group-feed__item" data-id="1">
-              <figure class="group-feed__image">
-                <img src="" alt="" />
-              </figure>
-              <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
-              <p class="group-feed__date">2021.11.01</p>
-              <p class="group-feed__author">작성자 ID</p>
-              <div class="group-feed__likes">
-                <div class="likes-number">2</div>
-                <button>
-                  <i class="bx bx-heart"></i>
-                </button>
-              </div>
-            </li>
-            <li class="group-feed__item" data-id="1">
-              <figure class="group-feed__image">
-                <img src="" alt="" />
-              </figure>
-              <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
-              <p class="group-feed__date">2021.11.01</p>
-              <p class="group-feed__author">작성자 ID</p>
-              <div class="group-feed__likes">
-                <div class="likes-number">2</div>
-                <button>
-                  <i class="bx bx-heart"></i>
-                </button>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="group-myFeed" id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" hidden>
-          <div class="filters">
-            <select class="filters-weeks">
-              <!-- <option value="1">1주차</option>
+        <div class="swiper-wrapper">
+          <div class="group-teamFeed swiper-slide" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+            <div class="filters">
+              <select class="filters-weeks">
+                <option value="1">1주차</option>
                 <option value="2">2주차</option>
-                <option value="3">3주차</option> -->
-            </select>
-            <select class="filters-days">
-              <!-- <option value="0">일요일</option>
+                <option value="3">3주차</option>
+              </select>
+              <select class="filters-days">
+                <option value="0">일요일</option>
                 <option value="1">월요일</option>
-                <option value="2">화요일</option> -->
-            </select>
-            <!-- 나의 피드 보기 시, hidden 클래스 추가  -->
-            <select class="filters-member">
-              <!-- <option value="nickname">nickname</option> -->
-            </select>
-          </div>
-          <ul class="group-myFeed__list">
-            <!-- <li class="group-feed__item" data-id="1">
-              <figure class="group-feed__image">
-                <img src="" alt="" />
-              </figure>
-              <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
-              <p class="group-feed__date">2021.11.01</p>
-              <p class="group-feed__author">작성자 ID</p>
-              <div class="group-feed__likes">
-                <div class="likes-number">2</div>
-                <button>
-                  <box-icon name="heart" class="likes-icon" type="solid"></box-icon>
-                </button>
-              </div>
-            </li> -->
-          </ul>
-        </div>
-        <div class="group-info" id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
-          <div class="group-info__summary">
-            <h3 class="group-info__title">스터디 개요</h3>
-            <button class="group-info__edit hidden">수정</button>
-            <div class="study-info">
-              <div class="study-info__wrap">
-                <span class="study-info__label">스터디 이름</span>
-                <span class="study-info__name">자바스크립트 뿌시기</span>
-              </div>
-              <div class="study-info__wrap">
-                <span class="study-info__label">스터디 설명</span>
-                <p class="study-info__description">화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</p>
-              </div>
-              <div class="study-info__wrap">
-                <span class="study-info__label">인증 요일</span>
-                <ul class="study-info__days">
-                  <li class="mon">월</li>
-                  <li class="tue">화</li>
-                  <li class="wed">수</li>
-                  <li class="thur">목</li>
-                  <li class="fri">금</li>
-                  <li class="sat">토</li>
-                  <li class="sun">일</li>
-                </ul>
-              </div>
+                <option value="2">화요일</option>
+              </select>
+              <!-- 나의 피드 보기 시, hidden 클래스 추가  -->
+              <select class="filters-member">
+                <option value="nickname">nickname</option>
+              </select>
             </div>
-          </div>
-          <div class="group-info__teamList">
-            <h3 class="group-info__title">나의 팀원 목록</h3>
-            <ul class="group-teamList__list">
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
+            <ul class="group-teamFeed__list">
+              <li class="group-feed__item" data-id="1">
+                <figure class="group-feed__image">
+                  <img src="" alt="" />
+                </figure>
+                <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
+                <p class="group-feed__date">2021.11.01</p>
+                <p class="group-feed__author">작성자 ID</p>
+                <div class="group-feed__likes">
+                  <div class="likes-number">2</div>
+                  <button>
+                    <i class="bx bx-heart"></i>
+                  </button>
+                </div>
               </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
-              </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
-              </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
-              </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
-              </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
-              </li>
-              <li class="group-teamList__member" tabindex="0">
-                <span class="group-teamList__member--nickname">팀원 아이디</span>
-                <span class="group-teamList__member--level">Lv. 3</span>
+              <li class="group-feed__item" data-id="2">
+                <figure class="group-feed__image">
+                  <img src="" alt="" />
+                </figure>
+                <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
+                <p class="group-feed__date">2021.11.01</p>
+                <p class="group-feed__author">작성자 ID</p>
+                <div class="group-feed__likes">
+                  <div class="likes-number">2</div>
+                  <button>
+                    <i class="bx bx-heart"></i>
+                  </button>
+                </div>
               </li>
             </ul>
           </div>
-          <div class="group-info__description">
-            <h3 class="group-info__title">스터디 인증 상세</h3>
+          <div class="group-myFeed swiper-slide" id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
+            <div class="filters">
+              <select class="filters-weeks">
+                <option value="1">1주차</option>
+                <option value="2">2주차</option>
+                <option value="3">3주차</option>
+              </select>
+              <select class="filters-days">
+                <option value="0">일요일</option>
+                <option value="1">월요일</option>
+                <option value="2">화요일</option>
+              </select>
+              <!-- 나의 피드 보기 시, hidden 클래스 추가  -->
+              <select class="filters-member">
+                <option value="nickname">nickname</option>
+              </select>
+            </div>
+            <ul class="group-myFeed__list">
+              <li class="group-feed__item" data-id="1">
+                <figure class="group-feed__image">
+                  <img src="" alt="" />
+                </figure>
+                <h3 class="group-feed__title">[필독] 가입하신 분들 인증 방법을 확인하세요</h3>
+                <p class="group-feed__date">2021.11.01</p>
+                <p class="group-feed__author">작성자 ID</p>
+                <div class="group-feed__likes">
+                  <div class="likes-number">2</div>
+                  <button>
+                    <i class="bx bx-heart"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="group-info swiper-slide" id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
+            <div class="group-info__summary">
+              <h3 class="group-info__title">스터디 개요</h3>
+              <button class="group-info__edit hidden">수정</button>
+              <div class="study-info">
+                <div class="study-info__wrap">
+                  <span class="study-info__label">스터디 이름</span>
+                  <span class="study-info__name">자바스크립트 뿌시기</span>
+                </div>
+                <div class="study-info__wrap">
+                  <span class="study-info__label">스터디 설명</span>
+                  <p class="study-info__description">화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</p>
+                </div>
+                <div class="study-info__wrap">
+                  <span class="study-info__label">인증 요일</span>
+                  <ul class="study-info__days">
+                    <li class="mon">월</li>
+                    <li class="tue">화</li>
+                    <li class="wed">수</li>
+                    <li class="thur">목</li>
+                    <li class="fri">금</li>
+                    <li class="sat">토</li>
+                    <li class="sun">일</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="group-info__teamList">
+              <h3 class="group-info__title">나의 팀원 목록</h3>
+              <ul class="group-teamList__list">
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+                <li class="group-teamList__member" tabindex="0">
+                  <span class="group-teamList__member--nickname">팀원 아이디</span>
+                  <span class="group-teamList__member--level">Lv. 3</span>
+                </li>
+              </ul>
+            </div>
             <div class="group-info__description">
-              <h4 class="group-info__description--title">인증방법</h4>
-              <p class="group-info__description--desc"></p>
+              <h3 class="group-info__title">스터디 인증 상세</h3>
+              <div class="group-info__description">
+                <h4 class="group-info__description--title">인증방법</h4>
+                <p class="group-info__description--desc"></p>
+              </div>
             </div>
           </div>
         </div>
