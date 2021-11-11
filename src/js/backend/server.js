@@ -57,7 +57,12 @@ app.get('/study/:id', async (req, res) => {
       });
     });
   }
+<<<<<<< HEAD
 
+=======
+  
+  // 인증글 
+>>>>>>> develop
   // 스터디 피드들을 보여줘야 함 응답으로
   res.send();
 });
@@ -180,11 +185,11 @@ app.patch('/study/:id', async (req, res) => {
 });
 
 // DELETE '/study/:id' { user :{ uid: ""} }
-app.delete('/study/:id', async (req, res) => {
+app.delete('/study/:groupId', async (req, res) => {
   const { user } = req.body;
-  const { id } = req.params;
+  const { groupId } = req.params;
   const userDB = db.collection('users').doc(user.uid);
-  const studyDB = db.collection('studyGroups').doc(`${id + ''}`);
+  const studyDB = db.collection('studyGroups').doc(`${groupId + ''}`);
   await userDB.update({
     studyGroup: admin.firestore.FieldValue.arrayRemove(studyDB),
   });
