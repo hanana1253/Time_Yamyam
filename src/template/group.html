@@ -38,17 +38,17 @@
               id="tab-1"
               tabindex="0"
             >
-              팀원 피드보기
+              팀원 피드
             </button>
             <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" tabindex="-1">
-              나의 피드보기
+              나의 피드
             </button>
             <button class="group-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" tabindex="-1">
               상세 설명
             </button>
           </div>
         </div>
-        <div class="group-teamFeed" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+        <div class="group-teamFeed" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1" hidden>
           <div class="filters">
             <select class="filters-weeks">
               <option value="1">1주차</option>
@@ -130,58 +130,67 @@
             </li> -->
           </ul>
         </div>
-        <div class="group-info" id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" hidden>
-          <div class="group-description__summary">
-            <h3 class="detail-summary__title">스터디 개요</h3>
-            <button class="detail-summary__edit hidden">수정</button>
+        <div class="group-info" id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
+          <div class="group-info__summary">
+            <h3 class="group-info__title">스터디 개요</h3>
+            <button class="group-info__edit hidden">수정</button>
             <div class="study-info">
-              <div class="study-info__name">
-                <span class="study-info__name--label">스터디 이름</span>
-                <span class="study-info__name--content">자바스크립트 뿌시기</span>
+              <div class="study-info__wrap">
+                <span class="study-info__label">스터디 이름</span>
+                <span class="study-info__name">자바스크립트 뿌시기</span>
               </div>
-              <div class="study-info__description">
-                <span class="study-info__description--label">스터디 설명</span>
-                <span class="study-info__description--content"
-                  >화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span
-                >
+              <div class="study-info__wrap">
+                <span class="study-info__label">스터디 설명</span>
+                <p class="study-info__description">화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</p>
               </div>
-              <div class="study-info__duration">
-                <span class="study-info__duration--label">스터디 설명</span>
-                <span class="study-info__duration--content"
-                  >화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span
-                >
-              </div>
-              <div class="study-info__level">
-                <span class="study-info__level--label">스터디 설명</span>
-                <span class="study-info__level--content">화, 목요일마다 자바스크립트 이론 공부할 분 모집합니다.</span>
-              </div>
-              <div class="study-info__days">
-                <span class="study-info__days--label">인증 요일</span>
-                <ul class="study-info__days--content">
-                  <li>화요일</li>
-                  <li>목요일</li>
+              <div class="study-info__wrap">
+                <span class="study-info__label">인증 요일</span>
+                <ul class="study-info__days">
+                  <li class="mon">월</li>
+                  <li class="tue">화</li>
+                  <li class="wed">수</li>
+                  <li class="thur">목</li>
+                  <li class="fri">금</li>
+                  <li class="sat">토</li>
+                  <li class="sun">일</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="group-description__teamList">
-            <h3 class="group-teamList__title">나의 팀원 목록</h3>
+          <div class="group-info__teamList">
+            <h3 class="group-info__title">나의 팀원 목록</h3>
             <ul class="group-teamList__list">
-              <!-- <li class="detail-teamList__member">
-                <img src="#" alt="" />
-                <span class="detail-teamList__user--nickname">팀원 아이디</span>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
               </li>
-              <li class="detail-teamList__user">
-                <img src="#" alt="" />
-                <span class="detail-teamList__user--id">팀원 아이디</span>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
               </li>
-              <li class="detail-teamList__user">
-                <img src="#" alt="" />
-                <span class="detail-teamList__user--id">팀원 아이디</span>
-              </li> -->
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
+              </li>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
+              </li>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
+              </li>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
+              </li>
+              <li class="group-teamList__member" tabindex="0">
+                <span class="group-teamList__member--nickname">팀원 아이디</span>
+                <span class="group-teamList__member--level">Lv. 3</span>
+              </li>
             </ul>
           </div>
-          <div class="group-description__info">
+          <div class="group-info__description">
             <h3 class="group-info__title">스터디 인증 상세</h3>
             <div class="group-info__description">
               <h4 class="group-info__description--title">인증방법</h4>

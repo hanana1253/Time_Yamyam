@@ -16,14 +16,19 @@ body {
   height: 100%;
   width: 100%;
 
-  button.active {
+  &-tab.active {
     color: black;
     font-weight: 700;
   }
 
-  button {
+  &-tab {
     color: gray;
     font-weight: 700;
+  }
+
+  .tab-header {
+    margin-bottom: rem(20px);
+    border-bottom: 1px solid #c9c0c0;
   }
 
   &-feed {
@@ -178,6 +183,121 @@ body {
   }
 }
 
+.group {
+  &-info {
+    position: relative;
+    margin-top: rem(25px);
+    height: 100%;
+
+    &__title {
+      // margin-top: rem(20px);
+      font-size: rem(18px);
+      font-weight: 700;
+    }
+
+    &__edit {
+      position: absolute;
+      top: rem(-3px);
+      left: rem(95px);
+      color: $white;
+      font-weight: 700;
+      border: 0;
+      border-radius: 5px;
+      padding: rem(5px) rem(10px);
+      background-color: #8ca49f;
+    }
+
+    button.edit {
+      color: $white;
+    }
+
+    .study-info {
+      margin-top: rem(15px);
+    }
+
+    @include mobile {
+      display: flex;
+      flex-flow: column;
+      flex-wrap: nowrap;
+      gap: rem(40px);
+    }
+
+    @include desktop {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      row-gap: rem(30px);
+      column-gap: rem(40px);
+    }
+
+    &__description {
+      @include desktop {
+        margin-top: rem(20px);
+      }
+
+      &--title {
+        margin-top: rem(20px);
+        font-size: rem(16px);
+        font-weight: 700;
+        color: #a123cd;
+      }
+    }
+  }
+
+  &-teamList {
+    &__list {
+      margin-top: rem(15px);
+      background-color: #f0eeee;
+      height: 88%;
+      max-height: rem(192px);
+      min-height: rem(192px);
+      border-radius: rem(10px);
+      overflow: scroll;
+    }
+
+    &__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Track */
+    &__list::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    /* Handle */
+    &__list::-webkit-scrollbar-thumb {
+      width: 10px;
+      background: red;
+      border-radius: 10px;
+      position: absolute;
+    }
+
+    /* Handle on hover */
+    &__list::-webkit-scrollbar-thumb:hover {
+      background: #b30000;
+    }
+
+    &__list::-webkit-scrollbar-corner {
+      display: none;
+    }
+
+    &__member {
+      padding: rem(20px);
+      display: flex;
+      justify-content: space-between;
+
+      &--nickname {
+        font-weight: 700;
+      }
+    }
+
+    &__member:focus {
+      background-color: gray;
+      color: $white;
+    }
+  }
+}
+
 .tab-header {
   display: flex;
   @include desktop {
@@ -188,9 +308,4 @@ body {
     flex-wrap: wrap;
     // justify-content: center;
   }
-}
-
-.filters {
-  padding-top: rem(20px);
-  border-top: 1px solid #c9c0c0;
 }
