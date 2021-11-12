@@ -2,6 +2,14 @@ const swiper = new Swiper('.swiper', {
   // Optional parameters
   direction: 'horizontal',
   loop: true,
+  a11y: {
+    prevSlideMessage: 'Previous slide',
+    nextSlideMessage: 'Next slide',
+  },
+  //   effect: 'fade',
+  //   fadeEffect: {
+  //     crossFade: true,
+  //   },
 });
 
 const $swiper = document.querySelector('.swiper').swiper;
@@ -13,7 +21,7 @@ document.querySelector('.group-tabList').onclick = e => {
   [...document.querySelector('.group-tabList').children].forEach((child, i) => {
     if (child === e.target) {
       $swiper.enable();
-      $swiper.slideTo(i + 1, 200);
+      $swiper.slideTo(i + 1, 250);
       $swiper.disable();
     }
     // $swiper.slideTo(3, 100);
