@@ -46,11 +46,7 @@
     "firebase": "^9.4.0",
     "firebase-admin": "^10.0.0",
     "firebaseui": "^6.0.0",
-<<<<<<< HEAD
-    "mini-css-extract-plugin": "^2.4.4"
-=======
     "mini-css-extract-plugin": "^2.4.4",
     "swiper": "^7.2.0"
->>>>>>> eaa1364d2422b2e13a255dcd32ad51a93f50d5d7
   }
 }
