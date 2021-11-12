@@ -36,30 +36,33 @@ app.use(express.json());
 
 // GET '/study/:id' { user: { uid: "dfkjdkf" } }
 // user정보로 가입되어있는 스터디인 경우 finishedDate 비교 후 처리
-app.get('/study/:id', async (req, res) => {
-  const { user } = req.body;
-  const { id } = req.params;
-  const studyDB = db.collection('studyGroups').doc(`${id}`);
-  const targetStudy = await studyDB.get();
-  const now = new Date();
-  if (now > targetStudy.data().finishDate.toDate() && !targetStudy.data().isFinished) {
-    studyDB.update({
-      isFinished: true,
-    });
-    targetStudy.data().userList.forEach(async user => {
-      const userData = await user.get();
-      const pointDB = db.collection('points').doc(`${userData.data().uid}`);
-      const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
-      await pointDB.update({
-        total: admin.firestore.FieldValue.increment(record.point),
-        history: admin.firestore.FieldValue.arrayUnion(record),
-      });
-    });
-  }
+app.get('/study/:id/member/:uid', async (req, res) => {
+  const { id, uid } = req.params;
+  const targetStudyDB = db.collection('studyGroups').doc(`${id}`);
+  const targetStudyData = await targetStudyDB.get().then(res => res.data());
+  // console.log(targetStudyData);
+
+  // console.log(test);
+  // 스터디그룹 완료 시 포인트 배분 및 상태변경
+  // const now = new Date();
+  // if (now > targetStudy.data().finishDate.toDate() && !targetStudy.data().isFinished) {
+  //   studyDB.update({
+  //     isFinished: true,
+  //   });
+  //   targetStudy.data().userList.forEach(async user => {
+  //     const userData = await user.get();
+  //     const pointDB = db.collection('points').doc(`${userData.data().uid}`);
+  //     const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
+  //     await pointDB.update({
+  //       total: admin.firestore.FieldValue.increment(record.point),
+  //       history: admin.firestore.FieldValue.arrayUnion(record),
+  //     });
+  //   });
+  // }
 
   // 인증글
   // 스터디 피드들을 보여줘야 함 응답으로
-  res.send();
+  res.send(targetStudyData);
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
@@ -102,7 +105,7 @@ app.post('/study', async (req, res) => {
     finishDate: new Date(new Date().setDate(createDate.getDate() + 7 + newStudy.duration * 7)),
     leader,
     userList: [leader],
-    isFinished: false,
+    status: 'ready',
     postingList: [],
   });
   res.send('success');
