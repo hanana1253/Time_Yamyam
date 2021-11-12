@@ -65,6 +65,13 @@ app.get('/study/:id/member/:uid', async (req, res) => {
   res.send(targetStudyData);
 });
 
+app.get('/mypage/:userUid', async (req, res) => {
+  const { userUid } = req.params;
+  const targetUserDB = db.collection('users').doc(`${userUid}`);
+  const targetUserData = await targetUserDB.get().then(res => res.data());
+  res.send(targetUserData);
+});
+
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
 app.post('/signup', async (req, res) => {
   const { email, nickname, uid } = req.body;
@@ -73,7 +80,7 @@ app.post('/signup', async (req, res) => {
   const userDB = db.collection('users').doc(uid);
 
   await pointsDB.set({ total: 50, history: [{ date: new Date(), point: 50, category: '회원가입' }] });
-  await userDB.set({ email, nickname, point: pointsDB, studyGroup: [] });
+  await userDB.set({ email, nickname, point: 50, pointsDB, studyGroup: [] });
 
   res.send('success');
 });
@@ -129,20 +136,23 @@ app.post('/posting', async (req, res) => {
   const { user, newPosting } = req.body;
 
   const id = generateNextPostingId();
-  const author = db.collection('users').doc(user.uid);
+  const authorUserDB = db.collection('users').doc(user.uid);
   const createDate = new Date();
   const studyGroupDB = db.collection('studyGroups').doc(newPosting.studyGroupId);
   const postingDB = db.collection('postings').doc(`${id}`);
   const pointDB = db.collection('points').doc(`${user.uid}`);
   const POSTING_POINT = 10;
   const record = { point: POSTING_POINT, category: '인증추가점수', date: new Date() };
-  await postingDB.set({ ...newPosting, author, createDate, studyGroupDB, likes: 0, id });
+  await postingDB.set({ ...newPosting, authorUserDB, createDate, studyGroupDB, likes: 0, id });
   await studyGroupDB.update({
     postingList: admin.firestore.FieldValue.arrayUnion(postingDB),
   });
   await pointDB.update({
     total: admin.firestore.FieldValue.increment(record.point),
     history: admin.firestore.FieldValue.arrayUnion(record),
+  });
+  await authorUserDB.update({
+    point: admin.firestore.FieldValue.increment(POSTING_POINT),
   });
 
   res.send('success');
@@ -177,10 +187,9 @@ app.patch('/study/:id', async (req, res) => {
 });
 
 // DELETE '/study/:id' { user :{ uid: ""} }
-app.delete('/study/:groupId', async (req, res) => {
-  const { user } = req.body;
-  const { groupId } = req.params;
-  const userDB = db.collection('users').doc(user.uid);
+app.delete('/study/:groupId/member/:userUid', async (req, res) => {
+  const { groupId, userUid } = req.params;
+  const userDB = db.collection('users').doc(userUid);
   const studyDB = db.collection('studyGroups').doc(`${groupId + ''}`);
   await userDB.update({
     studyGroup: admin.firestore.FieldValue.arrayRemove(studyDB),
