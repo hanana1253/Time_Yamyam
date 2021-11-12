@@ -2,7 +2,7 @@
 @use '../utils/' as *;
 
 .header {
-  width: 100vw;
+  width: 100%;
   padding: rem(7px) rem(20px);
   display: flex;
   gap: 10px;
@@ -68,18 +68,83 @@
   &-level::-ms-expand {
     display: none;
   }
+}
+// &-weeks::before,
+// &-days::before,
+// &-member::before,
+// &-level::before {
+//   content: 'dkssud';
+//   background-color: red;
+//   position: absolute;
+//   top: 10px;
+//   right: 10px;
+//   width: 10px;
+//   height: 10px;
+//   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+// }
 
-  // &-weeks::before,
-  // &-days::before,
-  // &-member::before,
-  // &-level::before {
-  //   content: 'dkssud';
-  //   background-color: red;
-  //   position: absolute;
-  //   top: 10px;
-  //   right: 10px;
-  //   width: 10px;
-  //   height: 10px;
-  //   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  // }
+.study-info {
+  background: #f0eeee;
+  border-radius: 10px;
+  padding: rem(30px);
+
+  &__wrap {
+    display: flex;
+    margin-bottom: rem(16px);
+    gap: 10px;
+  }
+
+  &__label {
+    font-weight: bold;
+    width: 24%;
+    word-break: keep-all;
+
+    & ~ * {
+      width: 80%;
+      word-break: break-all;
+    }
+  }
+
+  &__days {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    li {
+      border-radius: 50%;
+      width: rem(30px);
+      height: rem(30px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.mon {
+        background-color: $light-red;
+      }
+
+      &.tue {
+        background-color: $light-orange;
+      }
+
+      &.wed {
+        background-color: $light-yellow;
+      }
+
+      &.thur {
+        background-color: $light-green;
+      }
+
+      &.fri {
+        background-color: $light-blue;
+      }
+
+      &.sat {
+        background-color: $light-navy;
+      }
+
+      &.sun {
+        background-color: $light-violet;
+      }
+    }
+  }
 }
