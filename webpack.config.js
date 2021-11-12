@@ -45,7 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'group.html',
       template: 'src/template/group.html',
-      chunks: ['app', 'mypage'],
+      chunks: ['app', 'group'],
     }),
     new HtmlWebpackPlugin({
       filename: 'mypage.html',

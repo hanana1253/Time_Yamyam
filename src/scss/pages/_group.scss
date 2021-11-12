@@ -3,8 +3,8 @@
 
 html,
 body {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .navigation {
@@ -13,17 +13,22 @@ body {
 }
 
 .group {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 
-  button.active {
+  &-tab.active {
     color: black;
     font-weight: 700;
   }
 
-  button {
+  &-tab {
     color: gray;
     font-weight: 700;
+  }
+
+  .tab-header {
+    margin-bottom: rem(20px);
+    border-bottom: 1px solid #c9c0c0;
   }
 
   &-feed {
@@ -43,11 +48,64 @@ body {
     }
   }
 
+  &-feed {
+    &__title {
+      padding: rem(15px);
+      font-size: rem(16px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
+
+    &__date {
+      margin: rem(33px) 0 0 0;
+      padding: 0 0 0 rem(15px);
+      font-size: rem(12px);
+      color: gray;
+    }
+
+    &__author {
+      padding: 0 0 0 rem(15px);
+      font-size: rem(18px);
+      font-weight: 700;
+    }
+
+    &__likes {
+      display: flex;
+      align-items: center;
+      gap: rem(5px);
+      position: absolute;
+      bottom: rem(20px);
+      right: rem(10px);
+
+      button {
+        border: 0;
+        background-color: #f0eeee;
+        padding: 0;
+        font-size: rem(26px);
+        color: black;
+      }
+
+      .bxs-heart {
+        color: red;
+      }
+    }
+  }
+  .likes-number {
+    line-height: 100%;
+    font-size: rem(20px);
+  }
+
   @include mobile {
     padding: rem(20px) rem(30px) 0 rem(30px);
 
     &-title {
-      display: none;
+      font-size: rem(25px);
+      font-weight: 700;
+      padding: rem(20px) rem(5px);
+      //   display: none;
+      align-items: center;
     }
 
     &-tabList {
@@ -56,7 +114,7 @@ body {
       align-items: center;
       gap: rem(10px);
       //   padding: rem(20px) rem(10px);
-      padding: 0 0 rem(20px) 0;
+      flex-wrap: wrap;
     }
 
     &-tab {
@@ -71,8 +129,6 @@ body {
 
     &-teamFeed,
     &-myFeed {
-      //   display: flex;
-      //   flex-flow: column;
       &__list {
         margin: rem(10px) 0 0 0;
         display: flex;
@@ -82,65 +138,172 @@ body {
         align-items: center;
       }
     }
-
-    &-feed {
-      &__title {
-        padding: rem(15px);
-        font-size: rem(18px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-      }
-
-      &__date {
-        margin: rem(33px) 0 0 0;
-        padding: 0 0 0 rem(15px);
-      }
-
-      &__author {
-        padding: 0 0 0 rem(15px);
-      }
-
-      &__likes {
-        display: flex;
-        gap: rem(5px);
-        position: absolute;
-        bottom: rem(20px);
-        right: rem(10px);
-
-        button {
-          border: 0;
-          background-color: #f0eeee;
-          padding: 0;
-          font-size: rem(26px);
-          color: black;
-        }
-
-        .bxs-heart {
-          color: red;
-        }
-      }
-    }
-    .likes-number {
-      line-height: 100%;
-      font-size: rem(26px);
-    }
   }
 
   @include desktop {
-    padding: rem(53px) 0 0 rem(63px);
-    position: relative;
+    width: 100%;
+    // max-width: rem(1400px);
+    padding: rem(53px) rem(30px) 0 rem(30px);
+    // position: relative;
+    margin: auto;
 
     &-title {
-      font-size: rem(36px);
+      font-size: rem(25px);
       font-weight: 700;
+      padding: rem(20px) rem(5px);
     }
 
     &-tabList {
-      position: absolute;
-      top: 0;
-      right: rem(10px);
+      padding: rem(16px);
+      display: flex;
+
+      //   position: absolute;
+      //   top: rem(65px);
+      //   right: rem(10px);
     }
+
+    &-tab {
+      border: 0;
+      background-color: $white;
+      font-size: rem(20px);
+      //   font-size: 2vw;
+    }
+
+    &-teamFeed,
+    &-myFeed {
+      &__list {
+        margin-top: rem(39px);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: rem(10px);
+      }
+    }
+  }
+}
+
+.group {
+  &-info {
+    position: relative;
+    margin-top: rem(25px);
+    height: 100%;
+
+    &__title {
+      // margin-top: rem(20px);
+      font-size: rem(18px);
+      font-weight: 700;
+    }
+
+    &__edit {
+      position: absolute;
+      top: rem(-3px);
+      left: rem(95px);
+      color: $white;
+      font-weight: 700;
+      border: 0;
+      border-radius: 5px;
+      padding: rem(5px) rem(10px);
+      background-color: #8ca49f;
+    }
+
+    button.edit {
+      color: $white;
+    }
+
+    .study-info {
+      margin-top: rem(15px);
+    }
+
+    @include mobile {
+      display: flex;
+      flex-flow: column;
+      flex-wrap: nowrap;
+      gap: rem(40px);
+    }
+
+    @include desktop {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      row-gap: rem(30px);
+      column-gap: rem(40px);
+    }
+
+    &__description {
+      @include desktop {
+        margin-top: rem(20px);
+      }
+
+      &--title {
+        margin-top: rem(20px);
+        font-size: rem(16px);
+        font-weight: 700;
+        color: #a123cd;
+      }
+    }
+  }
+
+  &-teamList {
+    &__list {
+      margin-top: rem(15px);
+      background-color: #f0eeee;
+      height: 88%;
+      max-height: rem(192px);
+      min-height: rem(192px);
+      border-radius: rem(10px);
+      overflow: scroll;
+    }
+
+    &__list::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Track */
+    &__list::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    /* Handle */
+    &__list::-webkit-scrollbar-thumb {
+      width: 10px;
+      background: red;
+      border-radius: 10px;
+      position: absolute;
+    }
+
+    /* Handle on hover */
+    &__list::-webkit-scrollbar-thumb:hover {
+      background: #b30000;
+    }
+
+    &__list::-webkit-scrollbar-corner {
+      display: none;
+    }
+
+    &__member {
+      padding: rem(20px);
+      display: flex;
+      justify-content: space-between;
+
+      &--nickname {
+        font-weight: 700;
+      }
+    }
+
+    &__member:focus {
+      background-color: gray;
+      color: $white;
+    }
+  }
+}
+
+.tab-header {
+  display: flex;
+  @include desktop {
+    justify-content: space-between;
+  }
+  @include mobile {
+    justify-content: space-around;
+    flex-wrap: wrap;
+    // justify-content: center;
   }
 }
