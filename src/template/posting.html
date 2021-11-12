@@ -59,23 +59,22 @@
             placeholder="URL을 입력해주세요 (optional)"
           />
         </div>
-        <div>
-          <span class="questions a11y-hidden">사진을 등록해주세요 (optional)</span>
-          <label class="upload-btn" for="choose-image" aria-placeholder="사진을 등록해주세요">사진 업로드</label>
-          <input
-            class="a11y-hidden chosen-image"
-            type="file"
-            name="choose-image"
-            id="choose-image"
-            accept="image/*"
-            multiple
-          />
-          <div class="drop-zone">
-            <span class="drop-zone__prompt">사진을 드래그해주세요</span>
-            <input type="file" name="myFile" class="drop-zone__input" multiple />
+        
+        <!-- upload images -->
+        <form action="#" method="post" enctype="multipart/form-data">
+          <div class="drop-container">
+            <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요"
+              >사진 업로드</label
+            >
+            <div class="drop-zone">
+              <span class="drop-zone__prompt">사진을 드래그 해주세요</span>
+              <!-- <div class="drop-zone__thumb" data-label="myfile.txt"></div> -->
+              <!-- name for regular upload submission  -->
+              <input class="drop-zone__input" type="file" name="myFile" id="myFile" multiple />
+            </div>
           </div>
-        </div>
-        <div>
+        </form>
+
           <label class="questions a11y-hidden" for="text-content">내용을 입력해주세요 (optional)</label>
           <textarea
             class="text-content"
