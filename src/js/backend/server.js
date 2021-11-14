@@ -25,20 +25,34 @@ app.use(express.static('public'));
 app.use(express.json());
 
 // Get '/' { user: {uid: ""} 또는 null }
-// app.get('/', async (req, res) => {
-//   const { user } = req.body;
-//   const studyDB = await db.collection('studyGroups').get();
-//   studyDB.forEach(doc => {
-//     console.log(doc.data().userList);
-//   });
-//   res.send('ok');
-// });
+app.get('/:userUid', async (req, res) => {
+  const { userUid } = req.params;
+  const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
+  const readyStudyList = [];
+  studyDB.forEach(doc => {
+    readyStudyList.push(doc.data());
+  });
+  const myStudyList = [];
+  const myStudyDB = await db
+    .collection('users')
+    .doc(userUid)
+    .collection('myStudy')
+    .where('status', '==', 'ready')
+    .get();
+
+  myStudyDB.forEach(async doc => {
+    myStudyList.push(doc.data());
+    console.log((await db.doc(doc.data().ref.path).get()).data());
+  });
+
+  res.send({ readyStudyList, myStudyList });
+});
 
 // GET '/study/:id' { user: { uid: "dfkjdkf" } }
 // user정보로 가입되어있는 스터디인 경우 finishedDate 비교 후 처리
 app.get('/study/:id/member/:uid', async (req, res) => {
   const { id, uid } = req.params;
-  const targetStudyDB = db.collection('studyGroups').doc(`${id}`);
+  const targetStudyDB = db.collection('studyGroups').doc(id);
   const targetStudyData = await targetStudyDB.get().then(res => res.data());
   // console.log(targetStudyData);
 
@@ -51,7 +65,7 @@ app.get('/study/:id/member/:uid', async (req, res) => {
   //   });
   //   targetStudy.data().userList.forEach(async user => {
   //     const userData = await user.get();
-  //     const pointDB = db.collection('points').doc(`${userData.data().uid}`);
+  //     const pointDB = db.collection('points').doc(userData.data().uid);
   //     const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
   //     await pointDB.update({
   //       total: admin.firestore.FieldValue.increment(record.point),
@@ -67,9 +81,20 @@ app.get('/study/:id/member/:uid', async (req, res) => {
 
 app.get('/mypage/:userUid', async (req, res) => {
   const { userUid } = req.params;
-  const targetUserDB = db.collection('users').doc(`${userUid}`);
+  const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
   res.send(targetUserData);
+});
+
+// GET '/mypoints/:userUid' 포인트 조회페이지
+app.get('/mypoints/:userUid', async (req, res) => {
+  const { userUid } = req.params;
+  const targetUserPointsDB = await db.collection('users').doc(userUid).collection('points').get();
+  const pointHistory = [];
+  targetUserPointsDB.forEach(doc => {
+    pointHistory.push(doc.data());
+  });
+  res.send(pointHistory);
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
@@ -103,7 +128,7 @@ app.post('/study', async (req, res) => {
   const createDate = new Date();
 
   const id = generateNextStudyId();
-  const studyDB = db.collection('studyGroups').doc(`${id}`);
+  const studyDB = db.collection('studyGroups').doc(id);
 
   await studyDB.set({
     ...newStudy,
@@ -139,8 +164,8 @@ app.post('/posting', async (req, res) => {
   const authorUserDB = db.collection('users').doc(user.uid);
   const createDate = new Date();
   const studyGroupDB = db.collection('studyGroups').doc(newPosting.studyGroupId);
-  const postingDB = db.collection('postings').doc(`${id}`);
-  const pointDB = db.collection('points').doc(`${user.uid}`);
+  const postingDB = db.collection('postings').doc(id);
+  const pointDB = db.collection('points').doc(user.uid);
   const POSTING_POINT = 10;
   const record = { point: POSTING_POINT, category: '인증추가점수', date: new Date() };
   await postingDB.set({ ...newPosting, authorUserDB, createDate, studyGroupDB, likes: 0, id });
@@ -162,7 +187,7 @@ app.post('/posting', async (req, res) => {
 // app.post('/point', async (req, res) => {
 //   // req.headers에서 uid를 받아서 req.body의 user 대신 넣어주기
 //   const { user, newPoint } = req.body;
-//   const pointDB = db.collection('points').doc(`${user.uid}`);
+//   const pointDB = db.collection('points').doc(user.uid);
 //   const record = { diff: newPoint.diff, msg: newPoint.msg, date: new Date() };
 //   await pointDB.update({
 //     total: admin.firestore.FieldValue.increment(newPoint.diff),
@@ -176,7 +201,7 @@ app.patch('/study/:id', async (req, res) => {
   const { user } = req.body;
   const { id } = req.params;
   const userDB = db.collection('users').doc(user.uid);
-  const studyDB = db.collection('studyGroups').doc(`${id + ''}`);
+  const studyDB = db.collection('studyGroups').doc(id + '');
   await userDB.update({
     studyGroup: admin.firestore.FieldValue.arrayUnion(studyDB),
   });
@@ -190,7 +215,7 @@ app.patch('/study/:id', async (req, res) => {
 app.delete('/study/:groupId/member/:userUid', async (req, res) => {
   const { groupId, userUid } = req.params;
   const userDB = db.collection('users').doc(userUid);
-  const studyDB = db.collection('studyGroups').doc(`${groupId + ''}`);
+  const studyDB = db.collection('studyGroups').doc(groupId + '');
   await userDB.update({
     studyGroup: admin.firestore.FieldValue.arrayRemove(studyDB),
   });
