@@ -11,9 +11,7 @@ export const setCurrentForm = newForm => {
 export const setCurrentSchema = form => {
   schema = form === 'login' ? loginSchema : signupSchema;
 };
-export const getErrorMsgByInputName = inputName => {
-  return schema[inputName].error;
-};
+export const getErrorMsgByInputName = inputName => schema[inputName].error;
 
 export const getIsValidByInputName = inputName => schema[inputName].isValid;
 export const getIsValid = () => schema.isValid;
