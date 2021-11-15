@@ -38,5 +38,52 @@ const signupSchema = {
     return this.email.isValid && this.nickname.isValid && this.password.isValid && this['confirm-password'].isValid;
   },
 };
+const newstudySchema = {
+  'group-name': {
+    value: '',
+    get isValid() {
+      return this.value.length <= 7 && !!this.value;
+    },
 
-export { loginSchema, signupSchema };
+    error: '스터디 이름을 입력해주세요',
+  },
+  'group-introduction': {
+    value: '',
+    get isValid() {
+      return !!this.value;
+    },
+    error: '스터디 소개를 해주세요',
+  },
+  'hash-id': {
+    value: '',
+    get isValid() {
+      return this.value <= 20;
+    },
+    error: '해시태그는 20개까지 입력이 가능합니다',
+  },
+  'approval-method': {
+    value: '',
+    get isValid() {
+      return this.value > 0;
+    },
+    error: '인증 날짜를 선택해주세요',
+  },
+  'date-checker': {
+    value: false,
+    get isValid() {
+      return this.value;
+    },
+    error: '1개 이상 선택해주세요',
+  },
+
+  get isValid() {
+    return (
+      this['group-name'].isValid &&
+      this['group-introduction'].isValid &&
+      this['hash-id'].isValid &&
+      this['approval-method'].isValid &&
+      this['date-checker'].isValid
+    );
+  },
+};
+export { loginSchema, signupSchema, newstudySchema };

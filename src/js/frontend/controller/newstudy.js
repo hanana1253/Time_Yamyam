@@ -1,3 +1,6 @@
+import { throttle } from '../utils/helper.js';
+import { newstudySchema } from '../utils/schema.js';
+
 // hash tag
 const $tagInput = document.querySelector('.tag-id');
 const $tagList = document.querySelector('.tag-list');
@@ -47,33 +50,51 @@ $tagList.onclick = e => {
   removeTag(e.target.closest('li').dataset.id);
 };
 
-// auth
-const auth = {
-  studyName: {
-    checker(name) {
-      return name.length <= 7;
-    },
+// onchange = e => {
+//   const isError = auth.checkDate.checker([...$ul.children].filter(child => child.firstElementChild.checked).length);
 
-    alert: '스터디 이름을 입력해주세요',
-    completed: false,
-  },
-  hashTag: {
-    checker(tag) {
-      return tag.length <= 20;
-    },
-    alert: '태그는 20개까지 입력이 가능합니다',
-    completed: false,
-  },
-  checkDate: {
-    checker(checked) {},
-    alert: '인증 요일을 체크해주세요',
-    completed: false,
-  },
-  proveMethod: {
-    checker(text) {
-      return text.length > 0 && text.length < 300;
-    },
-    alert: '인증 방법을 적어주세요',
-    completed: false,
-  },
+// }
+// validation
+// const $newstudyForm = document.querySelector('.newstudy-form');
+// const setErrorMsg = inputName => {
+//   if (inputName === 'date-checker') {
+//     const formData = new FormData($newstudyForm);
+//     document.querySelector('.checkbox-container .error').textContent = formData.has('date-checker')
+//       ? ''
+//       : '1개이상 체크해주세요';
+//   } else {
+//     $newstudyForm.querySelector(`input[name = ${inputNmae}] ~ .error`).textContent = ;
+//   }
+// };
+// $newstudyForm.oninput = e => {};
+const schema = newstudySchema;
+const $newstudyForm = document.querySelector('.newstudy-form');
+const $submitBtn = document.querySelector('.submit');
+const getErrorMsgByInputName = inputName => schema[inputName].error;
+const getIsValidByInputName = inputName => schema[inputName].isValid;
+const getIsValid = () => schema.isValid;
+const setSchemaValueByInputName = (inputName, value) => {
+  schema[inputName].value = value;
 };
+
+const setErrorMessage = inputName => {
+  $newstudyForm.querySelector(`input[name = ${inputName}]`).closest('.input-container').lastElementChild.textContent =
+    getIsValidByInputName(inputName) ? '' : getErrorMsgByInputName(inputName);
+};
+const activateSubmitButton = () => {
+  $submitBtn.disabled = !getIsValid();
+};
+
+const validate = throttle(e => {
+  const { name, value } = e.target;
+  if (name === 'date-checker') {
+    const formData = new FormData($newstudyForm);
+    setSchemaValueByInputName(name, formData.has('date-checker'));
+  } else {
+    setSchemaValueByInputName(name, value.trim());
+  }
+  setErrorMessage(name);
+  activateSubmitButton();
+}, 300);
+
+$newstudyForm.oninput = validate;

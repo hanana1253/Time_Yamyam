@@ -30,129 +30,135 @@
       <div class="form-container">
         <h2 class="posting-title">스터디 그룹을 생성해 주세요</h2>
         <p class="due-date"></p>
-        <div>
-          <label class="questions a11y-hidden" for="group-name">스터디 그룹명</label>
-          <input class="group-name" type="text" name="group-name" id="group-name" placeholder="스터디 그룹명" />
-        </div>
-        <div>
-          <label class="questions a11y-hidden" for="group-introduction">스터디 그룹을 소개해주세요.</label>
-          <input
-            class="group-introduction"
-            type="text"
-            name="group-introduction"
-            id="group-introduction"
-            placeholder="스터디 그룹을 소개해주세요."
-          />
-        </div>
-
-        <!-- hash tag -->
-        <div class="tag-input">
-          <div class="input">
-            <label class="questions a11y-hidden" for="tag-id"> 해시태그 </label>
-            <div class="tag-container">
-              <i class="bx bxs-purchase-tag"></i>
-              <input class="tag-id" type="text" id="tag-id" placeholder="태그를 입력해주세요" />
+        <form class="newstudy-form">
+          <div class="input-container">
+            <label class="questions a11y-hidden" for="group-name">스터디 그룹명</label>
+            <input class="group-name" type="text" name="group-name" id="group-name" placeholder="스터디 그룹명" />
+            <div class="error"></div>
+          </div>
+          <div class="input-container">
+            <label class="questions a11y-hidden" for="group-introduction">스터디 그룹을 소개해주세요.</label>
+            <input
+              class="group-introduction"
+              type="text"
+              name="group-introduction"
+              id="group-introduction"
+              placeholder="스터디 그룹을 소개해주세요."
+            />
+            <div class="error"></div>
+          </div>
+          <!-- hash tag -->
+          <div class="tag-input input-container">
+            <div class="input">
+              <label class="questions a11y-hidden" for="tag-id"> 해시태그 </label>
+              <div class="tag-container">
+                <i class="bx bxs-purchase-tag"></i>
+                <input class="tag-id" type="text" id="tag-id" name="hash-id" placeholder="태그를 입력해주세요" />
+              </div>
+              <div class="error"></div>
+            </div>
+            <ul class="tag-list">
+              <!-- <li class="item" data-id="1">asdf<i class="bx bxs-tag-x"></i></li> -->
+            </ul>
+          </div>
+          <!-- range bar -->
+          <div class="enter-range">
+            <span class="questions">참여레벨</span>
+            <div class="range-bar">
+              <input
+                class="range-bar__input"
+                type="range"
+                min="0"
+                max="10"
+                value="0"
+                name="enter-level"
+                id="enter-level"
+              />
+              <output class="level-output" name="level" for="enter-level"></output>
+              <p class="new-value">Value: <span class="value-span"></span></p>
             </div>
           </div>
-          <ul class="tag-list">
-            <!-- <li class="item" data-id="1">asdf<i class="bx bxs-tag-x"></i></li> -->
-          </ul>
-        </div>
-
-        <!-- range bar -->
-        <div class="enter-range">
-          <span class="questions">참여레벨</span>
-          <div class="range-bar">
-            <input
-              class="range-bar__input"
-              type="range"
-              min="0"
-              max="10"
-              value="0"
-              name="enter-level"
-              id="enter-level"
-            />
-            <output class="level-output" name="level" for="enter-level"></output>
-            <p class="new-value">Value: <span class="value-span"></span></p>
+          <div class="duration-range">
+            <span class="questions">진행 기간</span>
+            <div class="range-bar">
+              <input
+                class="range-bar__input"
+                type="range"
+                min="1"
+                max="10"
+                step="1"
+                value="1"
+                name="duration"
+                id="duration"
+              />
+            </div>
+            <ul class="range-label">
+              <li class="active">1주</li>
+              <li>2주</li>
+              <li>3주</li>
+              <li>4주</li>
+              <li>5주</li>
+              <li>6주</li>
+              <li>7주</li>
+              <li>8주</li>
+              <li>9주</li>
+              <li>10주</li>
+            </ul>
           </div>
-        </div>
 
-        <div class="duration-range">
-          <span class="questions">진행 기간</span>
-          <div class="range-bar">
-            <input
-              class="range-bar__input"
-              type="range"
-              min="1"
-              max="10"
-              step="1"
-              value="1"
-              name="duration"
-              id="duration"
-            />
+          <div class="checkbox-container input-container">
+            <span class="questions authorization">인증 요일</span>
+            <ul>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="monday" />
+                <label class="mon" for="monday">월</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="tuesday" />
+                <label class="tue" for="tuesday">화</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="wednesday" />
+                <label class="wed" for="wednesday">수</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="thursday" />
+                <label class="thu" for="thursday">목</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="friday" />
+                <label class="fri" for="friday">금</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="saturday" />
+                <label class="sat" for="saturday">토</label>
+              </li>
+              <li>
+                <input class="date" type="checkbox" name="date-checker" id="sunday" />
+                <label class="sun" for="sunday">일</label>
+              </li>
+            </ul>
+            <div class="error"></div>
           </div>
-          <ul class="range-label">
-            <li class="active">1주</li>
-            <li>2주</li>
-            <li>3주</li>
-            <li>4주</li>
-            <li>5주</li>
-            <li>6주</li>
-            <li>7주</li>
-            <li>8주</li>
-            <li>9주</li>
-            <li>10주</li>
-          </ul>
-        </div>
-        <div class="checkbox-container">
-          <span class="questions authorization">인증 요일</span>
-          <ul>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="monday" />
-              <label class="mon" for="monday">월</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="tuesday" />
-              <label class="tue" for="tuesday">화</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="wednesday" />
-              <label class="wed" for="wednesday">수</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="thursday" />
-              <label class="thu" for="thursday">목</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="friday" />
-              <label class="fri" for="friday">금</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="saturday" />
-              <label class="sat" for="saturday">토</label>
-            </li>
-            <li>
-              <input class="date" type="checkbox" name="date-checker" id="sunday" />
-              <label class="sun" for="sunday">일</label>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <span class="questions">인증방법</span>
-          <label for="approval-method"></label>
-          <textarea
-            class="text-content"
-            name="approval-method"
-            id="approval-method"
-            cols="30"
-            rows="10"
-            placeholder="ex. 포스팅 url 공유, 사진 인증"
-          ></textarea>
-        </div>
-        <div class="button-group">
-          <button type="submit" class="submit">등록</button>
-          <button type="button" class="cancel">취소</button>
-        </div>
+
+          <div class="input-container">
+            <span class="questions">인증방법</span>
+            <label for="approval-method"></label>
+            <textarea
+              class="text-content"
+              name="approval-method"
+              id="approval-method"
+              cols="30"
+              rows="10"
+              placeholder="ex. 포스팅 url 공유, 사진 인증"
+            ></textarea>
+            <div class="error"></div>
+          </div>
+          <div class="button-group">
+            <button type="submit" class="submit">등록</button>
+            <button type="button" class="cancel">취소</button>
+          </div>
+        </form>
       </div>
     </main>
     <div class="overlay"></div>
