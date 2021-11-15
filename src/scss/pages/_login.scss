@@ -5,7 +5,7 @@
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   margin: rem(30px) auto;
   padding: rem(30px);
-  & .login-fail {
+  & .login-fail, .signup-fail {
     height: rem(20px);
     text-align: end;
     color: red;
@@ -51,10 +51,11 @@
       margin: rem(10px) rem(5px);
       height: rem(20px);
       color: red;
+      text-align: end;
     }
   }
   @include flexbox(column);
-  gap: rem(25px);
+  gap: rem(20px);
   @include mobile {
     width: rem(500px);
   }

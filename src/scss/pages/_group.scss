@@ -40,11 +40,34 @@ body {
       width: 100%;
       max-width: rem(500px);
       background-color: #f0eeee;
+
+      button.delete {
+        position: absolute;
+        top: rem(3px);
+        right: rem(3px);
+        width: rem(23px);
+        height: rem(23px);
+        border-radius: rem(50%);
+        background-color: $white;
+        padding: 0;
+        line-height: 110%;
+        font-size: rem(14px);
+        text-align: center;
+        color: black;
+        border: none;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+      }
     }
 
     &__image {
       background-color: #fffafa;
       height: 56%;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
@@ -294,6 +317,63 @@ body {
       color: $white;
     }
   }
+}
+
+.filters {
+  &-weeks,
+  &-days,
+  &-member {
+    position: relative;
+    &__checkbox {
+      display: flex;
+      flex-flow: column;
+      position: absolute;
+      top: rem(35px);
+      left: 0;
+      z-index: 100;
+      box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.3);
+      background-color: #f9f9f9;
+      font-size: rem(13px);
+      // color: #a99c9c;
+      width: 100%;
+      max-height: rem(105px);
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      label {
+        padding: rem(10px);
+        border-bottom: 1px solid #a99c9c;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      label > i {
+        margin-right: rem(5px);
+        font-size: rem(14px);
+        font-weight: 700;
+      }
+
+      label.checked > i {
+        color: green;
+      }
+
+      label:hover {
+        background-color: gray;
+        color: $white;
+      }
+    }
+  }
+}
+
+li.filters-weeks,
+li.filters-days,
+li.filters-member {
+  border: none;
+  padding: 0;
 }
 
 .tab-header {
