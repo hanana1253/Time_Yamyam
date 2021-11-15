@@ -50,12 +50,15 @@ app.get('/study/:id', async (req, res) => {
     .doc(id)
     .get()
     .then(res => res.data());
-  const userList = [];
-  const membersDB = await db.collection(`/studyGroups/${id}/members`).get();
-  membersDB.forEach(doc => {
-    const userInfo = doc.data();
-    userList.push(userInfo);
+  const postingsDB = await db.collection(`studyGroups/${id}/postings`).get();
+  const postingList = [];
+  postingsDB.forEach(doc => {
+    postingList.push(doc.data());
   });
+  const { userList } = (await db.doc(`studyGroups/${id}`).get()).data();
+  const targetStudyGroupUserList = await Promise.all(
+    userList.map(async uid => (await db.collection('users').doc(uid).get()).data())
+  );
   // console.log(test);
   // 스터디그룹 완료 시 포인트 배분 및 상태변경
   // const now = new Date();
@@ -75,19 +78,9 @@ app.get('/study/:id', async (req, res) => {
 
   // 인증글
   // 스터디 피드들을 보여줘야 함 응답으로
-  res.send({ ...targetStudy, userList });
+  res.send({ ...targetStudy, userList: targetStudyGroupUserList, postingList });
 });
 
-// GET '/study/:id/postings'
-app.get('/study/:id/postings', async (req, res) => {
-  const { id } = req.params;
-  const postingsDB = await db.collection(`studyGroups/${id}/postings`).get();
-  const postingList = [];
-  postingsDB.forEach(doc => {
-    postingList.push(doc.data());
-  });
-  res.send(postingList);
-});
 
 // GET '/mypage/:userUid' 마이페이지
 app.get('/mypage/:userUid', async (req, res) => {
