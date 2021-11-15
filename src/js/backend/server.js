@@ -114,7 +114,12 @@ app.post('/signup', async (req, res) => {
 
   const userDB = db.collection('users').doc(userUid);
   userDB.collection('points').add({ point: 50, category: '회원가입', date: new Date() });
-  await userDB.set({ email, nickname, point: 50, myStudy: [] });
+  await userDB.set({
+    email,
+    nickname,
+    point: 50,
+    myStudy: [],
+  });
 
   res.send('success');
 });
