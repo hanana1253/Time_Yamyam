@@ -1,22 +1,11 @@
 let group = [];
 let users = [];
-let postings = const postings = [{
-	isNoti: {boolean}, // user input
-	author: {string - userId}, // 서버에서 자동생성
-  title: {string}, // user input
-	description: {string}, // user input
-	url: {string}, // user input
-  img: {object} {
-    url: {string},
-    width: '300',
-    height: '300',
-    type: 'image/png'
-  }, // user input
-  createDate: {Date}, // 서버에서 자동생성
-  studyGroupId: {string - studyGroupId}, // 요청에서 온 id를 자동으로 넣어주기
-	likes: {number} // (0 ~ studyGroup.userList.length)
-}]
-;
+let postings = [];
+
+const feedState = {
+  feedLists: ['teamFeed', 'myFeed', 'info'],
+  currentFeed: 'teamFeed',
+};
 
 const filterState = {
   sortOfFilters: ['weeks', 'days', 'member'],
@@ -43,6 +32,15 @@ export default {
   },
   set postings(newPostings) {
     postings = newPostings;
+  },
+  get feedLists() {
+    return feedState.feedLists;
+  },
+  get currentFeed() {
+    return feedState.currentFeed;
+  },
+  set currentFeed(newFeed) {
+    feedState.currentFeed = newFeed;
   },
   get filterState() {
     return filterState;

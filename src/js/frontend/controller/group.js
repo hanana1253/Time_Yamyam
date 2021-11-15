@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 import state from '../store/group.js';
+// import { render } from '../view/group.js';
 
 initializeApp(firebaseConfig);
 
@@ -16,17 +17,16 @@ const swiper = new Swiper('.swiper', {
   },
 });
 const $swiper = document.querySelector('.swiper').swiper;
+const filters = state.filterState.sortOfFilters;
 
 // control function
 const forcedUncheckFilters = () => {
-  const filters = state.filterState.sortOfFilters;
   filters.forEach(filter => document.querySelector(`.filters li.filters-${filter}__checkbox`).classList.add('hidden'));
 };
 
 // Event handler
 window.addEventListener('DOMContentLoaded', () => {
   $swiper.disable();
-  //   state.group = axios.get('/study/HTML');
 });
 
 document.querySelector('.group-tabList').onclick = e => {
@@ -39,7 +39,8 @@ document.querySelector('.group-tabList').onclick = e => {
       $swiper.disable();
 
       document.querySelector('.filters').classList.toggle('hidden', i === 2);
-      // 새로운 탭으로 이동할 때 필터 창 닫기 기능 추가
+      state.currentFeed = state.feedLists[i];
+      // render[state.currentFeed]();
       forcedUncheckFilters();
     }
   });
@@ -79,19 +80,10 @@ document.querySelector('.filters').onchange = e => {
 };
 
 document.querySelector('.group').onclick = e => {
-  if (
-    e.target.classList.contains('filters-weeks') ||
-    e.target.classList.contains('filters-days') ||
-    e.target.classList.contains('filters-member')
-  ) {
-    return;
-  }
+  const { sortOfFilters } = state.filterState;
 
-  if (
-    e.target.classList.contains('filters-weeks__checkbox') ||
-    e.target.classList.contains('filters-days__checkbox') ||
-    e.target.classList.contains('filters-member__checkbox')
-  ) {
+  if (sortOfFilters.filter(filter => e.target.classList.contains(`filters-${filter}`)).length) return;
+  if (sortOfFilters.filter(filter => e.target.classList.contains(`filters-${filter}__checkbox`)).length) {
     return;
   }
 
