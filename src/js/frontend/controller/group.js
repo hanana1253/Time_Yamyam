@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
-import state from '../store/group.js';
 // import { render } from '../view/group.js';
+import { stateFunc, fetchGroups } from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
@@ -17,7 +17,7 @@ const swiper = new Swiper('.swiper', {
   },
 });
 const $swiper = document.querySelector('.swiper').swiper;
-const filters = state.filterState.sortOfFilters;
+const filters = stateFunc.filterState.sortOfFilters;
 
 // control function
 const forcedUncheckFilters = () => {
@@ -25,8 +25,16 @@ const forcedUncheckFilters = () => {
 };
 
 // Event handler
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   $swiper.disable();
+
+  fetchGroups();
+
+  // state.group = await axios.get('/study/HTML').then(({ data }) => data);
+  // state.user = state.group.userList;
+  // state.postings = state.group.postingList;
+
+  // render.teamFeed();
 });
 
 document.querySelector('.group-tabList').onclick = e => {
@@ -39,7 +47,7 @@ document.querySelector('.group-tabList').onclick = e => {
       $swiper.disable();
 
       document.querySelector('.filters').classList.toggle('hidden', i === 2);
-      state.currentFeed = state.feedLists[i];
+      stateFunc.currentFeed = stateFunc.feedLists[i];
       // render[state.currentFeed]();
       forcedUncheckFilters();
     }
@@ -80,10 +88,8 @@ document.querySelector('.filters').onchange = e => {
 };
 
 document.querySelector('.group').onclick = e => {
-  const { sortOfFilters } = state.filterState;
-
-  if (sortOfFilters.filter(filter => e.target.classList.contains(`filters-${filter}`)).length) return;
-  if (sortOfFilters.filter(filter => e.target.classList.contains(`filters-${filter}__checkbox`)).length) {
+  if (filters.filter(filter => e.target.classList.contains(`filters-${filter}`)).length) return;
+  if (filters.filter(filter => e.target.classList.contains(`filters-${filter}__checkbox`)).length) {
     return;
   }
 

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 let group = [];
 let users = [];
 let postings = [];
@@ -7,6 +9,12 @@ const feedState = {
   currentFeed: 'teamFeed',
 };
 
+const feedContents = {
+  teamFeed: '',
+  myFeed: '',
+  info: '',
+};
+
 const filterState = {
   sortOfFilters: ['weeks', 'days', 'member'],
   week: [],
@@ -14,7 +22,13 @@ const filterState = {
   memeber: [],
 };
 
-export default {
+const fetchGroups = async () => {
+  group = await axios.get('/study/HTML').then(({ data }) => data);
+  console.log(group);
+  // users = group.userList;
+};
+
+const stateFunc = {
   get group() {
     return group;
   },
@@ -36,6 +50,24 @@ export default {
   get feedLists() {
     return feedState.feedLists;
   },
+  get teamFeed() {
+    return feedContents.teamFeed;
+  },
+  set teamFeed(newFeed) {
+    feedContents.teamFeed = newFeed;
+  },
+  get myFeed() {
+    return feedContents.myFeed;
+  },
+  set myFeed(newFeed) {
+    feedContents.myFeed = newFeed;
+  },
+  get info() {
+    return feedContents.info;
+  },
+  set info(newFeed) {
+    feedContents.info = newFeed;
+  },
   get currentFeed() {
     return feedState.currentFeed;
   },
@@ -46,3 +78,5 @@ export default {
     return filterState;
   },
 };
+
+export { stateFunc, fetchGroups };
