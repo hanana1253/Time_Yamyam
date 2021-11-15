@@ -81,14 +81,13 @@ app.get('/study/:id', async (req, res) => {
   res.send({ ...targetStudy, userList: targetStudyGroupUserList, postingList });
 });
 
-
 // GET '/mypage/:userUid' 마이페이지
 app.get('/mypage/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
   const targetUserStudyGroups = await Promise.all(
-    targetUserData.studygroup.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
+    targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
   res.send({ targetUserData, targetUserStudyGroups });
 });
@@ -115,7 +114,7 @@ app.post('/signup', async (req, res) => {
 
   const userDB = db.collection('users').doc(userUid);
   userDB.collection('points').add({ point: 50, category: '회원가입', date: new Date() });
-  await userDB.set({ email, nickname, point: 50, studyGroup: [] });
+  await userDB.set({ email, nickname, point: 50, myStudy: [] });
 
   res.send('success');
 });
@@ -204,9 +203,12 @@ app.post('/study/:id/posting', async (req, res) => {
 app.patch('/study/:id/member/:userUid', async (req, res) => {
   const { id, userUid } = req.params;
   const studyDB = db.collection('studyGroups').doc(id);
-  await studyDB.update({
+  studyDB.update({
     userList: admin.firestore.FieldValue.arrayUnion(userUid),
   });
+  db.collection('users')
+    .doc(userUid)
+    .update({ myStudy: admin.firestore.FieldValue.arrayUnion(id) });
   res.send('success');
 });
 
