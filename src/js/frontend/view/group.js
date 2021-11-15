@@ -2,7 +2,7 @@ import state from '../store/group.js';
 
 const { currentFeed, postings, filterState } = state;
 
-const filtered = 
+
 
 const feedList = {
   teamFeed: '',
