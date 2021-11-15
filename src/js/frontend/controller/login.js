@@ -28,18 +28,24 @@ const $loginForm = document.querySelector('.login.auth-form');
 const $signupForm = document.querySelector('.signup.auth-form');
 const $loginFormSubmit = document.querySelector('.login.button');
 const $signupFormSubmit = document.querySelector('.signup.button');
-
+const $loginFailMsg = document.querySelector('.login-fail');
+const $signupFailMsg = document.querySelector('.signup-fail');
 let $currentForm = $loginForm;
 let $currentFormSubmit = $loginFormSubmit;
+let $currentFailMsg = $loginFailMsg;
 
 const toggleCurrentForm = () => {
   $currentForm.reset();
+  $currentFailMsg.textContent = '';
+
   if (getCurrentForm() === 'login') {
     setCurrentForm('signup');
     $currentForm = $signupForm;
+    $currentFailMsg = $signupFailMsg;
     $currentFormSubmit = $signupFormSubmit;
   } else {
     setCurrentForm('login');
+    $currentFailMsg = $loginFailMsg;
     $currentForm = $loginForm;
     $currentFormSubmit = $loginFormSubmit;
   }
@@ -81,17 +87,16 @@ const submit = async e => {
       const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
     } else {
       const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const { data } = await axios.post('/signup', { ...formData, uid: user.uid });
-      console.log(data);
+      const { data } = await axios.post('/signup', { ...formData, userUid: user.uid });
     }
     window.location.href = '/';
   } catch (e) {
-    if (getCurrentForm() === 'login') {
-      document.querySelector('.login-fail').textContent = '올바른 로그인 정보가 아닙니다.';
-    } else {
-      console.log(e);
-      document.querySelector('.signup-fail').textContent = '올바른 로그인 정보가 아닙니다.';
-    }
+    $currentFailMsg.textContent =
+      getCurrentForm() === 'login'
+        ? '올바른 로그인 정보가 아닙니다.'
+        : e.code === 'auth/email-already-in-use'
+          ? '중복된 이메일입니다.'
+          : '회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.';
   }
 };
 
