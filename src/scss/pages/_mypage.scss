@@ -45,11 +45,51 @@
     background-image: url(../images/hama-sprite.png);
     background-repeat: no-repeat;
     background-size: auto rem(250px);
-    background-position-x: 10px;
+    background-position-x: 0%;
     width: rem(250px);
     height: rem(250px);
     border-radius: 50%;
     margin: rem(25px) auto;
+  }
+
+  &__inner.level--1::before {
+    background-position-x: calc(100% / 9 * 0);
+  }
+
+  &__inner.level--2::before {
+    background-position-x: calc(100% / 9 * 1);
+  }
+
+  &__inner.level--3::before {
+    background-position-x: calc(100% / 9 * 2);
+  }
+
+  &__inner.level--4::before {
+    background-position-x: calc(100% / 9 * 3);
+  }
+
+  &__inner.level--5::before {
+    background-position-x: calc(100% / 9 * 4);
+  }
+
+  &__inner.level--6::before {
+    background-position-x: calc(100% / 9 * 5);
+  }
+
+  &__inner.level--7::before {
+    background-position-x: calc(100% / 9 * 6);
+  }
+
+  &__inner.level--8::before {
+    background-position-x: calc(100% / 9 * 7);
+  }
+
+  &__inner.level--9::before {
+    background-position-x: calc(100% / 9 * 8);
+  }
+
+  &__inner.level--10::before {
+    background-position-x: calc(100% / 9 * 9);
   }
 
   .wrap {
