@@ -8,14 +8,18 @@
 .form-container {
   background: $white;
   border-radius: rem(10px);
-  padding: 0 rem(120px);
+  padding: rem(60px) rem(120px);
 
   @include mobile {
-    padding: 0 rem(30px);
+    padding: rem(30px) rem(30px);
   }
 }
 .form-container div {
   padding-bottom: rem(40px);
+
+  @include mobile {
+    padding-bottom: rem(20px);
+  }
 }
 .posting-title {
   font-size: rem(40px);
@@ -49,120 +53,96 @@
 
   @include mobile {
     height: rem(30px);
+    padding: rem(15px);
+    font-size: rem(16px);
   }
+}
+
+// drag and drop box
+/* drop box border */
+.drop-container {
+  position: relative;
+  width: 100%;
 }
 .upload-btn {
   display: block;
-  margin-bottom: rem(20px);
-  padding: rem(10px) 0;
-  border-radius: rem(10px);
-  border-bottom: 4px solid #4b4dec;
-  transition: all 0.2s ease;
-  outline: none;
-  text-transform: uppercase;
-  background-color: $primary;
-  color: $white;
+  width: 100%;
   text-align: center;
-  font-weight: 700;
+  height: rem(50px);
+  border-radius: 10px;
+  border: 4px solid $primary;
+  background-color: $primary;
+  color: white;
   cursor: pointer;
-
-  @include mobile {
-    margin: 0 auto rem(30px);
-  }
-}
-.upload-btn:active {
-  border: 0;
-  transition: all 0.2s ease;
+  padding: 10px;
 }
 
 .drop-zone {
-  border: 4px dashed $primary;
-  border-radius: 10px;
-  text-align: center;
-  margin-top: 20px;
-  cursor: pointer;
+  max-width: 100%;
   height: rem(400px);
   padding: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+  border: 4px dashed $primary;
+  margin-top: rem(30px);
 
-  &__input {
-    display: none;
-  }
-  &__prompt {
-    width: 100%;
-    text-align: center;
-    font-size: rem(30px);
-    color: $lightblack;
+  @include mobile {
+    padding: 15px;
+    margin-top: rem(15px);
   }
 }
+/* if the image is on the drop zone, the border is changing */
 .drop-zone--over {
   border-style: solid;
 }
-
-// background image setting
+.drop-zone__input {
+  display: none;
+}
+/* cover : image taking entire space for background */
 .drop-zone__thumb {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
   overflow: hidden;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  //setting images through actual background
   position: relative;
 }
+/* image file name */
 .drop-zone__thumb::after {
+  /* displaying the content property */
   content: attr(data-label);
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 5px 0;
-  color: $white;
-  background: rgba(0, 0, 0, 0.75);
+  padding: 1px 0;
+  color: white;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.65);
   text-align: center;
+  border-radius: 1.3px;
 }
-// .remove-image {
-//   width: rem(200px);
-//   color: $darkpink;
-//   border: none;
-//   margin-top: 20px;
-//   margin-left: 33%;
-//   padding: 10px;
-//   border-radius: 4px;
-//   border-bottom: 4px solid #c9538c;
-//   transition: all 0.2s ease;
-//   outline: none;
-//   font-weight: 700px;
-// }
-// .remove-image:hover {
-//   background: #b53e77;
-//   color: $white;
-//   transition: all 0.2s ease;
-//   cursor: pointer;
-// }
-.upload-img {
-  width: rem(400px);
-  height: rem(600px);
 
-  @include mobile {
-    width: rem(240px);
-    height: rem(300px);
-  }
-}
+// text area
 .text-content {
   width: 100%;
   resize: none;
 }
 .button-group {
   text-align: center;
+  margin-top: 4%;
 }
 .cancel,
 .submit {
-  width: rem(100px);
-  height: rem(50px);
+  width: rem(300px);
+  height: rem(70px);
   margin: 0 10px;
   border: none;
   border-radius: 10px;
@@ -170,7 +150,8 @@
   font-size: rem(20px);
 
   @include mobile {
-    width: rem(60px);
+    width: rem(85px);
+    height: rem(50px);
   }
 }
 .submit {
