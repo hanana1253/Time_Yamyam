@@ -1,57 +1,28 @@
 import axios from 'axios';
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { firebaseConfig } from '../utils/firebaseConfig';
-
-initializeApp(firebaseConfig);
-
-const auth = getAuth();
-
-let userInfo = { nickname: null, point: null };
-let userStudyGroups = [
-  {
-    title: null,
-    description: null,
-    postingDays: null,
-    status: null,
-  },
-];
-
-const setUserInfo = ({ nickname, point }) => {
-  userInfo = { nickname, point };
-  console.log(userInfo);
+let userInfo = {
+  nickname: null,
+  point: null,
+  myStudy: [
+    {
+      title: null,
+      description: null,
+      postingDays: null,
+      status: null,
+    },
+  ],
 };
 
-const setUserStudyGroups = studyGroups => {
-  userStudyGroups = studyGroups.map(({ title, description, postingDays, status }) => ({
-    title,
-    description,
-    postingDays,
-    status,
-  }));
-  console.log(userStudyGroups);
+const setUserInfo = newUserInfo => {
+  userInfo = newUserInfo;
 };
 
-const fetchUserData = () => {
-  //   signOut(auth);
-  onAuthStateChanged(auth, async user => {
-    if (user) {
-      const { uid: userId } = user;
+const getUserData = () => ({ ...userInfo });
 
-      try {
-        const { data } = await axios.get(`/mypage/${userId}`);
-        console.log(data);
-        setUserInfo(data.targetUserData);
-        setUserStudyGroups(data.targetUserStudyGroups);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      window.location.href = '/';
-      console.log('사용자정보없음');
-    }
-  });
+const fetchUserData = user => {
+  const { uid: userId } = user;
+
+  return axios.get(`/mypage/${userId}`);
 };
 
-export default { fetchUserData };
+export default { setUserInfo, fetchUserData, getUserData };
