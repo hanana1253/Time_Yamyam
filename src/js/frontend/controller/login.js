@@ -81,7 +81,8 @@ const submit = async e => {
       const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
     } else {
       const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const { data } = await axios.post('/signup', { ...formData, uid: user.uid });
+      console.log('된것인가...');
+      const { data } = await axios.post('/signup', { ...formData, userUid: user.uid });
       console.log(data);
     }
     window.location.href = '/';
@@ -90,7 +91,7 @@ const submit = async e => {
       document.querySelector('.login-fail').textContent = '올바른 로그인 정보가 아닙니다.';
     } else {
       console.log(e);
-      document.querySelector('.signup-fail').textContent = '올바른 로그인 정보가 아닙니다.';
+      document.querySelector('.signup-fail').textContent = '올바른 회원가입 정보가 아닙니다.';
     }
   }
 };
