@@ -94,7 +94,10 @@ app.get('/mypage/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
-  res.send(targetUserData);
+  const targetUserStudyGroups = await Promise.all(
+    targetUserData.studygroup.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
+  );
+  res.send({ targetUserData, targetUserStudyGroups });
 });
 
 // GET '/mypoints/:userUid' 포인트 조회페이지, date 기준 내림차순 정렬된 적립 내역 데이터
