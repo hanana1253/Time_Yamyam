@@ -52,6 +52,11 @@ module.exports = {
       template: 'src/template/mypage.html',
       chunks: ['app', 'mypage'],
     }),
+    new HtmlWebpackPlugin({
+      filename: 'point.html',
+      template: 'src/template/point.html',
+      chunks: ['app', 'point'],
+    }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
       patterns: [

@@ -50,7 +50,7 @@ app.get('/study/:id', async (req, res) => {
     .doc(id)
     .get()
     .then(res => res.data());
-  const postingsDB = await db.collection(`studyGroups/${id}/postings`).get();
+  const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
   const postingList = [];
   postingsDB.forEach(doc => {
     postingList.push(doc.data());
@@ -89,7 +89,7 @@ app.get('/mypage/:userUid', async (req, res) => {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
-  res.send({ targetUserData, targetUserStudyGroups });
+  res.send({ ...targetUserData, myStudy: targetUserStudyGroups });
 });
 
 // GET '/mypoints/:userUid' 포인트 조회페이지, date 기준 내림차순 정렬된 적립 내역 데이터
@@ -178,9 +178,14 @@ app.post('/study/:id/posting', async (req, res) => {
   authorUserDB.update({
     point: admin.firestore.FieldValue.increment(POSTING_POINT),
   });
-  studyGroupDB
-    .collection('postings')
-    .add({ ...newPosting, author, authorUid: userUid, createDate, studyGroupDB, likes: 0 });
+  studyGroupDB.collection('postings').add({
+    ...newPosting,
+    author,
+    authorUid: userUid,
+    createDate,
+    studyGroupDB,
+    likes: 0,
+  });
   authorUserDB.collection('points').add(record);
 
   res.send('success');
