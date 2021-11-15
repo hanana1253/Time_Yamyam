@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 // import { render } from '../view/group.js';
-import { stateFunc, fetchGroups } from '../store/group.js';
+import { stateFunc, fetchGroups, initialFilter, setFilterState } from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
@@ -25,16 +25,11 @@ const forcedUncheckFilters = () => {
 };
 
 // Event handler
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', () => {
   $swiper.disable();
 
   fetchGroups();
-
-  // state.group = await axios.get('/study/HTML').then(({ data }) => data);
-  // state.user = state.group.userList;
-  // state.postings = state.group.postingList;
-
-  // render.teamFeed();
+  initialFilter();
 });
 
 document.querySelector('.group-tabList').onclick = e => {
@@ -79,7 +74,26 @@ document.querySelector('.filters').onclick = e => {
 document.querySelector('.filters').onchange = e => {
   if (!e.target.matches('.filters label > input')) return;
 
+  const value = e.target.parentNode.lastElementChild.value.split('-');
+
   e.target.parentNode.classList.toggle('checked', e.target.checked);
+
+  const temp = stateFunc.postings.filter(
+    posting =>
+      new Date(posting.createDate._seconds * 1000).getDate() >= stateFunc.group.date.getDate() + value[1] * 7 &&
+      new Date(posting.createDate._seconds * 1000).getDate() <= stateFunc.group.date.getDate() + (+value[1] + 1) * 7
+  );
+
+  console.log(
+    new Date(stateFunc.postings[0].createDate._seconds * 1000).getDate(),
+    stateFunc.group.date.getDate() + value[1] * 7
+  );
+  console.log(temp);
+  console.log(stateFunc.postings);
+  console.log(stateFunc.group);
+
+  // if (e.target.checked)
+  // setFilterState(value[0], stateFunc.postings.filter(posting => posting.createDate === stateFunc.group.crea));
 
   const isAllUnChecked =
     [...e.target.closest('li').children].filter($label => $label.classList.contains('checked')).length === 0;

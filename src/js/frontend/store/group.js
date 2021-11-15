@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-let group = [];
+const MILISECONDS = 1000;
+
+let group = {};
 let users = [];
 let postings = [];
 
@@ -24,8 +26,29 @@ const filterState = {
 
 const fetchGroups = async () => {
   group = await axios.get('/study/HTML').then(({ data }) => data);
-  console.log(group);
-  // users = group.userList;
+  group.date = new Date(group.date);
+
+  users = group.userList;
+  postings = group.postingList;
+
+  // console.log(new Date(postings[0].createDate._seconds * 1000));
+  // console.log(postings[0]);
+  // console.log(group.date);
+  // console.log(Date.parse(group.date));
+};
+
+const initialFilter = () => {
+  filterState.week = postings;
+  filterState.day = postings;
+  filterState.memeber = postings;
+};
+
+const setFilterState = (stateName, newState) => {
+  filterState[stateName] = newState;
+};
+
+const setFeedContent = (feedName, newFeed) => {
+  feedContents[feedName] = newFeed;
 };
 
 const stateFunc = {
@@ -79,4 +102,4 @@ const stateFunc = {
   },
 };
 
-export { stateFunc, fetchGroups };
+export { stateFunc, fetchGroups, initialFilter, setFilterState, setFeedContent };
