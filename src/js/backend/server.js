@@ -51,11 +51,10 @@ app.get('/study/:id', async (req, res) => {
     .get()
     .then(res => res.data());
   targetStudy.date = targetStudy.date.toDate();
-  const userList = [];
-  const membersDB = await db.collection(`/studyGroups/${id}/members`).get();
-  membersDB.forEach(doc => {
-    const userInfo = doc.data();
-    userList.push(userInfo);
+  const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
+  const postingList = [];
+  postingsDB.forEach(doc => {
+    postingList.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
   const { userList } = (await db.doc(`studyGroups/${id}`).get()).data();
   const targetStudyGroupUserList = await Promise.all(
