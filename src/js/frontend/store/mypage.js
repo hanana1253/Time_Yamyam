@@ -8,16 +8,33 @@ initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-const userInfo = { nickname: null, point: null };
+let userInfo = { nickname: null, point: null };
+let userStudyGroups = [
+  {
+    title: null,
+    description: null,
+    postingDays: null,
+    status: null,
+  },
+];
 
-const setUserInfo = newUser => {
-  userInfo.nickname = newUser.nickname;
-  userInfo.point = newUser.point;
+const setUserInfo = ({ nickname, point }) => {
+  userInfo = { nickname, point };
   console.log(userInfo);
 };
 
-const fetchUserInfo = () => {
-//   signOut(auth);
+const setUserStudyGroups = studyGroups => {
+  userStudyGroups = studyGroups.map(({ title, description, postingDays, status }) => ({
+    title,
+    description,
+    postingDays,
+    status,
+  }));
+  console.log(userStudyGroups);
+};
+
+const fetchUserData = () => {
+  //   signOut(auth);
   onAuthStateChanged(auth, async user => {
     if (user) {
       const { uid: userId } = user;
@@ -25,7 +42,8 @@ const fetchUserInfo = () => {
       try {
         const { data } = await axios.get(`/mypage/${userId}`);
         console.log(data);
-        setUserInfo(data);
+        setUserInfo(data.targetUserData);
+        setUserStudyGroups(data.targetUserStudyGroups);
       } catch (error) {
         console.log(error);
       }
@@ -36,4 +54,4 @@ const fetchUserInfo = () => {
   });
 };
 
-export default { fetchUserInfo };
+export default { fetchUserData };
