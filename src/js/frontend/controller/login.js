@@ -43,7 +43,7 @@ const toggleCurrentForm = () => {
     $currentForm = $loginForm;
     $currentFormSubmit = $loginFormSubmit;
   }
-  setCurrentSchema(getCurrentForm())
+  setCurrentSchema(getCurrentForm());
   document.querySelectorAll('.auth-form').forEach($form => $form.classList.toggle('hidden'));
 };
 
@@ -66,24 +66,33 @@ const validate = throttle(e => {
 }, 300);
 
 const submit = async e => {
-  e.preventDefault();
+  try {
+    e.preventDefault();
 
-  const formData = [...new FormData($currentForm)].reduce(
-    // eslint-disable-next-line no-return-assign, no-sequences
-    (obj, [key, value]) => ((obj[key] = value), obj),
-    {}
-  );
+    const formData = [...new FormData($currentForm)].reduce(
+      // eslint-disable-next-line no-return-assign, no-sequences
+      (obj, [key, value]) => ((obj[key] = value), obj),
+      {}
+    );
 
-  // console.log(`POST /${currentForm}`, formData);
+    // console.log(`POST /${currentForm}`, formData);
 
-  if (getCurrentForm() === 'login') {
-    const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-  } else {
-    const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-    const { data } = await axios.post('/signup', { ...formData, uid: user.uid });
-    console.log(data);
+    if (getCurrentForm() === 'login') {
+      const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+    } else {
+      const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const { data } = await axios.post('/signup', { ...formData, uid: user.uid });
+      console.log(data);
+    }
+    window.location.href = '/';
+  } catch (e) {
+    if (getCurrentForm() === 'login') {
+      document.querySelector('.login-fail').textContent = '올바른 로그인 정보가 아닙니다.';
+    } else {
+      console.log(e);
+      document.querySelector('.signup-fail').textContent = '올바른 로그인 정보가 아닙니다.';
+    }
   }
-  console.log('submit');
 };
 
 [$loginForm, $signupForm].forEach($form => {

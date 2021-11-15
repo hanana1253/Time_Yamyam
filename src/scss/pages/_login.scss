@@ -5,9 +5,13 @@
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   margin: rem(30px) auto;
   padding: rem(30px);
+  & .login-fail {
+    height: rem(20px);
+    text-align: end;
+    color: red;
+  }
   & .title {
     font-size: rem(24px); // h2는 common.scss에서 다같이 처리할 것이므로 이부분 나중에 삭제
-    margin-bottom: rem(36px);
   }
   & .button {
     line-height: rem(50px);
@@ -44,11 +48,13 @@
       transition: transform 100ms ease-in;
     }
     & .error {
+      margin: rem(10px) rem(5px);
       height: rem(20px);
+      color: red;
     }
   }
   @include flexbox(column);
-  gap: rem(20px);
+  gap: rem(25px);
   @include mobile {
     width: rem(500px);
   }
