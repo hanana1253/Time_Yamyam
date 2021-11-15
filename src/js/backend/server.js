@@ -50,12 +50,15 @@ app.get('/study/:id', async (req, res) => {
     .doc(id)
     .get()
     .then(res => res.data());
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4eb64d63f6f391047c397939eb4ae102c0994a1
   targetStudy.date = targetStudy.date.toDate();
   const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
   const postingList = [];
   postingsDB.forEach(doc => {
-    postingList.push(doc.data());
+    postingList.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
   const { userList } = (await db.doc(`studyGroups/${id}`).get()).data();
   const targetStudyGroupUserList = await Promise.all(
