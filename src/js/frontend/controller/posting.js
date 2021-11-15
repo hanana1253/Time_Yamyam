@@ -4,7 +4,7 @@ const $uploadButton = document.querySelector('.upload-btn');
 const $imageTitle = document.querySelector('.image-title');
 const $uploadImg = document.querySelector('.upload-img');
 const $hashTag = document.querySelectorAll('.hash-tag');
-const splitArray = $hashTag.split(' ');
+// const splitArray = $hashTag.split(' ');
 const linkedTag = '';
 // Functions
 const uploadFile = e => {
@@ -14,8 +14,8 @@ const uploadFile = e => {
     $uploadImg.setAttribute('src', event.target.result);
   };
   reader.readAsDataURL(e.target.files[0]);
-  $uploadButton.setAttribute('data-label', e.target.files[0].name);
-  $imageTitle.textContent = e.target.files[0].name;
+  // $uploadButton.setAttribute('data-label', e.target.files[0].name);
+  // $imageTitle.textContent = e.target.files[0].name;
 };
 
 /*
@@ -25,7 +25,7 @@ const uploadFile = e => {
  */
 
 function updateThumbnail(dropZoneElement, file) {
-  let $thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
+  const $thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
   // First time - remove the prompt
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
@@ -33,25 +33,26 @@ function updateThumbnail(dropZoneElement, file) {
   }
 
   // First time - create thumbnail element
-  if (!$thumbnailElement) {
-    $thumbnailElement = document.createElement('div');
-    $thumbnailElement.classList.add('drop-zone__thumb');
-    dropZoneElement.appendChild($thumbnailElement);
-  }
+  // if (!$thumbnailElement) {
+  //   $thumbnailElement = document.createElement('div');
+  //   $thumbnailElement.classList.add('drop-zone__thumb');
+  //   dropZoneElement.appendChild($thumbnailElement);
+  // }
 
   // file is proper file object
-  $thumbnailElement.dataset.label = file.name;
+  // $thumbnailElement.dataset.label = file.name;
 
   // show thumbnail for image files
   if (file.type.startsWith('image/')) {
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
-    reader.onload = () => {
-      $thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    reader.onload = event => {
+      // $thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+      $uploadImg.setAttribute('src', event.target.result);
     };
   } else {
-    $thumbnailElement.style.backgroundImage = null;
+    // $thumbnailElement.style.backgroundImage = null;
   }
 }
 // Event bindings
