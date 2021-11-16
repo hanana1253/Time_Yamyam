@@ -51,10 +51,10 @@
   @include flexbox(column);
   gap: rem(20px);
   @include mobile {
-    width: rem(500px);
+    width: rem(300px);
   }
   @include desktop {
-    width: 50vw;
-    min-width: rem(600px);
+    width: 40vw;
+    min-width: rem(500px);
   }
 }
