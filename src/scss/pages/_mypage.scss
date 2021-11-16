@@ -3,6 +3,7 @@
 .mypage {
   // temp
   // background-color: $primary;
+  margin: 0 auto;
 
   &__header {
     display: flex;
@@ -20,6 +21,7 @@
       display: flex;
       gap: rem(60px);
       padding-top: rem(10px);
+      justify-content: space-between;
     }
   }
 }
@@ -29,7 +31,8 @@
   font-size: rem(20px);
 
   @include desktop {
-    width: 60%;
+    width: 30%;
+    min-width: 260px;
     order: 1;
   }
 
@@ -107,6 +110,9 @@
 }
 
 .user-study {
+  @include desktop {
+    width: 65%;
+  }
   @include mobile {
     padding-top: 30px;
   }
