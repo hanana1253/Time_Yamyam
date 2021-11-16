@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { postingSchema } from '../utils/schema.js';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 import store from '../store/posting.js';
 import view from '../view/form.js';
@@ -21,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       window.location.href = '/';
-      console.log('사용자정보없음');
+      console.error('사용자정보없음');
     }
   });
 });
@@ -93,3 +92,18 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
     dropZoneElement.classList.remove('drop-zone--over');
   });
 });
+
+// validation check
+const $approvalTitle = document.querySelector('.approval-title');
+const $submitBtn = document.querySelector('.submit');
+const $errorMsg = document.querySelector('.error');
+const $form = document.querySelector('form');
+$approvalTitle.oninput = e => {
+  $submitBtn.disabled = !e.target.value.trim();
+  $errorMsg.textContent = e.target.value.trim() ? '' : '인증글 제목을 선택해주세요';
+};
+
+$form.onkeydown = e => {
+  if (e.key !== 'Enter' || e.target.name === 'text-content') return;
+  e.preventDefault();
+};

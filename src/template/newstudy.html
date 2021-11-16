@@ -49,18 +49,17 @@
           </div>
           <!-- hash tag -->
           <div class="tag-input input-container">
-            <div class="input">
-              <label class="questions a11y-hidden" for="tag-id"> 해시태그 </label>
-              <div class="tag-container">
-                <i class="bx bxs-purchase-tag"></i>
-                <input class="tag-id" type="text" id="tag-id" name="hash-id" placeholder="태그를 입력해주세요" />
-                <div class="error"></div>
-              </div>
+            <label class="questions a11y-hidden" for="tag-id"> 해시태그 </label>
+            <div class="tag-container">
+              <i class="bx bxs-purchase-tag"></i>
+              <input class="tag-id" type="text" id="tag-id" name="hash-id" placeholder="태그를 입력해주세요" />
             </div>
             <ul class="tag-list">
               <!-- <li class="item" data-id="1">asdf<i class="bx bxs-tag-x"></i></li> -->
             </ul>
+            <div class="error"></div>
           </div>
+
           <!-- range bar -->
           <div class="enter-range">
             <span class="questions">참여레벨</span>
@@ -155,7 +154,7 @@
             <div class="error"></div>
           </div>
           <div class="button-group">
-            <button type="submit" class="submit">등록</button>
+            <button type="submit" class="submit button" disabled>등록</button>
             <button type="button" class="cancel">취소</button>
           </div>
         </form>

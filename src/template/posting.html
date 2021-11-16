@@ -32,14 +32,9 @@
           <div>
             <label class="questions a11y-hidden" for="group-list">스터디 그룹을 설정해주세요.</label>
             <select class="group-list" name="group-list" id="group-list">
-              <!-- 동적생성 -->
-              <!-- <option value="자바스크립트 뽀개기">자바스크립트 뽀개기</option>
-              <option value="알고리즘신이 되어보자">알고리즘신이 되어보자</option>
-              <option value="html/css">html/css</option> -->
             </select>
-            <div class="error"></div>
           </div>
-          <div>
+          <div class="approval-container">
             <label class="questions a11y-hidden" for="approval-title">인증 글의 제목을 입력해주세요</label>
             <input
               class="approval-title"
@@ -89,7 +84,7 @@
             ></textarea>
           </div>
           <div class="button-group">
-            <button type="submit" class="submit">등록</button>
+            <button type="submit" class="submit button" disabled>등록</button>
             <button type="button" class="cancel">취소</button>
           </div>
         </div>

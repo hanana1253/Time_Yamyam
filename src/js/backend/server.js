@@ -90,7 +90,7 @@ app.get('/posting/:userUid', async (req, res) => {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
-  res.send(targetUserStudyGroups);
+  res.send({ studyGroup: targetUserStudyGroups });
 });
 
 // GET '/mypage/:userUid' 마이페이지
