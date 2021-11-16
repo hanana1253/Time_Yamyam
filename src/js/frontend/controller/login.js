@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 import axios from 'axios';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
-import { throttle } from '../utils/helper.js';
+import { debounce } from '../utils/helper.js';
 import {
   getCurrentForm,
   getErrorMsgByInputName,
@@ -62,7 +62,7 @@ const activateSubmitButton = () => {
   $currentFormSubmit.disabled = !getIsValid();
 };
 
-const validate = throttle(e => {
+const validate = debounce(e => {
   const { name, value } = e.target;
 
   setSchemaValueByInputName(name, value.trim());
