@@ -5,25 +5,18 @@ import { firebaseConfig } from '../utils/firebaseConfig.js';
 import store from '../store/posting.js';
 import view from '../view/form.js';
 
+/*
+ *@param {HTMLElement} dropZoneElement
+ *@param {File} file
+ */
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-window.addEventListener('DOMContentLoaded', () => {
-  onAuthStateChanged(auth, async user => {
-    if (user) {
-      try {
-        const { data } = await store.fetchStudyGroupData(user);
-        store.setStudyGroupInfo(data);
-        view.render(store.getStudyGroupData());
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      window.location.href = '/';
-      console.error('사용자정보없음');
-    }
-  });
-});
+const $approvalTitle = document.querySelector('.approval-title');
+const $submitBtn = document.querySelector('.submit');
+const $errorMsg = document.querySelector('.error');
+const $form = document.querySelector('form');
 
 // drag and drop
 function updateThumbnails(dropZoneElement, file) {
@@ -55,12 +48,23 @@ function updateThumbnails(dropZoneElement, file) {
 }
 
 // Event bindings
+window.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      try {
+        const { data } = await store.fetchStudyGroupData(user);
+        store.setStudyGroupInfo(data);
+        view.render(store.getStudyGroupData());
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      window.location.href = '/';
+      console.error('사용자정보없음');
+    }
+  });
+});
 
-/*
- * drag and drop
- *@param {HTMLElement} dropZoneElement
- *@param {File} file
- */
 document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
   // go up till they find drop zone element
   const dropZoneElement = inputElement.closest('.drop-zone');
@@ -93,11 +97,6 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
   });
 });
 
-// validation check
-const $approvalTitle = document.querySelector('.approval-title');
-const $submitBtn = document.querySelector('.submit');
-const $errorMsg = document.querySelector('.error');
-const $form = document.querySelector('form');
 $approvalTitle.oninput = e => {
   $submitBtn.disabled = !e.target.value.trim();
   $errorMsg.textContent = e.target.value.trim() ? '' : '인증글 제목을 선택해주세요';
