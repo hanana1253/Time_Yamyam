@@ -218,12 +218,12 @@ app.patch('/study/:id/posting/', async (req, res) => {
   const postingData = (await postingDB.get()).data();
   if (postingData.likedBy.includes(userUid)) {
     postingDB.update({
-      like: admin.firestore.FieldValue.increment(-1),
+      likes: admin.firestore.FieldValue.increment(-1),
       likedBy: admin.firestore.FieldValue.arrayRemove(userUid),
     });
   } else {
     postingDB.update({
-      like: admin.firestore.FieldValue.increment(1),
+      likes: admin.firestore.FieldValue.increment(1),
       likedBy: admin.firestore.FieldValue.arrayUnion(userUid),
     });
   }
