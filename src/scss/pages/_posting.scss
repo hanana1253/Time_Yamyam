@@ -41,6 +41,9 @@
     padding-bottom: rem(16px);
   }
 }
+.approval-container {
+  position: relative;
+}
 .group-list,
 .url,
 .approval-title {
@@ -62,7 +65,7 @@
   height: rem(20px);
   border: 2px solid $lightblack;
   position: absolute;
-  right: 10.5%;
+  right: 2%;
   cursor: pointer;
 }
 
@@ -152,10 +155,11 @@
   width: rem(300px);
   height: rem(70px);
   margin: 0 10px;
-  border: none;
   border-radius: 10px;
   color: $white;
   font-size: rem(20px);
+  line-height: rem(50px);
+  border: 3px solid transparent;
 
   @include mobile {
     width: rem(85px);
