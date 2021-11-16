@@ -106,3 +106,11 @@ $form.onkeydown = e => {
   if (e.key !== 'Enter' || e.target.name === 'text-content') return;
   e.preventDefault();
 };
+$form.onsubmit = e => {
+  e.preventDefault();
+  const posting = {};
+  posting.isNoti = $form.querySelector('.notice').value;
+  posting.title = $form.querySelector('.approval-title').value;
+  posting.description = $form.querySelector('.text-content').value;
+  posting.url = $form.querySelector('.url').value;
+};

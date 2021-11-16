@@ -99,3 +99,15 @@ $form.onkeydown = e => {
   if (e.key !== 'Enter' || e.target.name === 'text-content') return;
   e.preventDefault();
 };
+
+$form.onsubmit = e => {
+  e.preventDefault();
+  const newStudy = {};
+  newStudy.title = $form.querySelector('.group-name').value;
+  newStudy.description = $form.querySelector('.group-introduction').value;
+  newStudy.postingDescription = $form.querySelector('.approval-method').value;
+  newStudy.hashtags = $form.querySelector('.hash-id').value;
+  newStudy.duration = $form.querySelector('.adfs').value;
+  newStudy.postingDays = $form.querySelector('.fdsa').value;
+  newStudy.minLevel = $form.querySelector('.asdf').value;
+};
