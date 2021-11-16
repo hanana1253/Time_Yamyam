@@ -7,17 +7,6 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
-const generateNextStudyId = (() => {
-  let num = 0;
-  return () => num++;
-})();
-
-const generateNextPostingId = (() => {
-  let num = 0;
-  return () => num++;
-})();
-
 const app = express();
 const PORT = 3001;
 
@@ -163,21 +152,19 @@ app.post('/signup', async (req, res) => {
 //   minLevel: number,
 //   capacity: number,
 // };
+
 app.post('/study', async (req, res) => {
-  const { user, newStudy } = req.body;
-  const leader = db.collection('users').doc(user.uid);
+  const { userUid, newStudy } = req.body;
   const createDate = new Date();
-
-  const id = generateNextStudyId();
-  const studyDB = db.collection('studyGroups').doc(id);
-
+  const studyDB = db.collection('studyGroups').doc();
   await studyDB.set({
     ...newStudy,
+    id: studyDB.id,
     createDate,
     expireDate: new Date(new Date().setDate(createDate.getDate() + 7)),
     finishDate: new Date(new Date().setDate(createDate.getDate() + 7 + newStudy.duration * 7)),
-    leader,
-    userList: [leader],
+    leader: userUid,
+    userList: [userUid],
     status: 'ready',
     postingList: [],
   });
