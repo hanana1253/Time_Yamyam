@@ -64,7 +64,7 @@
 }
 .bx.bxs-purchase-tag {
   position: absolute;
-  top: 35%;
+  top: 51%;
   transform: translateY(-50%);
   font-size: 20px;
 }
@@ -191,4 +191,7 @@
 }
 .cancel {
   background: $lightblack;
+}
+.error {
+  position: absolute;
 }

@@ -26,71 +26,69 @@
       </ul>
     </nav>
     <main class="main form-main">
-      <div class="form-container">
-        <h2 class="posting-title">인증 글을 올려주세요</h2>
-        <div>
-          <label class="questions a11y-hidden" for="group-list">스터디 그룹을 설정해주세요.</label>
-          <select class="group-list" name="group-list" id="group-list">
-            <!-- 동적생성 -->
-            <option value="자바스크립트 뽀개기">자바스크립트 뽀개기</option>
-            <option value="알고리즘신이 되어보자">알고리즘신이 되어보자</option>
-            <option value="html/css">html/css</option>
-          </select>
-        </div>
-        <div>
-          <label class="questions a11y-hidden" for="approval-title">인증 글의 제목을 입력해주세요</label>
-          <input
-            class="approval-title"
-            type="text"
-            name="approval-title"
-            id="approval-title"
-            autocomplete="false"
-            placeholder="인증 글의 제목을 입력해주세요"
-          />
-        </div>
-        <div>
-          <label class="questions a11y-hidden" for="url">URL을 입력해주세요 (optional)</label>
-          <input
-            class="url"
-            type="url"
-            name="url"
-            id="url"
-            autocomplete="false"
-            placeholder="URL을 입력해주세요 (optional)"
-          />
-        </div>
-        
-        <!-- upload images -->
-        <form action="#" method="post" enctype="multipart/form-data">
-          <div class="drop-container">
-            <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요"
-              >사진 업로드</label
-            >
-            <div class="drop-zone">
-              <span class="drop-zone__prompt">사진을 드래그 해주세요</span>
-              <!-- <div class="drop-zone__thumb" data-label="myfile.txt"></div> -->
-              <!-- name for regular upload submission  -->
-              <input class="drop-zone__input" type="file" name="myFile" id="myFile" multiple />
-            </div>
+      <form class="posting-container">
+        <div class="form-container">
+          <h2 class="posting-title">인증 글을 올려주세요</h2>
+          <div>
+            <label class="questions a11y-hidden" for="group-list">스터디 그룹을 설정해주세요.</label>
+            <select class="group-list" name="group-list" id="group-list">
+            </select>
           </div>
-        </form>
-
-          <label class="questions a11y-hidden" for="text-content">내용을 입력해주세요 (optional)</label>
-          <textarea
-            class="text-content"
-            name="text-content"
-            id="text-content"
-            cols="30"
-            rows="10"
-            placeholder="내용을 입력해주세요 (optional)"
-          ></textarea>
+          <div class="approval-container">
+            <label class="questions a11y-hidden" for="approval-title">인증 글의 제목을 입력해주세요</label>
+            <input
+              class="approval-title"
+              type="text"
+              name="approval-title"
+              id="approval-title"
+              autocomplete="false"
+              placeholder="인증 글의 제목을 입력해주세요"
+            />
+            <input type="checkbox" id="notice" name="notice" class="notice">
+            <div class="error"></div>
+          </div>
+          <div>
+            <label class="questions a11y-hidden" for="url">URL을 입력해주세요 (optional)</label>
+            <input
+              class="url"
+              type="url"
+              name="url"
+              id="url"
+              autocomplete="false"
+              placeholder="URL을 입력해주세요 (optional)"
+            />
+          </div>
+          
+          <!-- upload images -->
+          <form action="#" method="post" enctype="multipart/form-data">
+            <div class="drop-container">
+              <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요"
+                >사진 업로드</label
+              >
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">사진을 드래그 해주세요</span>
+                <!-- <div class="drop-zone__thumb" data-label="myfile.txt"></div> -->
+                <!-- name for regular upload submission  -->
+                <input class="drop-zone__input" type="file" name="myFile" id="myFile" multiple />
+              </div>
+            </div>
+          </form>
+            <label class="questions a11y-hidden" for="text-content">내용을 입력해주세요 (optional)</label>
+            <textarea
+              class="text-content"
+              name="text-content"
+              id="text-content"
+              cols="30"
+              rows="10"
+              placeholder="내용을 입력해주세요 (optional)"
+            ></textarea>
+          </div>
+          <div class="button-group">
+            <button type="submit" class="submit button" disabled>등록</button>
+            <button type="button" class="cancel">취소</button>
+          </div>
         </div>
-
-        <div class="button-group">
-          <button type="submit" class="submit">등록</button>
-          <button type="button" class="cancel">취소</button>
-        </div>
-      </div>
+      </form>
     </main>
     <div class="overlay"></div>
   </body>
