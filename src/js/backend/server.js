@@ -82,6 +82,17 @@ app.get('/study/:id', async (req, res) => {
   res.send({ ...targetStudy, userList: targetStudyGroupUserList, postingList });
 });
 
+// GET '/posting/:id' 포스팅 페이지
+app.get('/posting/:userUid', async (req, res) => {
+  const { userUid } = req.params;
+  const targetUserDB = db.collection('users').doc(userUid);
+  const targetUserData = await targetUserDB.get().then(res => res.data());
+  const targetUserStudyGroups = await Promise.all(
+    targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
+  );
+  res.send(targetUserStudyGroups);
+});
+
 // GET '/mypage/:userUid' 마이페이지
 app.get('/mypage/:userUid', async (req, res) => {
   const { userUid } = req.params;
@@ -191,10 +202,30 @@ app.post('/study/:id/posting', async (req, res) => {
     createDate,
     studyGroupDB,
     likes: 0,
+    likedBy: [],
   });
   authorUserDB.collection('points').add(record);
 
   res.send('success');
+});
+
+app.patch('/study/:id/posting/', async (req, res) => {
+  const { id } = req.params;
+  const { userUid, postingId } = req.body;
+  const postingDB = db.collection('studyGroups').doc(id).collection('postings').doc(postingId);
+  const postingData = (await postingDB.get()).data();
+  if (postingData.likedBy.includes(userUid)) {
+    postingDB.update({
+      like: admin.firestore.FieldValue.increment(-1),
+      likedBy: admin.firestore.FieldValue.arrayRemove(userUid),
+    });
+  } else {
+    postingDB.update({
+      like: admin.firestore.FieldValue.increment(1),
+      likedBy: admin.firestore.FieldValue.arrayUnion(userUid),
+    });
+  }
+  res.send(postingData);
 });
 
 // post 말고 get요청으로 만들기 (마이페이지용)
