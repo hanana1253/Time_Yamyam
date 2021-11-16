@@ -55,18 +55,18 @@ const newstudySchema = {
     error: '스터디 소개를 해주세요',
   },
   'hash-id': {
-    value: '',
+    value: 0,
     get isValid() {
-      return this.value <= 20;
+      return this.value <= 5;
     },
-    error: '해시태그는 20개까지 입력이 가능합니다',
+    error: '해시태그는 5개까지 입력이 가능합니다',
   },
   'approval-method': {
     value: '',
     get isValid() {
-      return this.value > 0;
+      return !!this.value;
     },
-    error: '인증 날짜를 선택해주세요',
+    error: '인증 방법을 입력해주세요',
   },
   'date-checker': {
     value: false,
@@ -86,4 +86,5 @@ const newstudySchema = {
     );
   },
 };
+
 export { loginSchema, signupSchema, newstudySchema };

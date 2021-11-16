@@ -1,25 +1,35 @@
-// DOM Nodes
-const $hashTag = document.querySelectorAll('.hash-tag');
-// const splitArray = $hashTag.split(' ');
-// const linkedTag = '';
+import axios from 'axios';
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { firebaseConfig } from '../utils/firebaseConfig.js';
+import store from '../store/posting.js';
+import view from '../view/form.js';
 
-// Functions
+/*
+ *@param {HTMLElement} dropZoneElement
+ *@param {File} file
+ */
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+const $approvalTitle = document.querySelector('.approval-title');
+const $submitBtn = document.querySelector('.submit');
+const $errorMsg = document.querySelector('.error');
+const $form = document.querySelector('form');
 
 // drag and drop
 function updateThumbnails(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector('.drop-zene__thumb');
+  // let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
   // first time remove the prompt
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
   }
 
-  // very first time, there is not thumbnail
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement('div');
-    thumbnailElement.classList.add('drop-zone__thumb');
-    dropZoneElement.appendChild(thumbnailElement);
-  }
+  const thumbnailElement = document.createElement('div');
+  thumbnailElement.classList.add('drop-zone__thumb');
+  dropZoneElement.appendChild(thumbnailElement);
 
   // bring or set file name
   thumbnailElement.dataset.label = file.name;
@@ -38,12 +48,23 @@ function updateThumbnails(dropZoneElement, file) {
 }
 
 // Event bindings
+window.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      try {
+        const { data } = await store.fetchStudyGroupData(user);
+        store.setStudyGroupInfo(data);
+        view.render(store.getStudyGroupData());
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      window.location.href = '/';
+      console.error('사용자정보없음');
+    }
+  });
+});
 
-/*
- * drag and drop
- *@param {HTMLElement} dropZoneElement
- *@param {File} file
- */
 document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
   // go up till they find drop zone element
   const dropZoneElement = inputElement.closest('.drop-zone');
@@ -53,9 +74,7 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
   });
 
   inputElement.addEventListener('change', () => {
-    if (inputElement.files.length) {
-      updateThumbnails(dropZoneElement, inputElement.files[0]);
-    }
+    [...inputElement.files].forEach(file => updateThumbnails(dropZoneElement, file));
   });
 
   // whenever the user drag over the image
@@ -73,12 +92,25 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
 
   dropZoneElement.addEventListener('drop', e => {
     e.preventDefault();
-
-    if (e.dataTransfer.files.length) {
-      inputElement.files = e.dataTransfer.files;
-      updateThumbnails(dropZoneElement, e.dataTransfer.files[0]);
-    }
-
+    [...e.dataTransfer.files].forEach(file => updateThumbnails(dropZoneElement, file));
     dropZoneElement.classList.remove('drop-zone--over');
   });
 });
+
+$approvalTitle.oninput = e => {
+  $submitBtn.disabled = !e.target.value.trim();
+  $errorMsg.textContent = e.target.value.trim() ? '' : '인증글 제목을 선택해주세요';
+};
+
+$form.onkeydown = e => {
+  if (e.key !== 'Enter' || e.target.name === 'text-content') return;
+  e.preventDefault();
+};
+$form.onsubmit = e => {
+  e.preventDefault();
+  const posting = {};
+  posting.isNoti = $form.querySelector('.notice').value;
+  posting.title = $form.querySelector('.approval-title').value;
+  posting.description = $form.querySelector('.text-content').value;
+  posting.url = $form.querySelector('.url').value;
+};
