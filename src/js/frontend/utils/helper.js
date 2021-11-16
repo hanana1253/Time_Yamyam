@@ -8,6 +8,14 @@ const WEEKS = [
   { class: 'sat', content: '토' },
 ];
 
+const debounce = (callback, delay) => {
+  let timerId;
+  return event => {
+    if (timerId) clearTimeout(timerId);
+    timerId = setTimeout(callback, delay, event);
+  };
+};
+
 const throttle = (callback, delay) => {
   let timerId;
   return event => {
@@ -36,4 +44,4 @@ const getLevel = point => {
   if (point >= 5360) return 'MAX';
 };
 
-export { throttle, WEEKS, getLevel };
+export { debounce, throttle, WEEKS, getLevel };
