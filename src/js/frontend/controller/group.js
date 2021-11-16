@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
-// import { render } from '../view/group.js';
-import { stateFunc, fetchGroups, initialFilter, setFilterState } from '../store/group.js';
+import render from '../view/group.js';
+import { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, setFilterState } from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
@@ -26,10 +26,35 @@ const forcedUncheckFilters = () => {
 
 // Event handler
 window.addEventListener('DOMContentLoaded', () => {
-  $swiper.disable();
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      try {
+        $swiper.disable();
 
-  fetchGroups();
-  initialFilter();
+        const userInfo = await fetchUserInfo(user);
+        stateFunc.userInfo = userInfo;
+
+        const group = await fetchGroupData();
+        stateFunc.group = group;
+        stateFunc.users = group.userList;
+        stateFunc.postings = group.postingList.map(posting => {
+          posting.week = Math.ceil((new Date(posting.createDate).getDate() - group.date.getDate()) / 7);
+          posting.day = new Date(posting.createDate).getDay();
+          return posting;
+        });
+
+        initialFilter();
+
+        render[stateFunc.currentFeed]();
+        document.querySelector('.group-title').textContent = group.title;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      window.location.href = '/';
+      alert('로그인 이후 사용 가능합니다');
+    }
+  });
 });
 
 document.querySelector('.group-tabList').onclick = e => {
@@ -42,8 +67,10 @@ document.querySelector('.group-tabList').onclick = e => {
       $swiper.disable();
 
       document.querySelector('.filters').classList.toggle('hidden', i === 2);
+
       stateFunc.currentFeed = stateFunc.feedLists[i];
-      // render[state.currentFeed]();
+      render[stateFunc.currentFeed]();
+
       forcedUncheckFilters();
     }
   });
@@ -60,6 +87,27 @@ document.querySelector('.swiper-wrapper').onclick = e => {
   const isBx = e.target.classList.contains('bx-heart');
   e.target.classList.toggle('bx-heart', !isBx);
   e.target.classList.toggle('bxs-heart', isBx);
+
+  const $likes = e.target.closest('div').firstElementChild;
+  const content = $likes.textContent;
+  $likes.textContent = isBx ? +content + 1 : +content - 1;
+
+  let { postings } = stateFunc;
+  const $posting = e.target.closest('li');
+
+  postings = postings.map(posting => {
+    if (posting.id === $posting.dataset.post) {
+      posting.likes = isBx ? posting.likes + 1 : posting.likes - 1;
+      posting.likedBy.push(auth.currentUser.uid);
+    }
+    return posting;
+  });
+  stateFunc.postings = postings;
+
+  console.log(stateFunc.postings);
+
+  // console.log(postings);
+  // console.log($posting.dataset.member);
 };
 
 document.querySelector('.filters').onclick = e => {
@@ -74,26 +122,18 @@ document.querySelector('.filters').onclick = e => {
 document.querySelector('.filters').onchange = e => {
   if (!e.target.matches('.filters label > input')) return;
 
-  const value = e.target.parentNode.lastElementChild.value.split('-');
-
   e.target.parentNode.classList.toggle('checked', e.target.checked);
 
-  const temp = stateFunc.postings.filter(
-    posting =>
-      new Date(posting.createDate._seconds * 1000).getDate() >= stateFunc.group.date.getDate() + value[1] * 7 &&
-      new Date(posting.createDate._seconds * 1000).getDate() <= stateFunc.group.date.getDate() + (+value[1] + 1) * 7
-  );
+  if (e.target.checked) {
+    const [type, number] = e.target.parentNode.lastElementChild.value.split('-');
 
-  console.log(
-    new Date(stateFunc.postings[0].createDate._seconds * 1000).getDate(),
-    stateFunc.group.date.getDate() + value[1] * 7
-  );
-  console.log(temp);
-  console.log(stateFunc.postings);
-  console.log(stateFunc.group);
+    setFilterState(
+      type,
+      stateFunc.postings.filter(posting => posting[type] === +number)
+    );
 
-  // if (e.target.checked)
-  // setFilterState(value[0], stateFunc.postings.filter(posting => posting.createDate === stateFunc.group.crea));
+    render[stateFunc.currentFeed]();
+  }
 
   const isAllUnChecked =
     [...e.target.closest('li').children].filter($label => $label.classList.contains('checked')).length === 0;

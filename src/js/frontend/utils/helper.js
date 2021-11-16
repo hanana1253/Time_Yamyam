@@ -33,7 +33,7 @@ const getLevel = point => {
   if (point <= 670) return '7';
   if (point <= 1340) return '8';
   if (point <= 2680) return '9';
-  if (point >= 5360) return 'MAX';
+  if (point >= 2681) return 'MAX';
 };
 
 export { throttle, WEEKS, getLevel };

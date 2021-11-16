@@ -1,5 +1,5 @@
 import { stateFunc } from '../store/group.js';
-import { WEEKS } from '../utils/helper.js';
+import { WEEKS, getLevel } from '../utils/helper.js';
 
 const { filterState } = stateFunc;
 
@@ -20,7 +20,7 @@ const render = {
         (posting, i) => `
             <li class="group-feed__item" data-id="${i + 1}" data-week="${posting.week}" data-day="${
           posting.day
-        }" data-member="${posting.author}">
+        }" data-member="${posting.author}" data-post="${posting.id}">
                 <figure class="group-feed__image">
                     <img src="${posting.img.url}" alt="이미지" />
                 </figure>
@@ -49,7 +49,7 @@ const render = {
         (posting, i) => `
             <li class="group-feed__item" data-id="${i + 1}" data-week="${posting.week}" data-day="${
           posting.day
-        }" data-member="${posting.author}">
+        }" data-member="${posting.author}" data-post="${posting.id}">
                 <figure class="group-feed__image">
                     <img src="${posting.img.url}" alt="이미지" />
                 </figure>
@@ -101,7 +101,7 @@ const render = {
               .map(
                 user => `<li class="group-teamList__member" tabindex="0">
                     <span class="group-teamList__member--nickname">${user.nickname}</span>
-                    <span class="group-teamList__member--level">${user.point}</span>
+                    <span class="group-teamList__member--level">Lv.${getLevel(+user.point)}</span>
                 </li>`
               )
               .join('')}

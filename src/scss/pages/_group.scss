@@ -152,6 +152,7 @@ body {
 
     &-teamFeed,
     &-myFeed {
+      min-height: rem(300px);
       &__list {
         margin: rem(10px) 0 0 0;
         display: flex;
@@ -179,10 +180,6 @@ body {
     &-tabList {
       padding: rem(16px);
       display: flex;
-
-      //   position: absolute;
-      //   top: rem(65px);
-      //   right: rem(10px);
     }
 
     &-tab {
@@ -194,11 +191,13 @@ body {
 
     &-teamFeed,
     &-myFeed {
+      min-height: rem(300px);
       &__list {
         margin-top: rem(39px);
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         column-gap: rem(10px);
+        row-gap: rem(10px);
       }
     }
   }
