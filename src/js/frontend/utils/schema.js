@@ -94,5 +94,8 @@ const postingSchema = {
     },
     error: '인증글 제목을 선택해주세요',
   },
+  get isValid() {
+    return this['approval-title'].isValid;
+  },
 };
 export { loginSchema, signupSchema, newstudySchema, postingSchema };

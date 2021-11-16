@@ -1,4 +1,31 @@
+import axios from 'axios';
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { postingSchema } from '../utils/schema.js';
+import { firebaseConfig } from '../utils/firebaseConfig.js';
+import store from '../store/posting.js';
+import view from '../view/form.js';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+window.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      try {
+        const { data } = await store.fetchStudyGroupData(user);
+        store.setStudyGroupInfo(data);
+        view.render(store.getStudyGroupData());
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      window.location.href = '/';
+      console.log('사용자정보없음');
+    }
+  });
+});
+
 // drag and drop
 function updateThumbnails(dropZoneElement, file) {
   // let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
