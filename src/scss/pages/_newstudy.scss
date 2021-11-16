@@ -1,4 +1,5 @@
 @use '../utils' as *;
+
 .form-body {
   @include gradient($basic-gradient);
 }
@@ -14,13 +15,14 @@
   padding-bottom: rem(40px);
 }
 .posting-title {
-  font-size: rem(40px);
+  font-size: rem(38px);
   font-weight: 700;
   padding: rem(50px);
   text-align: center;
+
   @include mobile {
-    font-size: rem(16px);
-    padding: rem(3px) rem(10px);
+    font-size: 20px;
+    padding: rem(20px) rem(5px);
   }
 }
 .questions {
@@ -35,7 +37,7 @@
 }
 .group-name,
 .group-introduction,
-.hash-tag {
+#tag-id {
   width: 100%;
   height: rem(70px);
   padding: rem(10px);
@@ -44,95 +46,59 @@
   border-bottom: 1px solid $lightblack;
 
   @include mobile {
-    height: rem(30px);
+    height: rem(40px);
+    font-size: rem(16px);
   }
 }
+// hash tag
+.tag-input {
+  width: 100%;
+  max-width: 100%;
+}
+.tag-input .input {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.tag-input .input div {
+  position: relative;
+}
+.bx.bxs-purchase-tag {
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+.tag-id {
+  padding: 10px;
+  width: 100%;
+  height: 70px;
+  font-size: 20px;
+  text-indent: 15px;
+  border: none;
+  border-bottom: 1px solid #888;
+  outline: none;
+}
+.tag-input .tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tag-input .tag-list .item {
+  padding: 3px 5px;
+  border-radius: 10px;
+  background: $primary;
+  color: $white;
+  user-select: none;
+  list-style-type: none;
+}
+.tag-input .tag-list .item .delete-btn {
+  display: inline-block;
+  margin: 0 2px;
+  width: 8px;
+  text-align: center;
+}
+
 // range bar
-// .new-value {
-//   margin-top: 30px;
-//   opacity: 0.7;
-// }
-// .range-bar {
-//   width: 75%;
-//   margin-top: rem(20px);
-//   position: relative;
-
-//   &__input {
-//     -webkit-appearance: none;
-//     width: 100%;
-//     height: rem(20px);
-//     background-image: linear-gradient(90deg, rgb(117, 252, 117) 60%, rgb(214, 214, 214) 60%);
-//     outline: none;
-//     opacity: 0.7;
-//     -webkit-transition: 0.2s;
-//     transition: opacity 0.2s;
-//     border-radius: 12px;
-//     box-shadow: 0px 1px 10px 1px $lightblack;
-//   }
-
-//   &__input:hover {
-//     opacity: 1;
-//   }
-//   &__input::-webkit-slider-thumb {
-//     -webkit-appearance: none;
-//     width: 40px;
-//     height: 40px;
-//     background: $white;
-//     border-radius: 50%;
-//     cursor: pointer;
-//   }
-//   &__input::-moz-range-thumb {
-//     width: 40px;
-//     height: 40px;
-//     background: $white;
-//     border-radius: 50%;
-//     cursor: pointer;
-//   }
-// }
-// .range-bar::after {
-//   content: '10';
-//   color: $lightblack;
-//   font-size: rem(16px);
-//   position: absolute;
-//   left: 95%;
-//   top: 30%;
-// }
-// .range-bar::before {
-//   content: '1';
-//   color: $lightblack;
-//   font-size: rem(16px);
-//   position: absolute;
-//   left: 5%;
-//   top: 30%;
-// }
-
-// .range-labels {
-//   margin: rem(18px) rem(-41px) 0;
-//   padding: 0;
-
-//   & > li {
-//     position: relative;
-//     float: left;
-//     // width: rem(90px);
-//     text-align: center;
-//     color: white;
-//     font-size: rem(16px);
-//     cursor: pointer;
-
-//     &::before {
-//       position: absolute;
-//       top: rem(-25px);
-//       right: 0;
-//       left: 0;
-//       content: '';
-//       margin: 0 auto;
-//       width: 9px;
-//       height: 9px;
-//       background: #5d5fef;
-//       border-radius: 50px;
-//     }
-//   }
-// }
 
 // 인증 요일
 .checkbox-container ul {
@@ -141,26 +107,64 @@
 .checkbox-container .authorization {
   padding: 0;
 }
+.checkbox-container ul {
+  justify-content: center;
+  align-items: center;
+}
 .checkbox-container label {
   display: flex;
-  width: rem(50px);
-  height: rem(50px);
-  margin: 0 rem(10px);
+  width: rem(70px);
+  height: rem(70px);
+  margin: 0 rem(15px);
   border-radius: 50%;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: rem(22px);
+  font-size: rem(24px);
+
+  @include mobile {
+    font-size: rem(16px);
+    width: rem(40px);
+    height: rem(40px);
+    margin: 0 rem(5px);
+    align-items: center;
+    justify-content: center;
+  }
 }
-.date:checked ~ label {
-  background: $primary;
-  color: $white;
+.date ~ label {
+  border: 1px solid #ccc;
+  background: none;
+}
+.date:checked ~ label.mon {
+  background: $light-red;
+}
+.date:checked ~ label.tue {
+  background: $light-orange;
+}
+.date:checked ~ label.wed {
+  background: $light-yellow;
+}
+.date:checked ~ label.thu {
+  background: $light-green;
+}
+.date:checked ~ label.fri {
+  background: $light-blue;
+}
+.date:checked ~ label.sat {
+  background: $light-navy;
+}
+.date:checked ~ label.sun {
+  background: $light-violet;
 }
 .text-content {
   width: 100%;
   resize: none;
   font-size: rem(20px);
   padding: rem(20px);
+
+  @include mobile {
+    font-size: rem(16px);
+  }
 }
 .button-group {
   text-align: center;
@@ -169,7 +173,8 @@
 .submit {
   width: rem(100px);
   height: rem(50px);
-  margin: 0 10px;
+
+  padding: 10px;
   border: none;
   border-radius: 10px;
   color: $white;
@@ -178,6 +183,7 @@
   @include mobile {
     width: rem(80px);
     height: rem(40px);
+    margin: rem(20px);
   }
 }
 .submit {

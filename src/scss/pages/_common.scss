@@ -83,6 +83,12 @@
 //   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 // }
 
+.error {
+  margin: rem(10px) rem(5px);
+  height: rem(20px);
+  color: red;
+}
+
 .study-info {
   background: #f0eeee;
   border-radius: 10px;
