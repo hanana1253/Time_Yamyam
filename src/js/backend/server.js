@@ -28,17 +28,17 @@ app.use(express.json());
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
-  const readyStudyList = [];
+  const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyList.push(doc.data());
+    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
-  const myReadyStudyList = [];
+  const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
   myStudyDB.forEach(doc => {
-    myReadyStudyList.push(doc.data());
+    myGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
 
-  res.send({ readyStudyList, myReadyStudyList });
+  res.send({ readyStudyGroups, myGroups });
 });
 
 // GET '/study/:id'
@@ -50,7 +50,7 @@ app.get('/study/:id', async (req, res) => {
     .doc(id)
     .get()
     .then(res => res.data());
-  targetStudy.date = targetStudy.date.toDate();
+  targetStudy.createDate = targetStudy.createDate.toDate();
   const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
   const postingList = [];
   postingsDB.forEach(doc => {
@@ -90,7 +90,7 @@ app.get('/posting/:userUid', async (req, res) => {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
-  res.send({studyGroup: targetUserStudyGroups});
+  res.send({ studyGroup: targetUserStudyGroups });
 });
 
 // GET '/mypage/:userUid' 마이페이지
@@ -195,17 +195,19 @@ app.post('/study/:id/posting', async (req, res) => {
   authorUserDB.update({
     point: admin.firestore.FieldValue.increment(POSTING_POINT),
   });
-  studyGroupDB.collection('postings').add({
+  const postingDB = await studyGroupDB.collection('postings').add({
     ...newPosting,
+    id: null,
     author,
     authorUid: userUid,
     createDate,
     studyGroupDB,
     likes: 0,
+    img: { url: null },
     likedBy: [],
   });
   authorUserDB.collection('points').add(record);
-
+  postingDB.update({ id: postingDB.id });
   res.send('success');
 });
 
