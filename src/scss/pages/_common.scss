@@ -89,6 +89,19 @@
   color: red;
 }
 
+.button {
+  line-height: rem(50px);
+  border: 3px solid transparent;
+  background-color: $primary;
+  color: #fff;
+  cursor: pointer;
+  &:disabled {
+    background-color: transparent;
+    border: 2px solid $primary;
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
 .study-info {
   background: #f0eeee;
   border-radius: 10px;
