@@ -22,7 +22,7 @@ const render = {
           posting.day
         }" data-member="${posting.author}" data-post="${posting.id}">
                 <figure class="group-feed__image">
-                    <img src="${posting.img.url}" alt="이미지" />
+                    <img src="${posting.img.url ? posting.img.url : '../../images/feedImage.jpeg'}" alt="이미지" />
                 </figure>
                 <h3 class="group-feed__title">${posting.title}</h3>
                 <p class="group-feed__date">${posting.createDate.slice(0, 10)}</p>
@@ -30,7 +30,11 @@ const render = {
                 <div class="group-feed__likes">
                     <div class="likes-number">${posting.likes}</div>
                     <button>
-                        <i class="bx bx-heart"></i>
+                        ${
+                          posting.likedBy.includes(stateFunc.userInfo.uid)
+                            ? '<i class="bx bxs-heart"></i>'
+                            : '<i class="bx bx-heart"></i>'
+                        }
                     </button>
                 </div>
             </li>`
@@ -38,11 +42,14 @@ const render = {
       .join('');
 
     document.querySelector('ul.group-teamFeed__list').innerHTML = content;
-    this.filter();
+
+    // const { height } = document.querySelector('ul.group-teamFeed__list');
+    // document.querySelector('.swiper-wrapper').setAttribute('height', height);
+    // this.filter();
   },
   myFeed() {
     const { userInfo } = stateFunc;
-    const newPostings = filtering(stateFunc.postings, filterState).filter(post => post.nickname === userInfo.nickname);
+    const newPostings = filtering(stateFunc.postings, filterState).filter(post => post.authorUid === userInfo.uid);
 
     const content = newPostings
       .map(
@@ -51,7 +58,7 @@ const render = {
           posting.day
         }" data-member="${posting.author}" data-post="${posting.id}">
                 <figure class="group-feed__image">
-                    <img src="${posting.img.url}" alt="이미지" />
+                    <img src="${posting.img.url ? posting.img.url : '../../images/feedImage.jpeg'}" alt="이미지" />
                 </figure>
                 <h3 class="group-feed__title">${posting.title}</h3>
                 <p class="group-feed__date">${posting.createDate.slice(0, 10)}</p>
@@ -59,7 +66,11 @@ const render = {
                 <div class="group-feed__likes">
                     <div class="likes-number">${posting.likes}</div>
                     <button>
-                        <i class="bx bx-heart"></i>
+                    ${
+                      posting.likedBy.includes(stateFunc.userInfo.uid)
+                        ? '<i class="bx bxs-heart"></i>'
+                        : '<i class="bx bx-heart"></i>'
+                    }
                     </button>
                 </div>
                 <button class="delete">&times;</button>
@@ -68,7 +79,12 @@ const render = {
       .join('');
 
     document.querySelector('ul.group-myFeed__list').innerHTML = content;
-    this.filter();
+
+    // const { height } = window.getComputedStyle(document.querySelector('.group-myFeed__list'));
+    // console.log(height);
+    // document.querySelector('.swiper-wrapper').setAttribute('height', height);
+    // console.log(document.querySelector('.swiper-wrapper').getAttribute('height'));
+    // this.filter();
   },
   info() {
     const { group, users } = stateFunc;

@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// const MILISECONDS = 1000;
-
 let group = {
   authDescription: '',
   date: '',
@@ -64,6 +62,14 @@ const setFilterState = (stateName, newState) => {
   filterState[stateName] = newState;
 };
 
+const sendLikesInfo = (userUid, postingId) => {
+  axios.patch(`/study/${group.id}/posting/`, { userUid, postingId });
+};
+
+const sendDeletePosting = postingId => {
+  axios.delete(`/study/${group.id}/posting/${postingId}`);
+};
+
 const stateFunc = {
   get group() {
     return group;
@@ -104,4 +110,4 @@ const stateFunc = {
   },
 };
 
-export { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, setFilterState };
+export { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, setFilterState, sendLikesInfo, sendDeletePosting };

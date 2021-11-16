@@ -2,7 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 import render from '../view/group.js';
-import { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, setFilterState } from '../store/group.js';
+import {
+  stateFunc,
+  fetchGroupData,
+  fetchUserInfo,
+  initialFilter,
+  setFilterState,
+  sendLikesInfo,
+  sendDeletePosting,
+} from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
@@ -32,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
         $swiper.disable();
 
         const userInfo = await fetchUserInfo(user);
-        stateFunc.userInfo = userInfo;
+        stateFunc.userInfo = { ...userInfo, uid: auth.currentUser.uid };
 
         const group = await fetchGroupData();
         stateFunc.group = group;
@@ -46,6 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
         initialFilter();
 
         render[stateFunc.currentFeed]();
+        render.filter();
         document.querySelector('.group-title').textContent = group.title;
       } catch (error) {
         console.log(error);
@@ -98,16 +107,16 @@ document.querySelector('.swiper-wrapper').onclick = e => {
   postings = postings.map(posting => {
     if (posting.id === $posting.dataset.post) {
       posting.likes = isBx ? posting.likes + 1 : posting.likes - 1;
-      posting.likedBy.push(auth.currentUser.uid);
+      isBx
+        ? posting.likedBy.push(auth.currentUser.uid)
+        : posting.likedBy.splice(posting.likedBy.indexOf(auth.currentUser.uid), 1);
+
+      sendLikesInfo(auth.currentUser.uid, posting.id);
     }
     return posting;
   });
+
   stateFunc.postings = postings;
-
-  console.log(stateFunc.postings);
-
-  // console.log(postings);
-  // console.log($posting.dataset.member);
 };
 
 document.querySelector('.filters').onclick = e => {
@@ -148,4 +157,18 @@ document.querySelector('.group').onclick = e => {
   }
 
   forcedUncheckFilters();
+};
+
+document.querySelector('.group-myFeed__list').onclick = e => {
+  if (!e.target.classList.contains('delete')) return;
+
+  const $item = e.target.closest('li');
+
+  // 삭제 요청
+  const { postings } = stateFunc;
+  stateFunc.postings = postings.filter(posting => posting.id !== $item.dataset.post);
+
+  sendDeletePosting($item.dataset.post);
+
+  render[stateFunc.currentFeed]();
 };
