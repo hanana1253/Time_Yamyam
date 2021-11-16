@@ -28,17 +28,17 @@ app.use(express.json());
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
-  const readyStudyList = [];
+  const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyList.push(doc.data());
+    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
-  const myReadyStudyList = [];
+  const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
   myStudyDB.forEach(doc => {
-    myReadyStudyList.push(doc.data());
+    myGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
 
-  res.send({ readyStudyList, myReadyStudyList });
+  res.send({ readyStudyGroups, myGroups });
 });
 
 // GET '/study/:id'
@@ -50,7 +50,7 @@ app.get('/study/:id', async (req, res) => {
     .doc(id)
     .get()
     .then(res => res.data());
-  targetStudy.date = targetStudy.date.toDate();
+  targetStudy.createDate = targetStudy.createDate.toDate();
   const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
   const postingList = [];
   postingsDB.forEach(doc => {
@@ -195,17 +195,19 @@ app.post('/study/:id/posting', async (req, res) => {
   authorUserDB.update({
     point: admin.firestore.FieldValue.increment(POSTING_POINT),
   });
-  studyGroupDB.collection('postings').add({
+  const postingDB = await studyGroupDB.collection('postings').add({
     ...newPosting,
+    id: null,
     author,
     authorUid: userUid,
     createDate,
     studyGroupDB,
     likes: 0,
+    img: { url: null },
     likedBy: [],
   });
   authorUserDB.collection('points').add(record);
-
+  postingDB.update({ id: postingDB.id });
   res.send('success');
 });
 
@@ -216,12 +218,12 @@ app.patch('/study/:id/posting/', async (req, res) => {
   const postingData = (await postingDB.get()).data();
   if (postingData.likedBy.includes(userUid)) {
     postingDB.update({
-      like: admin.firestore.FieldValue.increment(-1),
+      likes: admin.firestore.FieldValue.increment(-1),
       likedBy: admin.firestore.FieldValue.arrayRemove(userUid),
     });
   } else {
     postingDB.update({
-      like: admin.firestore.FieldValue.increment(1),
+      likes: admin.firestore.FieldValue.increment(1),
       likedBy: admin.firestore.FieldValue.arrayUnion(userUid),
     });
   }
