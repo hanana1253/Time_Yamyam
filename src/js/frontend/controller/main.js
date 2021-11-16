@@ -1,3 +1,17 @@
+import axios from 'axios';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { firebaseConfig } from '../utils/firebaseConfig.js';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
 const swiper = new Swiper('.swiper', {
   // Optional parameters
   direction: 'horizontal',
@@ -25,3 +39,15 @@ document.querySelector('.group-tablist').onclick = e => {
     $el.classList.toggle('active', $el === e.target);
   });
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, async () => {
+    if (auth) {
+      const { userUid } = auth.currentUser;
+      const data = await axios.get(`${userUid}`).then(({ data }) => data);
+      console.log(data);
+    } else {
+      console.log('로그인해주세요');
+    }
+  });
+});

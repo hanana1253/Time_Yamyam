@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
 import axios from 'axios';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 import { throttle } from '../utils/helper.js';
