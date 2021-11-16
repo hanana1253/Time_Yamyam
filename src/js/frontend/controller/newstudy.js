@@ -78,8 +78,11 @@ const setSchemaValueByInputName = (inputName, value) => {
 };
 
 const setErrorMessage = inputName => {
-  $newstudyForm.querySelector(`input[name = ${inputName}]`).closest('.input-container').lastElementChild.textContent =
-    getIsValidByInputName(inputName) ? '' : getErrorMsgByInputName(inputName);
+  $newstudyForm
+    .querySelector(`input[name = ${inputName}], textarea[name=${inputName}]`)
+    .closest('.input-container').lastElementChild.textContent = getIsValidByInputName(inputName)
+    ? ''
+    : getErrorMsgByInputName(inputName);
 };
 const activateSubmitButton = () => {
   $submitBtn.disabled = !getIsValid();

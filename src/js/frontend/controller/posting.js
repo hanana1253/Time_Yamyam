@@ -1,25 +1,16 @@
-// DOM Nodes
-const $hashTag = document.querySelectorAll('.hash-tag');
-// const splitArray = $hashTag.split(' ');
-// const linkedTag = '';
-
-// Functions
-
+import { postingSchema } from '../utils/schema.js';
 // drag and drop
 function updateThumbnails(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector('.drop-zene__thumb');
+  // let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
   // first time remove the prompt
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
   }
 
-  // very first time, there is not thumbnail
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement('div');
-    thumbnailElement.classList.add('drop-zone__thumb');
-    dropZoneElement.appendChild(thumbnailElement);
-  }
+  const thumbnailElement = document.createElement('div');
+  thumbnailElement.classList.add('drop-zone__thumb');
+  dropZoneElement.appendChild(thumbnailElement);
 
   // bring or set file name
   thumbnailElement.dataset.label = file.name;
@@ -53,9 +44,7 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
   });
 
   inputElement.addEventListener('change', () => {
-    if (inputElement.files.length) {
-      updateThumbnails(dropZoneElement, inputElement.files[0]);
-    }
+    [...inputElement.files].forEach(file => updateThumbnails(dropZoneElement, file));
   });
 
   // whenever the user drag over the image
@@ -73,12 +62,7 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
 
   dropZoneElement.addEventListener('drop', e => {
     e.preventDefault();
-
-    if (e.dataTransfer.files.length) {
-      inputElement.files = e.dataTransfer.files;
-      updateThumbnails(dropZoneElement, e.dataTransfer.files[0]);
-    }
-
+    [...e.dataTransfer.files].forEach(file => updateThumbnails(dropZoneElement, file));
     dropZoneElement.classList.remove('drop-zone--over');
   });
 });
