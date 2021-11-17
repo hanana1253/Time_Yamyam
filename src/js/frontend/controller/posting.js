@@ -83,8 +83,6 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
       dropZoneElement.classList.remove('drop-zone--over');
     });
   });
-  dropZoneElement.addEventListener('click', () => {});
-
   dropZoneElement.addEventListener('drop', e => {
     e.preventDefault();
     [...e.dataTransfer.files].forEach(file => updateThumbnails(dropZoneElement, file));

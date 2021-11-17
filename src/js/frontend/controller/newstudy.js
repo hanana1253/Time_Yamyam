@@ -5,9 +5,10 @@ import { firebaseConfig } from '../utils/firebaseConfig.js';
 import { debounce } from '../utils/helper.js';
 import { newstudySchema } from '../utils/schema.js';
 
-let tags = [];
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+let tags = [];
+const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
 
 const $form = document.querySelector('form');
 const $tagInput = document.querySelector('.tag-id');
@@ -19,7 +20,6 @@ const $durationRangeInput = document.querySelector('.duration-range');
 const schema = newstudySchema;
 
 // Functions -------------------------------------------------
-const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const getErrorMsgByInputName = inputName => schema[inputName].error;
