@@ -45,22 +45,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
         // group, posting, users list update
         const group = await fetchGroupData();
+        const notiPost = group.postingList.filter(post => post.isNoti);
+        const noneNotiPost = group.postingList.filter(post => !post.isNoti);
+
         stateFunc.group = group;
         stateFunc.users = group.userList;
-        stateFunc.postings = group.postingList.map(posting => {
-          posting.week =
+        stateFunc.postings = [...notiPost, ...noneNotiPost].map(posting => {
+          posting.weeks =
             Math.ceil(
               (new Date(posting.createDate).getMilliseconds() - new Date(group.createDate).getMilliseconds()) / WEEKDAYS
             ) - 1;
-          posting.day = new Date(posting.createDate).getDay();
+          posting.days = new Date(posting.createDate).getDay();
           return posting;
         });
 
-        // filter initialize
         initialFilter();
 
         render[stateFunc.currentFeed]();
         render.filter();
+
+        // console.log(group.postingList);
 
         document.querySelector('.group-title').textContent = group.title;
       } catch (error) {
@@ -155,7 +159,8 @@ document.querySelector('.filters').onchange = e => {
 
   if (isAllUnChecked) {
     filterType = filterType.map(_ => 1);
-    isFirst = { week: true, day: true, member: true };
+    isFirst = { weeks: true, days: true, member: true };
+    document.querySelector(`.filters-${type}`).setAttribute('color', 'black');
   }
 
   stateFunc.filterState[type] = filterType;

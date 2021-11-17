@@ -5,8 +5,8 @@ const filtering = (postings, filterState) => {
   const { group } = stateFunc;
   const userNickname = group.userList.map(user => user.nickname);
 
-  let newPostings = postings.filter(posting => filterState.week[posting.week]);
-  newPostings = newPostings.filter(posting => filterState.day[posting.day]);
+  let newPostings = postings.filter(posting => filterState.weeks[posting.weeks]);
+  newPostings = newPostings.filter(posting => filterState.days[posting.days]);
   newPostings = newPostings.filter(posting => filterState.member[userNickname.indexOf(posting.author)]);
 
   return newPostings;
@@ -21,7 +21,9 @@ const render = {
         (posting, i) => `
             <li class="group-feed__item" data-id="${i + 1}" data-week="${posting.week}" data-day="${
           posting.day
-        }" data-member="${posting.author}" data-post="${posting.id}">
+        }" data-member="${posting.author}" data-post="${posting.id}" style="${
+          posting.isNoti ? 'background-color: pink;' : 'background-color: #f0eeee;'
+        }">
                 <figure class="group-feed__image">
                     <img src="${posting.img.url ? posting.img.url : '../../images/feedImage.jpeg'}" alt="이미지" />
                 </figure>
@@ -30,7 +32,7 @@ const render = {
                 <p class="group-feed__author">${posting.author}</p>
                 <div class="group-feed__likes">
                     <div class="likes-number">${posting.likes}</div>
-                    <button>
+                    <button style="${posting.isNoti ? 'background-color: pink;' : 'background-color: #f0eeee;'}">
                         ${
                           posting.likedBy.includes(stateFunc.userInfo.uid)
                             ? '<i class="bx bxs-heart"></i>'
@@ -146,7 +148,7 @@ const render = {
     const week = `${durationArr
       .map(
         duration =>
-          `<label><i class="bx bx-check"></i><input type="checkbox" value="week-${duration}" />${
+          `<label><i class="bx bx-check"></i><input type="checkbox" value="weeks-${duration}" />${
             duration + 1
           }주차</label>`
       )
@@ -155,7 +157,7 @@ const render = {
     const day = `${postingDays
       .map(
         day =>
-          `<label><i class="bx bx-check"></i><input type="checkbox" value="day-${day}" />${WEEKS[day].content}</label>`
+          `<label><i class="bx bx-check"></i><input type="checkbox" value="days-${day}" />${WEEKS[day].content}</label>`
       )
       .join('')}`;
 

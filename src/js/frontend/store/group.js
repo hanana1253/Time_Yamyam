@@ -34,12 +34,12 @@ let userInfo = {
 let filterState = {
   sortOfFilters: ['weeks', 'days', 'member'],
   isFirst: {
-    week: true,
-    day: true,
+    weeks: true,
+    days: true,
     member: true,
   },
-  week: [],
-  day: [],
+  weeks: [],
+  days: [],
   member: [],
 };
 
@@ -68,8 +68,8 @@ const initialFilter = () => {
   const weekNum = group.duration;
   const memberNum = group.userList.length;
 
-  filterState.week = Array(weekNum).fill(1);
-  filterState.day = Array(7).fill(1);
+  filterState.weeks = Array(weekNum).fill(1);
+  filterState.days = Array(7).fill(1);
   filterState.member = Array(memberNum).fill(1);
 };
 
