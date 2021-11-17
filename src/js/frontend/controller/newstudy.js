@@ -2,7 +2,7 @@ import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
-import { throttle } from '../utils/helper.js';
+import { debounce } from '../utils/helper.js';
 import { newstudySchema } from '../utils/schema.js';
 
 let tags = [];
@@ -33,9 +33,9 @@ const render = () => {
   $tagList.innerHTML = tags
     .map(
       ({ id, content }) => `
-    <li class="item" style="background-color:${getRandomColor()}" data-id="${id}">${content}
+        <li class="item" style="background-color:${getRandomColor()}" data-id="${id}">${content}
           <i class='bx bxs-tag-x' ></i>
-          </li>`
+        </li>`
     )
     .join('');
 };
@@ -52,7 +52,7 @@ const activateSubmitButton = () => {
   $submitBtn.disabled = !getIsValid();
 };
 
-const validate = throttle(e => {
+const validate = debounce(e => {
   const { name, value } = e.target;
   if (name === 'duration' || name === 'minLevel') return;
   if (name === 'date-checker') {
