@@ -111,3 +111,38 @@ $form.onsubmit = e => {
   newStudy.postingDays = $form.querySelector('.fdsa').value;
   newStudy.minLevel = $form.querySelector('.asdf').value;
 };
+
+const $enterRangeInput = document.querySelector('.enter-range');
+const $durationRangeInput = document.querySelector('.duration-range');
+
+const setValue = currentInput => {
+  const $rangeInput = document.querySelector(
+    `${currentInput === 'enter' ? '.enter-range' : '.duration-range'} .range-input`
+  );
+  const $rangeOuput = document.querySelector(
+    `${currentInput === 'enter' ? '.enter-range' : '.duration-range'} .range-ouput`
+  );
+  const newValue = (($rangeInput.value - $rangeInput.min) * 100) / ($rangeInput.max - $rangeInput.min);
+  const newPosition = 12 - newValue * 0.24; // TODO: thumbsize 변수로 만들기
+  $rangeOuput.innerHTML = `<span>${$rangeInput.value}${$rangeInput.dataset.label}</span>`;
+  $rangeOuput.style.left = `calc(${newValue}% + (${newPosition}px))`;
+
+  $rangeInput.style = `
+    background-image: 
+      -webkit-gradient(linear, 0% 0%, 100% 0%, 
+        color-stop(${newValue / 100},${currentInput === 'enter' ? '#aaa' : '#5D5FEF'}),
+        color-stop(${newValue / 100},${currentInput === 'enter' ? '#5D5FEF' : '#aaa'}));`;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  setValue('enter');
+  setValue('duration');
+});
+
+$enterRangeInput.oninput = () => {
+  setValue('enter');
+};
+
+$durationRangeInput.oninput = () => {
+  setValue('duration');
+};
