@@ -40,6 +40,7 @@ body {
       width: 100%;
       max-width: rem(500px);
       background-color: #f0eeee;
+      transition: all 0.3s ease;
 
       button.delete {
         position: absolute;
@@ -57,6 +58,10 @@ body {
         border: none;
         box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
       }
+    }
+
+    &__item:hover {
+      transform: translateY(-5px);
     }
 
     &__image {
@@ -152,6 +157,7 @@ body {
 
     &-teamFeed,
     &-myFeed {
+      min-height: rem(300px);
       &__list {
         margin: rem(10px) 0 0 0;
         display: flex;
@@ -179,10 +185,6 @@ body {
     &-tabList {
       padding: rem(16px);
       display: flex;
-
-      //   position: absolute;
-      //   top: rem(65px);
-      //   right: rem(10px);
     }
 
     &-tab {
@@ -194,11 +196,14 @@ body {
 
     &-teamFeed,
     &-myFeed {
+      // min-height: rem(300px);
+      min-height: 100%;
       &__list {
         margin-top: rem(39px);
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         column-gap: rem(10px);
+        row-gap: rem(10px);
       }
     }
   }
@@ -208,7 +213,7 @@ body {
   &-info {
     position: relative;
     margin-top: rem(25px);
-    height: 100%;
+    min-height: 100%;
 
     &__title {
       // margin-top: rem(20px);
@@ -269,9 +274,9 @@ body {
     &__list {
       margin-top: rem(15px);
       background-color: #f0eeee;
-      height: 88%;
+      // height: 88%;
       max-height: rem(192px);
-      min-height: rem(192px);
+      // min-height: rem(192px);
       border-radius: rem(10px);
       overflow: scroll;
     }
@@ -349,6 +354,7 @@ body {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        min-height: rem(36px);
       }
 
       label > i {
