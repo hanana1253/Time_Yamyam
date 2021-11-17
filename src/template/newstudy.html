@@ -63,48 +63,18 @@
           <!-- range bar -->
           <div class="enter-range">
             <span class="questions">참여레벨</span>
-            <div class="range-bar">
-              <input
-                class="range-bar__input"
-                type="range"
-                min="0"
-                max="10"
-                value="0"
-                name="enter-level"
-                id="enter-level"
-              />
-              <output class="level-output" name="level" for="enter-level"></output>
-              <p class="new-value">Value: <span class="value-span"></span></p>
+            <div class="range-wrap">
+              <output class="range-ouput"></output>
+              <input class="range-input" name="minLevel" type="range" min="1" max="10" value="1" step="1" data-label="이상"/>
             </div>
           </div>
           <div class="duration-range">
             <span class="questions">진행 기간</span>
-            <div class="range-bar">
-              <input
-                class="range-bar__input"
-                type="range"
-                min="1"
-                max="10"
-                step="1"
-                value="1"
-                name="duration"
-                id="duration"
-              />
+            <div class="range-wrap">
+              <output class="range-ouput"></output>
+              <input class="range-input" name="duration" type="range" min="1" max="10" value="4" step="1" data-label="주"/>
             </div>
-            <ul class="range-label">
-              <li class="active">1주</li>
-              <li>2주</li>
-              <li>3주</li>
-              <li>4주</li>
-              <li>5주</li>
-              <li>6주</li>
-              <li>7주</li>
-              <li>8주</li>
-              <li>9주</li>
-              <li>10주</li>
-            </ul>
           </div>
-
           <div class="checkbox-container input-container">
             <span class="questions authorization">인증 요일</span>
             <ul>
