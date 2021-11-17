@@ -9,7 +9,21 @@
   }
 }
 .all-groups {
-  background-color: salmon;
+  &__list {
+    @include mobile {
+      display: flex;
+      flex-flow: column;
+      flex-wrap: nowrap;
+      gap: rem(40px);
+    }
+    @include desktop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      row-gap: rem(30px);
+      column-gap: rem(40px);
+    }
+  }
   &__filters {
     justify-content: space-evenly;
   }
@@ -20,6 +34,7 @@
     height: rem(326px);
     width: 100%;
     max-width: rem(500px);
+    margin: 0 auto;
     background-color: #f0eeee;
   }
   &__title {
@@ -30,13 +45,47 @@
     text-overflow: ellipsis;
     word-break: break-all;
   }
+  &__day {
+    display: inline-flex;
+    & > li {
+      padding: rem(5px);
+      line-height: 1;
+      width: rem(20px);
+      height: rem(20px);
+      border-radius: 50%;
+    }
+  }
   &__image {
     background-color: #fffafa;
     height: 56%;
   }
 }
 .my-groups {
-  background-color: yellow;
   width: 100%;
   height: 30vh;
+}
+
+.join {
+  line-height: rem(20px);
+  position: absolute;
+  right: rem(30px);
+  bottom: rem(30px);
+  border: 3px solid transparent;
+  background-color: $primary;
+  color: #fff;
+  cursor: pointer;
+  &:disabled {
+    background-color: transparent;
+    border: 2px solid $primary;
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.anonymous-page {
+  padding: rem(100px) rem(50px);
+  text-align: center;
+  .anonymous {
+    display: inline-block;
+    width: rem(300px);
+  }
 }

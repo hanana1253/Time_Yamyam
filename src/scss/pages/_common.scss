@@ -87,6 +87,7 @@
   margin: rem(10px) rem(5px);
   height: rem(20px);
   color: red;
+  position: absolute;
 }
 
 .button {
@@ -165,17 +166,5 @@
         background-color: $light-violet;
       }
     }
-  }
-}
-.button {
-  line-height: rem(50px);
-  border: 3px solid transparent;
-  background-color: $primary;
-  color: #fff;
-  cursor: pointer;
-  &:disabled {
-    background-color: transparent;
-    border: 2px solid $primary;
-    color: rgba(0, 0, 0, 0.3);
   }
 }

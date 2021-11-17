@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { setMyGroups, setReadyGroups } from '../store/main.js';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { setMyGroups, setAllGroups, setAnonymous } from '../store/main.js';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 
 const app = initializeApp(firebaseConfig);
@@ -35,16 +35,18 @@ document.querySelector('.group-tablist').onclick = e => {
   });
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  $swiper.disable();
   onAuthStateChanged(auth, async () => {
     if (auth.currentUser) {
       const { uid: userUid } = auth.currentUser;
-      const { readyStudyGroups, myGroups } = await axios.get(`/${userUid}`).then(({ data }) => data);
+      const { readyStudyGroups, myGroups, userData } = await axios.get(`/${userUid}`).then(({ data }) => data);
+      setAllGroups(readyStudyGroups, userData);
       setMyGroups(myGroups);
-      setReadyGroups(readyStudyGroups);
     } else {
       const { readyStudyGroups } = await axios.get('/allGroups').then(({ data }) => data);
-      setReadyGroups(readyStudyGroups);
+      setAllGroups(readyStudyGroups);
+      setAnonymous();
     }
   });
 });

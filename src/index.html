@@ -34,16 +34,15 @@
           aria-selected="true"
           aria-controls="all-groups"
           id="all"
-          tabindex="0"
         >
           전체 스터디
         </button>
-        <button class="group-tab" role="tab" aria-selected="false" aria-controls="my-groups" id="my" tabindex="-1">
+        <button class="group-tab" role="tab" aria-selected="false" aria-controls="my-groups" id="my">
           나의 스터디
         </button>
       </div>
       <div class="swiper-wrapper">
-        <div class="all-groups swiper-slide" id="all-groups" role="tabpanel" tabindex="0" aria-labelledby="all">
+        <div class="all-groups swiper-slide" id="all-groups" role="tabpanel" aria-labelledby="all">
           <div class="all-groups__filters filters">
             <select name="filters-level">
               <option value="0">레벨</option>
@@ -83,17 +82,6 @@
             </select>
           </div>
           <ul class="all-groups__list">
-            <li class="all-groups__item">
-            <h3 class="all-groups__title">study group title</h3>
-            <figure class="all-groups__image"><img src="#" alt="" /></figure>
-            <p>00부터 시작</p>
-            <ul>
-              <li>레벨</li>
-              <li>횟수</li>
-              <li>요일</li>
-              <li>기간</li>
-            </ul>
-          </li>
           </ul>
           <div class="confirm">
             <!-- <h3>study group title</h3>
@@ -108,14 +96,8 @@
           <button class="confirm__button--cancel">취소</button> -->
           </div>
         </div>
-        <div class="my-groups swiper-slide" id="my-groups" role="tabpanel" tabindex="0" aria-labelledby="my">
+        <div class="my-groups swiper-slide" id="my-groups" role="tabpanel" aria-labelledby="my">
           <ul class="my-groups__list">
-            <li class="my-groups__item">
-              <h3>study group title</h3>
-              <figure><img src="#" alt="" /></figure>
-              <p>00부터 시작</p>
-              <div>span으로 레벨,주#회,요일,기간 넣어줄 것</div>
-            </li>
           </ul>
         </div>
       </div>
