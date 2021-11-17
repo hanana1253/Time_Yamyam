@@ -1,19 +1,20 @@
 import { stateFunc } from '../store/group.js';
 import { WEEKS, getLevel } from '../utils/helper.js';
 
-const { filterState } = stateFunc;
-
 const filtering = (postings, filterState) => {
-  let newPostings = postings.filter(posting => filterState.week.includes(posting));
-  newPostings = newPostings.filter(posting => filterState.day.includes(posting));
-  newPostings = newPostings.filter(posting => filterState.member.includes(posting));
+  const { group } = stateFunc;
+  const userNickname = group.userList.map(user => user.nickname);
+
+  let newPostings = postings.filter(posting => filterState.week[posting.week]);
+  newPostings = newPostings.filter(posting => filterState.day[posting.day]);
+  newPostings = newPostings.filter(posting => filterState.member[userNickname.indexOf(posting.author)]);
 
   return newPostings;
 };
 
 const render = {
   teamFeed() {
-    const newPostings = filtering(stateFunc.postings, filterState);
+    const newPostings = filtering(stateFunc.postings, stateFunc.filterState);
 
     const content = newPostings
       .map(
@@ -49,7 +50,9 @@ const render = {
   },
   myFeed() {
     const { userInfo } = stateFunc;
-    const newPostings = filtering(stateFunc.postings, filterState).filter(post => post.authorUid === userInfo.uid);
+    const newPostings = filtering(stateFunc.postings, stateFunc.filterState).filter(
+      post => post.authorUid === userInfo.uid
+    );
 
     const content = newPostings
       .map(
@@ -151,8 +154,8 @@ const render = {
 
     const day = `${postingDays
       .map(
-        (day, i) =>
-          `<label><i class="bx bx-check"></i><input type="checkbox" value="day-${i}" />${WEEKS[day].content}</label>`
+        day =>
+          `<label><i class="bx bx-check"></i><input type="checkbox" value="day-${day}" />${WEEKS[day].content}</label>`
       )
       .join('')}`;
 

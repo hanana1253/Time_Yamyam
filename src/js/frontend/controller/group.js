@@ -7,13 +7,13 @@ import {
   fetchGroupData,
   fetchUserInfo,
   initialFilter,
-  setFilterState,
   sendLikesInfo,
   sendDeletePosting,
 } from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
+const WEEKDAYS = 7 * 86400000;
 const auth = getAuth();
 const swiper = new Swiper('.swiper', {
   // Optional parameters
@@ -39,22 +39,29 @@ window.addEventListener('DOMContentLoaded', () => {
       try {
         $swiper.disable();
 
+        // auth info update
         const userInfo = await fetchUserInfo(user);
         stateFunc.userInfo = { ...userInfo, uid: auth.currentUser.uid };
 
+        // group, posting, users list update
         const group = await fetchGroupData();
         stateFunc.group = group;
         stateFunc.users = group.userList;
         stateFunc.postings = group.postingList.map(posting => {
-          posting.week = Math.ceil((new Date(posting.createDate).getDate() - group.date.getDate()) / 7);
+          posting.week =
+            Math.ceil(
+              (new Date(posting.createDate).getMilliseconds() - new Date(group.createDate).getMilliseconds()) / WEEKDAYS
+            ) - 1;
           posting.day = new Date(posting.createDate).getDay();
           return posting;
         });
 
+        // filter initialize
         initialFilter();
 
         render[stateFunc.currentFeed]();
         render.filter();
+
         document.querySelector('.group-title').textContent = group.title;
       } catch (error) {
         console.log(error);
@@ -131,23 +138,31 @@ document.querySelector('.filters').onclick = e => {
 document.querySelector('.filters').onchange = e => {
   if (!e.target.matches('.filters label > input')) return;
 
-  e.target.parentNode.classList.toggle('checked', e.target.checked);
+  const [type, number] = e.target.parentNode.lastElementChild.value.split('-');
+  let filterType = stateFunc.filterState[type];
+  let { isFirst } = stateFunc.filterState;
 
-  if (e.target.checked) {
-    const [type, number] = e.target.parentNode.lastElementChild.value.split('-');
-
-    setFilterState(
-      type,
-      stateFunc.postings.filter(posting => posting[type] === +number)
-    );
-
-    render[stateFunc.currentFeed]();
+  if (stateFunc.filterState.isFirst[type]) {
+    filterType = filterType.map(_ => 0);
+    isFirst[type] = false;
   }
+
+  e.target.parentNode.classList.toggle('checked', e.target.checked);
+  filterType[number] = e.target.checked ? 1 : 0;
 
   const isAllUnChecked =
     [...e.target.closest('li').children].filter($label => $label.classList.contains('checked')).length === 0;
 
+  if (isAllUnChecked) {
+    filterType = filterType.map(_ => 1);
+    isFirst = { week: true, day: true, member: true };
+  }
+
+  stateFunc.filterState[type] = filterType;
+  stateFunc.filterState.isFirst = isFirst;
+
   e.target.closest('li').classList.toggle('hidden', isAllUnChecked);
+  render[stateFunc.currentFeed]();
 };
 
 document.querySelector('.group').onclick = e => {

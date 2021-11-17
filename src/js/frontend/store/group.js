@@ -15,7 +15,6 @@ let group = {
   title: '',
   userList: [],
 };
-
 let users = [];
 let postings = [];
 
@@ -32,16 +31,21 @@ let userInfo = {
   ],
 };
 
-const feedState = {
-  feedLists: ['teamFeed', 'myFeed', 'info'],
-  currentFeed: 'teamFeed',
-};
-
-const filterState = {
+let filterState = {
   sortOfFilters: ['weeks', 'days', 'member'],
+  isFirst: {
+    week: true,
+    day: true,
+    member: true,
+  },
   week: [],
   day: [],
   member: [],
+};
+
+const feedState = {
+  feedLists: ['teamFeed', 'myFeed', 'info'],
+  currentFeed: 'teamFeed',
 };
 
 const fetchGroupData = () => axios.get('/study/HTML').then(({ data }) => data);
@@ -52,22 +56,21 @@ const fetchUserInfo = user => {
   return axios.get(`/mypage/${userId}`).then(({ data }) => data);
 };
 
-const initialFilter = () => {
-  filterState.week = postings;
-  filterState.day = postings;
-  filterState.member = postings;
-};
-
-const setFilterState = (stateName, newState) => {
-  filterState[stateName] = newState;
-};
-
 const sendLikesInfo = (userUid, postingId) => {
   axios.patch(`/study/${group.id}/posting/`, { userUid, postingId });
 };
 
 const sendDeletePosting = postingId => {
   axios.delete(`/study/${group.id}/posting/${postingId}`);
+};
+
+const initialFilter = () => {
+  const weekNum = group.duration;
+  const memberNum = group.userList.length;
+
+  filterState.week = Array(weekNum).fill(1);
+  filterState.day = Array(7).fill(1);
+  filterState.member = Array(memberNum).fill(1);
 };
 
 const stateFunc = {
@@ -102,12 +105,15 @@ const stateFunc = {
   get filterState() {
     return filterState;
   },
-  set userInfo(newUserInfo) {
-    userInfo = newUserInfo;
+  set filterState(newFilterState) {
+    filterState = newFilterState;
   },
   get userInfo() {
     return userInfo;
   },
+  set userInfo(newUserInfo) {
+    userInfo = newUserInfo;
+  },
 };
 
-export { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, setFilterState, sendLikesInfo, sendDeletePosting };
+export { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, sendLikesInfo, sendDeletePosting };
