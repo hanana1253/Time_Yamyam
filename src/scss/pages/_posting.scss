@@ -76,7 +76,9 @@
     stop-opacity: 1px solid $lightblack;
   }
 }
-
+.notice:checked {
+  background-color: violet;
+}
 // drag and drop box
 /* drop box border */
 .drop-container {

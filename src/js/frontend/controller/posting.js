@@ -17,12 +17,11 @@ const $approvalTitle = document.querySelector('.approval-title');
 const $submitBtn = document.querySelector('.submit');
 const $errorMsg = document.querySelector('.error');
 const $form = document.querySelector('form');
+const $postingTitle = document.querySelector('.posting-title');
+const $notice = document.querySelector('.notice');
 
-// drag and drop
+// Functions --------------------------------------------
 function updateThumbnails(dropZoneElement, file) {
-  // let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
-
-  // first time remove the prompt
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
   }
@@ -31,10 +30,8 @@ function updateThumbnails(dropZoneElement, file) {
   thumbnailElement.classList.add('drop-zone__thumb');
   dropZoneElement.appendChild(thumbnailElement);
 
-  // bring or set file name
   thumbnailElement.dataset.label = file.name;
 
-  // show thumbnails for image files
   if (file.type.startsWith('image/')) {
     const reader = new FileReader();
 
@@ -47,7 +44,7 @@ function updateThumbnails(dropZoneElement, file) {
   }
 }
 
-// Event bindings
+// Event bindings----------------------------
 window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async user => {
     if (user) {
@@ -66,7 +63,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
-  // go up till they find drop zone element
   const dropZoneElement = inputElement.closest('.drop-zone');
 
   dropZoneElement.addEventListener('click', () => {
@@ -77,7 +73,6 @@ document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
     [...inputElement.files].forEach(file => updateThumbnails(dropZoneElement, file));
   });
 
-  // whenever the user drag over the image
   dropZoneElement.addEventListener('dragover', e => {
     e.preventDefault();
     dropZoneElement.classList.add('drop-zone--over');
@@ -102,15 +97,26 @@ $approvalTitle.oninput = e => {
   $errorMsg.textContent = e.target.value.trim() ? '' : '인증글 제목을 선택해주세요';
 };
 
+$notice.oninput = e => {
+  $postingTitle.textContent = e.target.checked ? '공지 글을 입력해주세요' : '인증 글을 입력해주세요';
+};
+
 $form.onkeydown = e => {
   if (e.key !== 'Enter' || e.target.name === 'text-content') return;
   e.preventDefault();
 };
+
+// send data to server-----------------------------
 $form.onsubmit = e => {
   e.preventDefault();
-  const posting = {};
-  posting.isNoti = $form.querySelector('.notice').value;
-  posting.title = $form.querySelector('.approval-title').value;
-  posting.description = $form.querySelector('.text-content').value;
-  posting.url = $form.querySelector('.url').value;
+  const newPosting = {};
+  const selectedId = $form.querySelector('.group-selected').dataset.id;
+  newPosting.isNoti = $form.querySelector('.notice').checked;
+  newPosting.title = $form.querySelector('.approval-title').value;
+  newPosting.description = $form.querySelector('.text-content').value;
+  newPosting.url = $form.querySelector('.url').value;
+  const userUid = auth.currentUser.uid;
+  axios.post(`/study/${selectedId}/posting`, { userUid, newPosting });
+  // query string으로 study id 보내기
+  window.location.href = '/group.html';
 };
