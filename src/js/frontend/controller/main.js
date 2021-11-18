@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { setMyGroups, setAllGroups, setAnonymous, getAllGroups, filterState} from '../store/main.js';
+import { setMyGroups, setAllGroups, setAnonymous, getAllGroups, filterState, getFilterState } from '../store/main.js';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 import { render } from '../view/main.js';
 
@@ -53,50 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-$allGroupsList.onclick = e => {
+$allGroupsList.onclick = async e => {
   if (!e.target.matches('li > .join')) return;
   const studyIndex = e.target.closest('li').dataset.index;
+  const studyId = e.target.closest('li').dataset.id;
   const study = getAllGroups()[+studyIndex];
+  
   document.querySelector('.overlay').classList.add('active');
   render.modal(study);
-};
-
-document.querySelector('.filters').onclick = e => {
-  if (!(e.target.matches('ul') || e.target.matches('li'))) return;
-
-  const className = e.target.classList.value;
-  const checkbox = document.querySelector(`.${className}__checkbox`);
-
-  checkbox.classList.toggle('hidden', !checkbox.classList.contains('hidden'));
-};
-
-document.querySelector('.filters').onchange = e => {
-  if (!e.target.matches('.filters label > input')) return;
-
-  const [type, number] = e.target.parentNode.lastElementChild.value.split('-');
-  let filterType = stateFunc.filterState[type];
-  let { isFirst } = stateFunc.filterState;
-
-  if (stateFunc.filterState.isFirst[type]) {
-    filterType = filterType.map(_ => 0);
-    isFirst[type] = false;
-  }
-
-  e.target.parentNode.classList.toggle('checked', e.target.checked);
-  filterType[number] = e.target.checked ? 1 : 0;
-
-  const isAllUnChecked =
-    [...e.target.closest('li').children].filter($label => $label.classList.contains('checked')).length === 0;
-
-  if (isAllUnChecked) {
-    filterType = filterType.map(_ => 1);
-    isFirst = { weeks: true, days: true, member: true };
-    document.querySelector(`.filters-${type}`).setAttribute('color', 'black');
-  }
-
-  stateFunc.filterState[type] = filterType;
-  stateFunc.filterState.isFirst = isFirst;
-
-  e.target.closest('li').classList.toggle('hidden', isAllUnChecked);
-  render[stateFunc.currentFeed]();
+  document.querySelector('.study-modal .confirm').onclick = async () => {
+    await axios.patch(`/study/${studyId}/member/${auth.currentUser.uid}`);
+    window.location.href = '/';
+  };
+  document.querySelector('.cancel').onclick = () => {
+    document.querySelector('.overlay').classList.remove('active');
+    render.modal();
+  };
 };
