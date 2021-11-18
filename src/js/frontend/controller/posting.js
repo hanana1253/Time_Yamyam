@@ -128,5 +128,5 @@ $form.onsubmit = e => {
   const userUid = auth.currentUser.uid;
   axios.post(`/study/${selectedId}/posting`, { userUid, newPosting });
   // query string으로 study id 보내기
-  window.location.href = '/group.html';
+  window.location.href = `/group.html?studyId=${selectedId}`;
 };

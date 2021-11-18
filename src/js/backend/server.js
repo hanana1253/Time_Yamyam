@@ -164,7 +164,7 @@ app.post('/study', async (req, res) => {
     status: 'ready',
     postingList: [],
   });
-  res.send('success');
+  res.send(studyDB.id);
 });
 
 // POST '/posting' { userUid: uid string, newPosting: 새로운 스터디 객체 }

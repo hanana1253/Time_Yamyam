@@ -147,7 +147,7 @@ $cancelBtn.onclick = () => {
 };
 
 // send data to server ----------------------------
-$form.onsubmit = e => {
+$form.onsubmit = async e => {
   e.preventDefault();
   const newStudy = {};
   newStudy.title = $form.querySelector('.group-name').value;
@@ -159,7 +159,8 @@ $form.onsubmit = e => {
     .filter(input => input.checked)
     .map(input => +input.dataset.id);
   newStudy.minLevel = $form.querySelector('.minLevel').value;
-  axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
+  const studyId = await axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
+  console.log(studyId);
   // query string으로 study id 보내기
-  window.location.href = '/group.html';
+  window.location.href = `/group.html?studyId=${studyId}`;
 };
