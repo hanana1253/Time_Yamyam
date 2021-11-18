@@ -142,7 +142,7 @@ app.get('/mypoints/:userUid', async (req, res) => {
     .get();
   const pointHistory = [];
   targetUserPointsDB.forEach(doc => {
-    pointHistory.push(doc.data());
+    pointHistory.push({ ...doc.data(), date: doc.data().toDate() });
   });
   res.send(pointHistory);
 });
