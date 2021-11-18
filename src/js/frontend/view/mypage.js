@@ -1,4 +1,4 @@
-import { getLevel, WEEKS } from '../utils/helper';
+import { getLevel, WEEKS, removeActive } from '../utils/helper';
 
 const $userInfoInner = document.querySelector('.user-info__inner');
 const $nickname = document.querySelector('.user-info__nickname');
@@ -7,8 +7,13 @@ const $point = document.querySelector('.user-info__point span');
 const $inprogressStudy = document.querySelector('.inprogress-study');
 const $waitingStudy = document.querySelector('.waiting-study');
 const $closeStudy = document.querySelector('.close-study');
+const $loading = document.querySelector('.loading');
 
 const render = ({ nickname, point, myStudy }) => {
+  setTimeout(() => {
+    removeActive([$loading, document.body]);
+  }, 300);
+
   $userInfoInner.classList.add(`level--${getLevel(point)}`);
   $nickname.textContent = nickname;
   $level.textContent = `레벨 ${getLevel(point)}`;
