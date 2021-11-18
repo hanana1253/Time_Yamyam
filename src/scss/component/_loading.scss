@@ -9,9 +9,9 @@
 }
 
 .loading {
+  font-family: initial;
   z-index: -999;
   opacity: 0;
-  transition: 0.4s;
 }
 
 .loading.active {

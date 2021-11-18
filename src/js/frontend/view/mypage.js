@@ -7,8 +7,14 @@ const $point = document.querySelector('.user-info__point span');
 const $inprogressStudy = document.querySelector('.inprogress-study');
 const $waitingStudy = document.querySelector('.waiting-study');
 const $closeStudy = document.querySelector('.close-study');
+const $loading = document.querySelector('.loading');
 
 const render = ({ nickname, point, myStudy }) => {
+  setTimeout(() => {
+    $loading.classList.remove('active');
+    document.body.classList.remove('active');
+  }, 300);
+
   $userInfoInner.classList.add(`level--${getLevel(point)}`);
   $nickname.textContent = nickname;
   $level.textContent = `레벨 ${getLevel(point)}`;
