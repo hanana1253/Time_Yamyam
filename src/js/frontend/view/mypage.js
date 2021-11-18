@@ -1,4 +1,4 @@
-import { getLevel, WEEKS } from '../utils/helper';
+import { getLevel, WEEKS, removeActive } from '../utils/helper';
 
 const $userInfoInner = document.querySelector('.user-info__inner');
 const $nickname = document.querySelector('.user-info__nickname');
@@ -11,8 +11,7 @@ const $loading = document.querySelector('.loading');
 
 const render = ({ nickname, point, myStudy }) => {
   setTimeout(() => {
-    $loading.classList.remove('active');
-    document.body.classList.remove('active');
+    removeActive([$loading, document.body]);
   }, 300);
 
   $userInfoInner.classList.add(`level--${getLevel(point)}`);
