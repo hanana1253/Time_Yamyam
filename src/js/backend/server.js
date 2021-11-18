@@ -19,26 +19,79 @@ app.use(express.json());
 const setSchedule = () => {
   const rule = new schedule.RecurrenceRule();
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
-  rule.hour = 0;
-  rule.minute = 0;
-  // rule.minute = 46;
-  // rule.second = 30;
+
+  // rule.hour = 0;
+  // rule.minute = 0;
+
+  // test 용
+  // rule.hour = 1;
+  // rule.minute = 11;
+  // rule.second = 40;
 
   schedule.scheduleJob(rule, async () => {
     console.log('완료된 스터디그룹 체크 실행', new Date());
     // 스터디그룹 완료 시 포인트 배분 및 상태변경
     const now = new Date();
-    const targetGroupsDB = await db.collection('studyGroups').where('status', '==', 'started').get();
+    const startedGroupsDB = await db.collection('studyGroups').where('status', '==', 'started').get();
+    const readyGroupsDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
 
-    targetGroupsDB.forEach(doc => {
+    startedGroupsDB.forEach(doc => {
       const finishDate = doc.data().finishDate.toDate();
       // console.log(finishDate);
       if (finishDate < now) {
         doc.ref.update({ status: 'finished' });
 
         doc.data().userList.forEach(userUid => {
-          const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
-          db.collection('users').doc(userUid).collection('points').add(record);
+          const pointRecord = { point: 100, category: `${doc.data().title} 스터디완료`, date: new Date() };
+          const notiRecord = {
+            category: '알림',
+            msg: `'${doc.data().title}' 스터디완료 포인트가 지급되었습니다.`,
+            date: new Date(),
+          };
+          db.collection('users').doc(userUid).collection('points').add(pointRecord);
+          db.collection('users').doc(userUid).collection('noti').add(notiRecord);
+        });
+      } else {
+        const { postingDays } = doc.data();
+
+        console.log(postingDays, now.getDay());
+        if (postingDays.includes(now.getDay())) {
+          doc.data().userList.forEach(userUid => {
+            const notiRecord = {
+              category: '알림',
+              msg: `'${doc.data().title}' 스터디 인증 요일입니다.`,
+              date: new Date(),
+            };
+            db.collection('users').doc(userUid).collection('noti').add(notiRecord);
+          });
+        }
+      }
+    });
+
+    readyGroupsDB.forEach(doc => {
+      const expireDate = doc.data().expireDate.toDate();
+
+      if (expireDate < now) {
+        let record = {};
+
+        if (doc.data().userList.length < 3) {
+          doc.ref.update({ status: 'expired' });
+          record = {
+            category: '알림',
+            msg: `3명이 모이지 않아서 '${doc.data().title}' 스터디가 삭제되었습니다.`,
+            date: new Date(),
+          };
+        } else {
+          doc.ref.update({ status: 'started' });
+          record = {
+            category: '알림',
+            msg: `'${doc.data().title}' 스터디가 시작되었습니다.`,
+            date: new Date(),
+          };
+        }
+
+        doc.data().userList.forEach(userUid => {
+          db.collection('users').doc(userUid).collection('noti').add(record);
         });
       }
     });
@@ -65,6 +118,12 @@ app.get('/:userUid', async (req, res) => {
     });
   });
   const userData = (await db.collection('users').doc(userUid).get()).data();
+  // const { attend } = (await db.collection('users').doc(userUid).get()).data();
+  // if (userData.attend) {
+  //   const pointRecord = { point: 1, category: '출석체크', date: new Date() };
+  //   db.collection('users').doc(userUid).collection('points').add(pointRecord);
+  // }
+
   res.send({ readyStudyGroups, myGroups, userData });
 });
 
