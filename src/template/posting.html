@@ -91,14 +91,10 @@
           <!-- upload images -->
           <form action="#" method="post" enctype="multipart/form-data">
             <div class="drop-container">
-              <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요"
-                >사진 업로드</label
-              >
-              <div class="drop-zone swiper">
+              <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요">사진 업로드</label>
+              <div class="drop-zone ">
+                <img class="drop-zone__img" src="https://wickedev.com/wp-content/uploads/2021/02/cloud-uploading.png">
                 <span class="drop-zone__prompt">사진을 드래그 해주세요</span>
-                <div class="swiper-wrapper"></div>
-                <!-- <div class="drop-zone__thumb" data-label="myfile.txt"></div> -->
-                <!-- name for regular upload submission  -->
                 <input class="drop-zone__input" type="file" name="myFile" id="myFile" multiple />
               </div>
             </div>
