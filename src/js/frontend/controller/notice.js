@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig';
 
-import store from '../store/mypage';
-import view from '../view/mypage';
+import store from '../store/notice';
+import view from '../view/notice';
 
 initializeApp(firebaseConfig);
 
@@ -13,9 +13,9 @@ window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async user => {
     if (user) {
       try {
-        const { data } = await store.fetchUserData(user);
-        store.setUserInfo(data);
-        view.render(store.getUserData());
+        const { data } = await store.fetchNotiList(user);
+        store.setNotiList(data);
+        view.render(store.getNotiList());
       } catch (error) {
         console.log(error);
       }
