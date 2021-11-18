@@ -63,77 +63,65 @@
           <!-- range bar -->
           <div class="enter-range">
             <span class="questions">참여레벨</span>
-            <div class="range-bar">
+            <div class="range-wrap">
+              <output class="range-ouput"></output>
               <input
-                class="range-bar__input"
+                class="range-input minLevel"
+                name="minLevel"
                 type="range"
-                min="0"
+                min="1"
                 max="10"
-                value="0"
-                name="enter-level"
-                id="enter-level"
+                value="1"
+                step="1"
+                data-label="이상"
               />
-              <output class="level-output" name="level" for="enter-level"></output>
-              <p class="new-value">Value: <span class="value-span"></span></p>
             </div>
           </div>
           <div class="duration-range">
             <span class="questions">진행 기간</span>
-            <div class="range-bar">
+            <div class="range-wrap">
+              <output class="range-ouput"></output>
               <input
-                class="range-bar__input"
+                class="range-input duration"
+                name="duration"
                 type="range"
                 min="1"
                 max="10"
+                value="4"
                 step="1"
-                value="1"
-                name="duration"
-                id="duration"
+                data-label="주"
               />
             </div>
-            <ul class="range-label">
-              <li class="active">1주</li>
-              <li>2주</li>
-              <li>3주</li>
-              <li>4주</li>
-              <li>5주</li>
-              <li>6주</li>
-              <li>7주</li>
-              <li>8주</li>
-              <li>9주</li>
-              <li>10주</li>
-            </ul>
           </div>
-
           <div class="checkbox-container input-container">
             <span class="questions authorization">인증 요일</span>
             <ul>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="monday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="monday" data-id="1" />
                 <label class="mon" for="monday">월</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="tuesday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="tuesday" data-id="2" />
                 <label class="tue" for="tuesday">화</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="wednesday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="wednesday" data-id="3" />
                 <label class="wed" for="wednesday">수</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="thursday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="thursday" data-id="4" />
                 <label class="thu" for="thursday">목</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="friday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="friday" data-id="5" />
                 <label class="fri" for="friday">금</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="saturday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="saturday" data-id="6" />
                 <label class="sat" for="saturday">토</label>
               </li>
               <li>
-                <input class="date" type="checkbox" name="date-checker" id="sunday" />
+                <input class="date posting-days" type="checkbox" name="date-checker" id="sunday" data-id="" />
                 <label class="sun" for="sunday">일</label>
               </li>
             </ul>
@@ -144,7 +132,7 @@
             <span class="questions">인증방법</span>
             <label for="approval-method"></label>
             <textarea
-              class="text-content"
+              class="text-content approval-method"
               name="approval-method"
               id="approval-method"
               cols="30"

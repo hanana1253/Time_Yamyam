@@ -51,6 +51,9 @@
   }
 }
 // hash tag
+.tag-container {
+  position: relative;
+}
 .tag-input {
   width: 100%;
   max-width: 100%;
@@ -64,7 +67,7 @@
 }
 .bx.bxs-purchase-tag {
   position: absolute;
-  top: 51%;
+  top: 37%;
   transform: translateY(-50%);
   font-size: 20px;
 }
@@ -173,7 +176,7 @@
 .submit {
   width: rem(100px);
   height: rem(50px);
-
+  line-height: rem(30px);
   padding: 10px;
   border: none;
   border-radius: 10px;
@@ -184,6 +187,7 @@
     width: rem(80px);
     height: rem(40px);
     margin: rem(20px);
+    text-align: center;
   }
 }
 .submit {

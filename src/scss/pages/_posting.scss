@@ -41,6 +41,9 @@
     padding-bottom: rem(16px);
   }
 }
+.approval-container {
+  position: relative;
+}
 .group-list,
 .url,
 .approval-title {
@@ -58,14 +61,24 @@
   }
 }
 .notice {
-  width: rem(20px);
-  height: rem(20px);
+  width: rem(25px);
+  height: rem(25px);
   border: 2px solid $lightblack;
   position: absolute;
-  right: 10.5%;
+  right: 2%;
+  top: 20%;
   cursor: pointer;
-}
 
+  @include mobile {
+    width: rem(15px);
+    height: rem(15px);
+    top: 15%;
+    stop-opacity: 1px solid $lightblack;
+  }
+}
+.notice:checked {
+  background-color: $primary;
+}
 // drag and drop box
 /* drop box border */
 .drop-container {
@@ -151,11 +164,12 @@
 .submit {
   width: rem(300px);
   height: rem(70px);
-  margin: 0 10px;
-  border: none;
+  margin: 10px;
   border-radius: 10px;
   color: $white;
   font-size: rem(20px);
+  line-height: rem(30px);
+  border: 3px solid transparent;
 
   @include mobile {
     width: rem(85px);
