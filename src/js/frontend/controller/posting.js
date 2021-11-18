@@ -13,6 +13,7 @@ import view from '../view/form.js';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
+const $formBody = document.querySelector('.form-body');
 const $approvalTitle = document.querySelector('.approval-title');
 const $submitBtn = document.querySelector('.submit');
 const $errorMsg = document.querySelector('.error');
@@ -22,14 +23,16 @@ const $notice = document.querySelector('.notice');
 const $cancelBtn = document.querySelector('.cancel');
 
 // Functions --------------------------------------------
-function updateThumbnails(dropZoneElement, file) {
+const updateThumbnails = (dropZoneElement, file) => {
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
+    dropZoneElement.querySelector('.drop-zone__img').remove();
   }
 
   const thumbnailElement = document.createElement('div');
   thumbnailElement.classList.add('drop-zone__thumb');
   dropZoneElement.appendChild(thumbnailElement);
+  document.querySelector('.drop-zone').style.flexDirection = 'row';
 
   thumbnailElement.dataset.label = file.name;
 
@@ -43,13 +46,17 @@ function updateThumbnails(dropZoneElement, file) {
   } else {
     thumbnailElement.style.backgroundImage = null;
   }
-}
+};
 
 // Event bindings----------------------------
 window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async user => {
     if (user) {
       try {
+        setTimeout(() => {
+          $formBody.style.opacity = 1;
+        }, 100);
+
         const { data } = await store.fetchStudyGroupData(user);
         store.setStudyGroupInfo(data);
         view.render(store.getStudyGroupData());
@@ -121,5 +128,5 @@ $form.onsubmit = e => {
   const userUid = auth.currentUser.uid;
   axios.post(`/study/${selectedId}/posting`, { userUid, newPosting });
   // query string으로 study id 보내기
-  window.location.href = '/group.html';
+  window.location.href = `/group.html?studyId=${selectedId}`;
 };
