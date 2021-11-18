@@ -166,3 +166,17 @@
     color: rgba(0, 0, 0, 0.3);
   }
 }
+
+body.active {
+  overflow: hidden;
+}
+
+.overlay.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+}
