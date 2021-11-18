@@ -16,6 +16,8 @@ module.exports = {
     mypage: './src/js/frontend/controller/mypage.js',
     point: './src/js/frontend/controller/point.js',
     nav: './src/js/frontend/controller/nav.js',
+    notice: './src/js/frontend/controller/notice.js',
+    setting: './src/js/frontend/controller/setting.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
   // https://webpack.js.org/configuration/output/#outputpath
@@ -58,6 +60,16 @@ module.exports = {
       filename: 'point.html',
       template: 'src/template/point.html',
       chunks: ['app', 'point', 'nav'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'notice.html',
+      template: 'src/template/notice.html',
+      chunks: ['app', 'notice', 'nav'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'setting.html',
+      template: 'src/template/setting.html',
+      chunks: ['app', 'setting', 'nav'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({

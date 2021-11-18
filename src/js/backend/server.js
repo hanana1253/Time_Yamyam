@@ -43,10 +43,10 @@ const setSchedule = () => {
         doc.ref.update({ status: 'finished' });
 
         doc.data().userList.forEach(userUid => {
-          const pointRecord = { point: 100, category: `${doc.data().title} 스터디완료`, date: new Date() };
+          const pointRecord = { point: 100, category: `[${doc.data().title}] 스터디완료`, date: new Date() };
           const notiRecord = {
             category: '알림',
-            msg: `'${doc.data().title}' 스터디완료 포인트가 지급되었습니다.`,
+            msg: `[${doc.data().title}] 스터디완료 포인트가 지급되었습니다.`,
             date: new Date(),
           };
           db.collection('users').doc(userUid).collection('points').add(pointRecord);
@@ -79,14 +79,14 @@ const setSchedule = () => {
           doc.ref.update({ status: 'expired' });
           record = {
             category: '알림',
-            msg: `3명이 모이지 않아서 '${doc.data().title}' 스터디가 삭제되었습니다.`,
+            msg: `3명이 모이지 않아서 [${doc.data().title}] 스터디가 삭제되었습니다.`,
             date: new Date(),
           };
         } else {
           doc.ref.update({ status: 'started' });
           record = {
             category: '알림',
-            msg: `'${doc.data().title}' 스터디가 시작되었습니다.`,
+            msg: `[${doc.data().title}] 스터디가 시작되었습니다.`,
             date: new Date(),
           };
         }
@@ -127,6 +127,14 @@ app.get('/posting', (req, res) => {
 
 app.get('/point', (req, res) => {
   res.sendFile(path.join(__dirname, './../../../public/point.html'));
+});
+
+app.get('/notice', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/notice.html'));
+});
+
+app.get('/setting', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/setting.html'));
 });
 
 app.get('/:userUid', async (req, res) => {
@@ -239,6 +247,17 @@ app.get('/mypoints/:userUid', async (req, res) => {
     pointHistory.push({ ...doc.data(), date: doc.data().date.toDate() });
   });
   res.send({ total, pointHistory });
+});
+
+app.get('/mynotice/:userUid', async (req, res) => {
+  const { userUid } = req.params;
+
+  const targetUserNotiDB = await db.collection('users').doc(userUid).collection('noti').orderBy('date', 'desc').get();
+  const notiHistory = [];
+  targetUserNotiDB.forEach(doc => {
+    notiHistory.push({ ...doc.data(), date: doc.data().date.toDate() });
+  });
+  res.send({ notiHistory });
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
