@@ -14,84 +14,219 @@
       <div class="logo"><img src="../images/logo.png" alt="로고" /></div>
     </header>
     <nav class="nav">
-      <button class="nav__button">하마버튼</button>
+      <button class="nav__button" aria-label="메뉴"></button>
       <ul class="nav__links">
-        <li><a class="nav__item" href="#">홈으로</a></li>
-        <li><a class="nav__item" href="#">스터디그룹 만들기</a></li>
-        <li><a class="nav__item" href="#">마이페이지</a></li>
-        <li><a class="nav__item" href="#">인증글쓰기</a></li>
-        <li><a class="nav__item" href="#">알림</a></li>
-        <li><a class="nav__item" href="#">닫기</a></li>
+        <li>
+          <a class="nav__item nav__item--1" href="#">
+            <i class="bx bx-home-alt nav__icon"></i>
+            <span>홈으로</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__item nav__item--2" href="#">
+            <i class="bx bx-pencil nav__icon"></i>
+            <span>인증글쓰기</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__item nav__item--3" href="#">
+            <i class="bx bx-user nav__icon"></i>
+            <span>마이페이지</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__item nav__item--4 nav__item--close" href="#">
+            <i class="bx bx-x nav__icon"></i>
+            <span>닫기</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__item nav__item--5" href="#">
+            <i class="bx bx-bell nav__icon"></i>
+            <span>알림</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__item nav__item--6" href="#">
+            <i class="bx bx-plus nav__icon"></i>
+            <span>스터디생성</span>
+          </a>
+        </li>
       </ul>
     </nav>
     <main class="main point">
-      <table class="table">
-        <caption>
-          포인트 적립기준
-        </caption>
-        <thead class="table__head a11y-hidden">
-          <tr class="table__head__row">
-            <th>적립 기준</th>
-            <th>적립 포인트</th>
-          </tr>
-        </thead>
-        <tbody class="table__body">
-          <tr class="table__body__row">
-            <td><span>스터디 완료</span></td>
-            <td><span>100P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>스터디 인증</span></td>
-            <td><span>10P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>스터디 미인증</span></td>
-            <td><span>-5P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>출석체크</span></td>
-            <td><span>1P</span></td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="table">
-        <caption>
-          포인트 내역
-        </caption>
-        <thead class="table__head a11y-hidden">
-          <tr class="table__head__row">
-            <th>적립 내용</th>
-            <th>적립 포인트</th>
-          </tr>
-        </thead>
-        <tbody class="table__body">
-          <tr class="table__body__row">
-            <td><span>스터디 완료</span></td>
-            <td><span>21.11.03</span></td>
-            <td><span>100P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>스터디 인증</span></td>
-            <td><span>21.11.02</span></td>
-            <td><span>10P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>출석</span></td>
-            <td><span>21.11.02</span></td>
-            <td><span>1P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>스터디 인증</span></td>
-            <td><span>21.11.01</span></td>
-            <td><span>10P</span></td>
-          </tr>
-          <tr class="table__body__row">
-            <td><span>출석</span></td>
-            <td><span>21.11.01</span></td>
-            <td><span>1P</span></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="point__info">
+        <div class="point__info__guide">
+          <table class="table">
+            <caption>
+              포인트 적립기준
+              <!-- <i class="bx bxs-down-arrow button--more" role="button"></i> -->
+            </caption>
+            <thead class="table__head a11y-hidden">
+              <tr class="table__head__row">
+                <th>적립 기준</th>
+                <th>적립 포인트</th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr class="table__body__row">
+                <td><span>스터디 완료</span></td>
+                <td class="amount"><span>100P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>스터디 인증</span></td>
+                <td class="amount"><span>10P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>스터디 미인증</span></td>
+                <td class="amount"><span>-5P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>출석체크</span></td>
+                <td class="amount"><span>1P</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="point__info__level">
+          <table class="table">
+            <caption>
+              레벨업 기준
+              <!-- <i class="bx bxs-down-arrow button--more" role="button"></i> -->
+            </caption>
+            <thead class="table__head a11y-hidden">
+              <tr class="table__head__row">
+                <th>레벨업 기준</th>
+                <th>포인트</th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr class="table__body__row">
+                <td><span>레벨 1</span></td>
+                <td class="amount"><span>0 ~ 50P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 2</span></td>
+                <td class="amount"><span>51P ~ 65P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 3</span></td>
+                <td class="amount"><span>66P ~ 100P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 4</span></td>
+                <td class="amount"><span>101P ~ 150P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 5</span></td>
+                <td class="amount"><span>151P ~ 225P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 6</span></td>
+                <td class="amount"><span>226P ~ 335P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 7</span></td>
+                <td class="amount"><span>336P ~ 670P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 8</span></td>
+                <td class="amount"><span>671P ~ 1340P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 9</span></td>
+                <td class="amount"><span>1341P ~ 2680P</span></td>
+              </tr>
+              <tr class="table__body__row">
+                <td><span>레벨 MAX</span></td>
+                <td class="amount"><span>2681P 이상</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="point__history">
+        <table class="table">
+          <caption>
+            포인트 내역
+            <span class="point__total">700P</span>
+          </caption>
+          <thead class="table__head a11y-hidden">
+            <tr class="table__head__row">
+              <th>적립 내용</th>
+              <th>적립 포인트</th>
+            </tr>
+          </thead>
+          <tbody class="table__body">
+            <tr class="table__body__row">
+              <td><span>스터디 완료</span></td>
+              <td><span>21.11.03</span></td>
+              <td class="amount"><span>100P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>스터디 인증</span></td>
+              <td><span>21.11.02</span></td>
+              <td class="amount"><span>10P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.02</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>스터디 인증</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>10P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+            <tr class="table__body__row">
+              <td><span>출석</span></td>
+              <td><span>21.11.01</span></td>
+              <td class="amount"><span>1P</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
     <div class="overlay"></div>
   </body>

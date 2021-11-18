@@ -10,13 +10,12 @@
 
 .loading {
   font-family: initial;
-  z-index: -999;
-  opacity: 0;
+  display: none;
 }
 
 .loading.active {
   z-index: 9999;
-  opacity: 1;
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
