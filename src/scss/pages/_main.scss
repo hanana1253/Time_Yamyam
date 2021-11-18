@@ -4,39 +4,102 @@
 .group-tablist {
   display: flex;
   justify-content: space-evenly;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  height: rem(50px);
+
   .group-tab {
     width: 50%;
   }
 }
-.all-groups {
-  background-color: salmon;
+.all-groups, .my-groups {
+  &__list {
+    @include mobile {
+      display: flex;
+      flex-flow: column;
+      flex-wrap: nowrap;
+      gap: rem(17px);
+
+    }
+    @include desktop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      row-gap: rem(30px);
+      column-gap: rem(40px);
+    }
+  }
   &__filters {
+    margin: rem(20px) 0;
     justify-content: space-evenly;
   }
   &__item {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    height: rem(326px);
+    height: rem(320px);
     width: 100%;
     max-width: rem(500px);
+    margin: 0 auto;
     background-color: #f0eeee;
   }
   &__title {
-    padding: rem(15px);
-    font-size: rem(16px);
+    padding: rem(15px) rem(20px);
+    font-size: rem(18px);
+    font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
   }
+  
   &__image {
     background-color: #fffafa;
-    height: 56%;
+    height: 60%;
+    & img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    };
+  }
+  &__date {
+    color: gray;
+    margin: rem(10px) 0;
+  }
+  &__detail {
+    margin: 0 rem(20px);
+    
   }
 }
 .my-groups {
-  background-color: yellow;
-  width: 100%;
-  height: 30vh;
+  &__list {
+    margin-top: rem(15px);
+  }
+}
+
+.join {
+  line-height: rem(20px);
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  padding: rem(7px) rem(15px);
+  right: rem(30px);
+  bottom: rem(30px);
+  border: 3px solid transparent;
+  background-color: $primary;
+  color: #fff;
+  cursor: pointer;
+  &:disabled {
+    box-shadow: 0 0 transparent;
+    background-color: transparent;
+    border: 2px solid $primary;
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.anonymous-page {
+  padding: rem(100px) rem(50px);
+  text-align: center;
+  .anonymous {
+    display: inline-block;
+    width: rem(300px);
+  }
 }
