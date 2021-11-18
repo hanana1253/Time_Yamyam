@@ -134,6 +134,8 @@ app.get('/mypage/:userUid', async (req, res) => {
 // GET '/mypoints/:userUid' 포인트 조회페이지, date 기준 내림차순 정렬된 적립 내역 데이터
 app.get('/mypoints/:userUid', async (req, res) => {
   const { userUid } = req.params;
+  const total = (await db.collection('users').doc(userUid).get()).data().point;
+  console.log(total);
   const targetUserPointsDB = await db
     .collection('users')
     .doc(userUid)
@@ -142,9 +144,9 @@ app.get('/mypoints/:userUid', async (req, res) => {
     .get();
   const pointHistory = [];
   targetUserPointsDB.forEach(doc => {
-    pointHistory.push({ ...doc.data(), date: doc.data().toDate() });
+    pointHistory.push({ ...doc.data(), date: doc.data().date.toDate() });
   });
-  res.send(pointHistory);
+  res.send({ total, pointHistory });
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string
