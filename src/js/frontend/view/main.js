@@ -29,6 +29,14 @@ export const render = {
       .join('');
   },
   myGroups(myGroups) {
+    if (myGroups.length === 0) {
+      const content =
+        '<div class="anonymous-page"><span class="button anonymous newbie">스터디 그룹에 참여해보세요</span></div>';
+      [...document.querySelectorAll('.my-groups')].forEach($div => {
+        $div.innerHTML = content;
+      });
+      return;
+    }
     const content =
       '<ul class="my-groups__list">' +
       myGroups
