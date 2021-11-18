@@ -145,6 +145,7 @@ textarea {
 .main {
   @include desktop {
     max-width: 1200px;
+    margin: auto;
     padding: rem(90px) rem(50px) 0;
   }
   @include mobile {

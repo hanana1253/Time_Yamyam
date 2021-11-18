@@ -1,10 +1,31 @@
 @use '../base' as *;
 @use '../utils' as *;
 
+.login-main {
+  @include gradient($basic-gradient);
+  @include desktop{
+    padding: rem(20px);
+  }
+  @include mobile {
+    padding: 0;
+  }
+}
 .auth-form {
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
-  margin: rem(60px) auto;
+  background-color: white;
   padding: rem(30px);
+  @include desktop{
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+    margin: rem(50px) auto rem(20px);
+  }
+  @include mobile {
+    margin: rem(50px) 0;
+    width: 100%;
+    min-width: rem(300px);
+  }
+  @include desktop {
+    width: 40vw;
+    min-width: rem(500px);
+  }
   & .login-fail, .signup-fail {
     height: rem(20px);
     text-align: end;
@@ -51,12 +72,5 @@
   }
   @include flexbox(column);
   gap: rem(20px);
-  @include mobile {
-    width: 80vw;
-    min-width: rem(300px);
-  }
-  @include desktop {
-    width: 40vw;
-    min-width: rem(500px);
-  }
+  
 }
