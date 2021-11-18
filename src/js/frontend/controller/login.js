@@ -78,6 +78,7 @@ const submit = async e => {
       const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const { data } = await axios.post('/signup', { ...formData, userUid: user.uid });
       window.alert('성공적으로 가입되었습니다. 로그인해주세요.');
+      signOut();
       window.location.href = '/login.html';
     }
   } catch (e) {
@@ -95,3 +96,12 @@ const submit = async e => {
   $form.oninput = validate;
   $form.querySelector('.toggle-btn').onclick = toggleCurrentForm;
 });
+
+document.addEventListener('DOMContentLoaded', ()=> {
+  onAuthStateChanged(auth, () => {
+    if (auth.currentUser) {
+      window.alert('이미 로그인되어 있습니다.');
+      window.location.href = '/';
+    }
+  })
+})
