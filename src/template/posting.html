@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
     <title>시간 먹는 하마</title>
   </head>
   <body class="form-body">
@@ -65,8 +67,9 @@
               <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요"
                 >사진 업로드</label
               >
-              <div class="drop-zone">
+              <div class="drop-zone swiper">
                 <span class="drop-zone__prompt">사진을 드래그 해주세요</span>
+                <div class="swiper-wrapper"></div>
                 <!-- <div class="drop-zone__thumb" data-label="myfile.txt"></div> -->
                 <!-- name for regular upload submission  -->
                 <input class="drop-zone__input" type="file" name="myFile" id="myFile" multiple />

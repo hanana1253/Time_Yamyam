@@ -12,6 +12,16 @@ import view from '../view/form.js';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  a11y: {
+    prevSlideMessage: 'Previous slide',
+    nextSlideMessage: 'Next slide',
+  },
+});
+const $swiper = document.querySelector('.swiper').swiper;
 
 const $approvalTitle = document.querySelector('.approval-title');
 const $submitBtn = document.querySelector('.submit');

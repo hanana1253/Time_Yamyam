@@ -64,8 +64,6 @@ window.addEventListener('DOMContentLoaded', () => {
         render[stateFunc.currentFeed]();
         render.filter();
 
-        // console.log(group.postingList);
-
         document.querySelector('.group-title').textContent = group.title;
       } catch (error) {
         console.log(error);
@@ -101,19 +99,17 @@ document.querySelector('.group-tabList').onclick = e => {
 };
 
 // 인증 하트버튼
-document.querySelector('.swiper-wrapper').onclick = e => {
-  if (!e.target.matches('i')) return;
+const changeHeartNum = target => {
+  const isBx = target.classList.contains('bx-heart');
+  target.classList.toggle('bx-heart', !isBx);
+  target.classList.toggle('bxs-heart', isBx);
 
-  const isBx = e.target.classList.contains('bx-heart');
-  e.target.classList.toggle('bx-heart', !isBx);
-  e.target.classList.toggle('bxs-heart', isBx);
-
-  const $likes = e.target.closest('div').firstElementChild;
+  const $likes = target.closest('div').firstElementChild;
   const content = $likes.textContent;
   $likes.textContent = isBx ? +content + 1 : +content - 1;
 
   let { postings } = stateFunc;
-  const $posting = e.target.closest('li');
+  const $posting = target.closest('li');
 
   postings = postings.map(posting => {
     if (posting.id === $posting.dataset.post) {
@@ -129,6 +125,37 @@ document.querySelector('.swiper-wrapper').onclick = e => {
 
   stateFunc.postings = postings;
 };
+
+const activeModal = target => {
+  const postingId = target.closest('li').dataset.post;
+  const postings = stateFunc.group.postingList;
+  const posting = postings.filter(posting => posting.id === postingId)[0];
+
+  document.querySelector('.overlay').classList.add('active');
+  document.querySelector('.overlay-container').classList.remove('hidden');
+
+  document.querySelector('.overlay-img > img').src = posting.img.url ? posting.img.url : '../../images/feedImage.jpeg';
+  document.querySelector('.overlay-title').textContent = posting.title;
+  document.querySelector('.overlay-description').textContent = posting.description;
+};
+
+document.querySelector('.swiper-wrapper').onclick = e => {
+  if (!(e.target.matches('i') || e.target.classList.contains('modal'))) return;
+
+  e.target.matches('i') ? changeHeartNum(e.target) : activeModal(e.target);
+};
+
+// document.querySelector('.overlay-close').onclick = e => {
+//   document.querySelector('.overlay').classList.remove('active');
+//   document.querySelector('.overlay-container').classList.add('hidden');
+// };
+
+// document.querySelector('.overlay').onclick = e => {
+//   document.querySelector('.overlay-container').classList.add('hidden');
+
+//   if (e.target.classList.contains('.overlay-close')) return;
+//   document.querySelector('.overlay').classList.remove('active');
+// };
 
 document.querySelector('.filters').onclick = e => {
   if (!(e.target.matches('ul') || e.target.matches('li'))) return;

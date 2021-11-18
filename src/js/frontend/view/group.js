@@ -40,6 +40,7 @@ const render = {
                         }
                     </button>
                 </div>
+                <button class="modal">자세히</button>
             </li>`
       )
       .join('');
@@ -56,6 +57,7 @@ const render = {
       post => post.authorUid === userInfo.uid
     );
 
+    // image random 만들기
     const content = newPostings
       .map(
         (posting, i) => `
@@ -79,6 +81,7 @@ const render = {
                     </button>
                 </div>
                 <button class="delete">&times;</button>
+                <button class="modal">자세히</button>
             </li>`
       )
       .join('');
