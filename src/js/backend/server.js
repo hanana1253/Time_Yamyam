@@ -27,8 +27,8 @@ app.get('/:userUid', async (req, res) => {
   myStudyDB.forEach(doc => {
     myGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
   });
-
-  res.send({ readyStudyGroups, myGroups });
+  const userData = (await db.collection('users').doc(userUid).get()).data();
+  res.send({ readyStudyGroups, myGroups, userData });
 });
 
 app.get('/allGroups', async (req, res) => {

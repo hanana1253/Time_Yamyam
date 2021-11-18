@@ -5,8 +5,10 @@ export const render = {
     document.querySelector('.all-groups__list').innerHTML = allGroups
       .map(studyGroup => {
         const joined = studyGroup.userList.includes(userData?.id);
+        console.log(studyGroup.userList, userData?.id)
         const isValidLevel = studyGroup.minLevel <= getLevel(userData?.point);
         const disable = joined || !isValidLevel;
+        console.log(studyGroup.title, joined, isValidLevel, disable);
         const leftDates = 7 - Math.round((Date.now() - new Date(studyGroup.createDate)) / (24 * 60 * 60 * 1000));
         return `<li class="all-groups__item" data-id="${studyGroup.id}">
                     <figure class="all-groups__image">
@@ -18,7 +20,7 @@ export const render = {
                     <span>#Lv.${studyGroup.minLevel}</span>
                     <span>#${studyGroup.duration}주</span></div>
                     <button class="join" type="button" ${disable ? 'disabled' : ''}>${
-          joined ? '신청 완료' : isValidLevel ? '참여불가' : '참여하기'
+          joined ? '신청 완료' : isValidLevel ? '참여하기' : '참여불가'
         }</button>
                 </li>`;
       })
