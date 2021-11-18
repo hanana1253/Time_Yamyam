@@ -6,7 +6,10 @@
   padding: rem(7px) rem(20px);
   display: flex;
   gap: 10px;
-  // position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 9;
+
   @include gradient($basic-gradient);
 
   .title {

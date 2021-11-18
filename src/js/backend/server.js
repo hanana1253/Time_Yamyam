@@ -1,5 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
+const schedule = require('node-schedule');
 const serviceAccount = require('./secretKey.json');
 
 admin.initializeApp({
@@ -15,6 +16,37 @@ app.use(express.json());
 
 // GET '/' { userUid: {string} 또는 null }
 
+const setSchedule = () => {
+  const rule = new schedule.RecurrenceRule();
+  // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
+  rule.hour = 0;
+  // rule.hour = 11;
+  // rule.minute = 46;
+  // rule.second = 30;
+
+  schedule.scheduleJob(rule, async () => {
+    console.log('완료된 스터디그룹 체크 실행');
+    // 스터디그룹 완료 시 포인트 배분 및 상태변경
+    const now = new Date();
+    const targetGroupsDB = await db.collection('studyGroups').where('status', '==', 'started').get();
+
+    targetGroupsDB.forEach(doc => {
+      const finishDate = doc.data().finishDate.toDate();
+      console.log(finishDate);
+      if (finishDate < now) {
+        doc.ref.update({ status: 'finished' });
+
+        doc.data().userList.forEach(userUid => {
+          const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
+          db.collection('users').doc(userUid).collection('points').add(record);
+        });
+      }
+    });
+  });
+};
+
+setSchedule();
+
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
@@ -25,17 +57,27 @@ app.get('/:userUid', async (req, res) => {
   const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
   myStudyDB.forEach(doc => {
-    myGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    myGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
-
-  res.send({ readyStudyGroups, myGroups });
+  const userData = (await db.collection('users').doc(userUid).get()).data();
+  res.send({ readyStudyGroups, myGroups, userData });
 });
 
 app.get('/allGroups', async (req, res) => {
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
   const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    readyStudyGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
 
   res.send({ readyStudyGroups });
@@ -61,21 +103,6 @@ app.get('/study/:id', async (req, res) => {
     userList.map(async uid => (await db.collection('users').doc(uid).get()).data())
   );
   // console.log(test);
-  // 스터디그룹 완료 시 포인트 배분 및 상태변경
-  // const now = new Date();
-  // if (now > targetStudy.finishDate.toDate() && !targetStudy.isFinished) {
-  //   db.collection('studyGroups').doc(id).update({
-  //     isFinished: true,
-  //   });
-  //   targetStudy.userList.forEach(async user => {
-  //     const userData = await user.get();
-  //     const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
-  //     await pointDB.update({
-  //       total: admin.firestore.FieldValue.increment(record.point),
-  //       history: admin.firestore.FieldValue.arrayUnion(record),
-  //     });
-  //   });
-  // }
 
   // 인증글
   // 스터디 피드들을 보여줘야 함 응답으로
@@ -107,6 +134,8 @@ app.get('/mypage/:userUid', async (req, res) => {
 // GET '/mypoints/:userUid' 포인트 조회페이지, date 기준 내림차순 정렬된 적립 내역 데이터
 app.get('/mypoints/:userUid', async (req, res) => {
   const { userUid } = req.params;
+  const total = (await db.collection('users').doc(userUid).get()).data().point;
+  console.log(total);
   const targetUserPointsDB = await db
     .collection('users')
     .doc(userUid)
@@ -115,9 +144,9 @@ app.get('/mypoints/:userUid', async (req, res) => {
     .get();
   const pointHistory = [];
   targetUserPointsDB.forEach(doc => {
-    pointHistory.push(doc.data());
+    pointHistory.push({ ...doc.data(), date: doc.data().date.toDate() });
   });
-  res.send(pointHistory);
+  res.send({ total, pointHistory });
 });
 
 // POST '/signup' { email, nickname, password } password는 6글자 이상 string

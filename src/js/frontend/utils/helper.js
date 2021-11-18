@@ -44,4 +44,16 @@ const getLevel = point => {
   if (point >= 2681) return 'MAX';
 };
 
-export { debounce, throttle, WEEKS, getLevel };
+const removeActive = elementList => {
+  elementList.forEach($el => {
+    $el.classList.remove('active');
+  });
+};
+
+const toggleActive = elementList => {
+  elementList.forEach($el => {
+    $el.classList.toggle('active');
+  });
+};
+
+export { debounce, throttle, WEEKS, getLevel, removeActive, toggleActive };

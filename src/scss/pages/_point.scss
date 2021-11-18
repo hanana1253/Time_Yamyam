@@ -1,0 +1,94 @@
+@use '../utils' as *;
+
+.point {
+  margin: 0 auto;
+  display: flex;
+
+  &__history {
+    overflow-y: scroll;
+
+    @include mobile {
+      order: -1;
+    }
+  }
+
+  &__total {
+    font-weight: normal;
+    position: absolute;
+    right: 0;
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  @include desktop {
+    justify-content: space-between;
+    gap: rem(60px);
+    height: 85vh;
+
+    &__info {
+      width: 30%;
+
+      &__guide {
+        height: 35vh;
+        overflow-y: scroll;
+      }
+
+      &__level {
+        height: 40vh;
+        overflow-y: scroll;
+      }
+    }
+    &__history {
+      width: 60%;
+    }
+  }
+}
+
+.table {
+  font-size: rem(14px);
+  line-height: 1.7142857142857142;
+  width: 100%;
+
+  caption {
+    font-weight: 700;
+    font-size: rem(24px);
+    color: $black;
+    line-height: 1.48;
+    text-align: left;
+    padding: 20px 5px;
+    border-bottom: 2px solid $black;
+    position: sticky;
+    background-color: $white;
+
+    @include desktop {
+      top: 0;
+    }
+
+    .button--more {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  [class*='__row'] {
+    height: rem(32px);
+
+    th,
+    td {
+      padding: 0 8px;
+    }
+  }
+
+  .amount {
+    text-align: right;
+  }
+}
