@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const { uid: userUid } = auth.currentUser;
       const { readyStudyGroups, myGroups, userData } = await axios.get(`/${userUid}`).then(({ data }) => data);
       setAllGroups(readyStudyGroups, userData);
+      console.log(userData);
       setMyGroups(myGroups);
     } else {
       const { readyStudyGroups } = await axios.get('/allGroups').then(({ data }) => data);

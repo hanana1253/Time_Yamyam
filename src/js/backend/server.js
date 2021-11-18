@@ -159,6 +159,7 @@ app.post('/signup', async (req, res) => {
     nickname,
     point: 50,
     myStudy: [],
+    id: userUid
   });
 
   res.send('success');
