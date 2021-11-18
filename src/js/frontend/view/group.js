@@ -1,5 +1,5 @@
 import { stateFunc } from '../store/group.js';
-import { WEEKS, getLevel } from '../utils/helper.js';
+import { WEEKS, getLevel, removeActive } from '../utils/helper.js';
 
 const filtering = (postings, filterState) => {
   const { group } = stateFunc;
@@ -11,9 +11,14 @@ const filtering = (postings, filterState) => {
 
   return newPostings;
 };
+const $loading = document.querySelector('.loading');
 
 const render = {
   teamFeed() {
+    setTimeout(() => {
+      removeActive([$loading, document.body]);
+    }, 300);
+
     const newPostings = filtering(stateFunc.postings, stateFunc.filterState);
 
     const content = newPostings
