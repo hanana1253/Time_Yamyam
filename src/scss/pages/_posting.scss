@@ -62,23 +62,24 @@
   }
 }
 .notice {
-  width: rem(25px);
-  height: rem(25px);
-  border: 2px solid $lightblack;
+  width: rem(40px);
+  height: rem(40px);
+  border: none;
+  background-size: contain;
+  background-image: url('../images/notepad-regular-24.png');
   position: absolute;
   right: 2%;
-  top: 20%;
+  top: 13%;
   cursor: pointer;
 
   @include mobile {
-    width: rem(15px);
-    height: rem(15px);
-    top: 15%;
-    stop-opacity: 1px solid $lightblack;
+    width: rem(30px);
+    height: rem(30px);
+    top: 2%;
   }
 }
 .notice:checked {
-  background-color: $primary;
+  background-image: url('../images/notepad-first.png');
 }
 // drag and drop box
 /* drop box border */
@@ -104,6 +105,7 @@
   height: rem(400px);
   padding: 25px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -114,7 +116,15 @@
   border: 4px dashed $primary;
   margin-top: rem(30px);
 
+  &__img {
+    max-width: rem(260px);
+    @include mobile {
+      width: 50%;
+    }
+  }
+
   @include mobile {
+    font-size: rem(18px);
     padding: 15px;
     margin-top: rem(15px);
   }

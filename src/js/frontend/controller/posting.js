@@ -26,16 +26,13 @@ const $cancelBtn = document.querySelector('.cancel');
 const updateThumbnails = (dropZoneElement, file) => {
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
-  }
-
-  if (document.querySelector('.drop-zone__prompt')) {
-    document.querySelector('.drop-zone__prompt').remove();
+    dropZoneElement.querySelector('.drop-zone__img').remove();
   }
 
   const thumbnailElement = document.createElement('div');
   thumbnailElement.classList.add('drop-zone__thumb');
-  thumbnailElement.classList.add('swiper-slide');
   dropZoneElement.appendChild(thumbnailElement);
+  document.querySelector('.drop-zone').style.flexDirection = 'row';
 
   thumbnailElement.dataset.label = file.name;
 
@@ -58,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
       try {
         setTimeout(() => {
           $formBody.style.opacity = 1;
-        }, 300);
+        }, 100);
 
         const { data } = await store.fetchStudyGroupData(user);
         store.setStudyGroupInfo(data);
