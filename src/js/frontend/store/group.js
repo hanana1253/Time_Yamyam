@@ -48,7 +48,7 @@ const feedState = {
   currentFeed: 'teamFeed',
 };
 
-const fetchGroupData = () => axios.get('/study/HTML').then(({ data }) => data);
+const fetchGroupData = studyId => axios.get(`/study/${studyId}`).then(({ data }) => data);
 
 const fetchUserInfo = user => {
   const { uid: userId } = user;

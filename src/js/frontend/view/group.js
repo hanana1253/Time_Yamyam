@@ -1,5 +1,5 @@
 import { stateFunc } from '../store/group.js';
-import { WEEKS, getLevel } from '../utils/helper.js';
+import { WEEKS, getLevel, removeActive } from '../utils/helper.js';
 
 const filtering = (postings, filterState) => {
   const { group } = stateFunc;
@@ -11,9 +11,14 @@ const filtering = (postings, filterState) => {
 
   return newPostings;
 };
+const $loading = document.querySelector('.loading');
 
 const render = {
   teamFeed() {
+    setTimeout(() => {
+      removeActive([$loading, document.body]);
+    }, 300);
+
     const newPostings = filtering(stateFunc.postings, stateFunc.filterState);
 
     const content = newPostings
@@ -40,6 +45,7 @@ const render = {
                         }
                     </button>
                 </div>
+                <button class="modal">자세히</button>
             </li>`
       )
       .join('');
@@ -56,6 +62,7 @@ const render = {
       post => post.authorUid === userInfo.uid
     );
 
+    // image random 만들기
     const content = newPostings
       .map(
         (posting, i) => `
@@ -79,6 +86,7 @@ const render = {
                     </button>
                 </div>
                 <button class="delete">&times;</button>
+                <button class="modal">자세히</button>
             </li>`
       )
       .join('');
