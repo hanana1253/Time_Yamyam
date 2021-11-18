@@ -106,10 +106,6 @@ app.get('/study/:id', async (req, res) => {
   const targetStudyGroupUserList = await Promise.all(
     userList.map(async uid => (await db.collection('users').doc(uid).get()).data())
   );
-  // console.log(test);
-
-  // 인증글
-  // 스터디 피드들을 보여줘야 함 응답으로
   res.send({ ...targetStudy, userList: targetStudyGroupUserList, postingList });
 });
 
