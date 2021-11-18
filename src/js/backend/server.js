@@ -20,19 +20,19 @@ const setSchedule = () => {
   const rule = new schedule.RecurrenceRule();
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
   rule.hour = 0;
-  // rule.hour = 11;
+  rule.minute = 0;
   // rule.minute = 46;
   // rule.second = 30;
 
   schedule.scheduleJob(rule, async () => {
-    console.log('완료된 스터디그룹 체크 실행');
+    console.log('완료된 스터디그룹 체크 실행', new Date());
     // 스터디그룹 완료 시 포인트 배분 및 상태변경
     const now = new Date();
     const targetGroupsDB = await db.collection('studyGroups').where('status', '==', 'started').get();
 
     targetGroupsDB.forEach(doc => {
       const finishDate = doc.data().finishDate.toDate();
-      console.log(finishDate);
+      // console.log(finishDate);
       if (finishDate < now) {
         doc.ref.update({ status: 'finished' });
 
@@ -125,9 +125,13 @@ app.get('/mypage/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
+  // 처음가입하고 마이페이지 들어가면 에러
+  // let targetUserStudyGroups = [];
+  // if (targetUserData) {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
+  // }
   res.send({ ...targetUserData, myStudy: targetUserStudyGroups });
 });
 
