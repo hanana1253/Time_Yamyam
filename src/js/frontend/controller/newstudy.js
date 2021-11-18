@@ -16,6 +16,7 @@ const $tagList = document.querySelector('.tag-list');
 const $submitBtn = document.querySelector('.submit');
 const $newstudyForm = document.querySelector('.newstudy-form');
 const $enterRangeInput = document.querySelector('.enter-range');
+const $cancelBtn = document.querySelector('.cancel');
 const $durationRangeInput = document.querySelector('.duration-range');
 const schema = newstudySchema;
 
@@ -135,6 +136,9 @@ $enterRangeInput.oninput = () => {
 
 $durationRangeInput.oninput = () => {
   setValue('duration');
+};
+$cancelBtn.onclick = () => {
+  window.location.href = './';
 };
 
 // send data to server ----------------------------
