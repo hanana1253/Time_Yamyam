@@ -19,7 +19,7 @@ const render = ({ nickname, point, myStudy }) => {
   $level.textContent = `레벨 ${getLevel(point)}`;
   $point.textContent = `${point}P`;
 
-  console.log(nickname, point, myStudy);
+  // console.log(nickname, point, myStudy);
 
   [
     [$inprogressStudy, 'started'],

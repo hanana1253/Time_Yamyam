@@ -7,8 +7,13 @@
   &__history {
     overflow-y: scroll;
 
+    caption {
+      top: 0;
+    }
+
     @include mobile {
       order: -1;
+      height: 40vh;
     }
   }
 
@@ -30,14 +35,15 @@
     &__info {
       width: 30%;
 
-      &__guide {
-        height: 35vh;
-        overflow-y: scroll;
-      }
+      // &__guide {
+      //   height: 35vh;
+      //   overflow-y: scroll;
+      // }
 
       &__level {
-        height: 40vh;
-        overflow-y: scroll;
+        // height: 40vh;
+        // overflow-y: scroll;
+        padding-bottom: 30px;
       }
     }
     &__history {
@@ -59,12 +65,8 @@
     text-align: left;
     padding: 20px 5px;
     border-bottom: 2px solid $black;
-    position: sticky;
     background-color: $white;
-
-    @include desktop {
-      top: 0;
-    }
+    position: sticky;
 
     .button--more {
       position: absolute;

@@ -14,6 +14,7 @@ module.exports = {
     newstudy: './src/js/frontend/controller/newstudy.js',
     posting: './src/js/frontend/controller/posting.js',
     mypage: './src/js/frontend/controller/mypage.js',
+    point: './src/js/frontend/controller/point.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
   // https://webpack.js.org/configuration/output/#outputpath

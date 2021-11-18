@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>나의 포인트</title>
   </head>
-  <body>
+  <body class="active">
     <header class="header">
       <div class="title">
         <h1>시간 먹는 하마</h1>
@@ -82,6 +82,10 @@
                 <td class="amount"><span>-5P</span></td>
               </tr>
               <tr class="table__body__row">
+                <td><span>강제 탈퇴</span></td>
+                <td class="amount"><span>-100P</span></td>
+              </tr>
+              <tr class="table__body__row">
                 <td><span>출석체크</span></td>
                 <td class="amount"><span>1P</span></td>
               </tr>
@@ -150,7 +154,7 @@
         <table class="table">
           <caption>
             포인트 내역
-            <span class="point__total">700P</span>
+            <span class="point__total"></span>
           </caption>
           <thead class="table__head a11y-hidden">
             <tr class="table__head__row">
@@ -159,75 +163,18 @@
             </tr>
           </thead>
           <tbody class="table__body">
-            <tr class="table__body__row">
+            <!-- <tr class="table__body__row">
               <td><span>스터디 완료</span></td>
               <td><span>21.11.03</span></td>
               <td class="amount"><span>100P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>스터디 인증</span></td>
-              <td><span>21.11.02</span></td>
-              <td class="amount"><span>10P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.02</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>스터디 인증</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>10P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
-            <tr class="table__body__row">
-              <td><span>출석</span></td>
-              <td><span>21.11.01</span></td>
-              <td class="amount"><span>1P</span></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
     </main>
     <div class="overlay"></div>
+    <div class="loading active">
+      <div>loading...</div>
+    </div>
   </body>
 </html>
