@@ -29,6 +29,7 @@ const $errorMsg = document.querySelector('.error');
 const $form = document.querySelector('form');
 const $postingTitle = document.querySelector('.posting-title');
 const $notice = document.querySelector('.notice');
+const $cancelBtn = document.querySelector('.cancel');
 
 // Functions --------------------------------------------
 function updateThumbnails(dropZoneElement, file) {
@@ -72,7 +73,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-document.querySelectorAll('.drop-zone__input').forEach(inputElement => {
+[...document.querySelectorAll('.drop-zone__input')].forEach(inputElement => {
   const dropZoneElement = inputElement.closest('.drop-zone');
 
   dropZoneElement.addEventListener('click', () => {
@@ -112,6 +113,10 @@ $notice.oninput = e => {
 $form.onkeydown = e => {
   if (e.key !== 'Enter' || e.target.name === 'text-content') return;
   e.preventDefault();
+};
+
+$cancelBtn.onclick = () => {
+  window.location.href = './';
 };
 
 // send data to server-----------------------------

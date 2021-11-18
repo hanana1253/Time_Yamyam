@@ -27,6 +27,7 @@
   }
   & .input-container {
     position: relative;
+    margin-bottom: rem(35px);
     & input {
       display: block;
       margin: 0 auto;
@@ -51,7 +52,8 @@
   @include flexbox(column);
   gap: rem(20px);
   @include mobile {
-    width: rem(300px);
+    width: 80vw;
+    min-width: rem(300px);
   }
   @include desktop {
     width: 40vw;
