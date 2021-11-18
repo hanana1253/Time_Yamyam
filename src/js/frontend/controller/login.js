@@ -66,7 +66,7 @@ const validate = debounce(e => {
 const submit = async e => {
   try {
     e.preventDefault();
-    
+
     const formData = [...new FormData($currentForm)].reduce((obj, [key, value]) => ((obj[key] = value), obj), {});
 
     // console.log(`POST /${currentForm}`, formData);
@@ -87,6 +87,12 @@ const submit = async e => {
         : '회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.';
   }
 };
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelector('.login-body').style.opacity = 1;
+  }, 500);
+});
 
 [$loginForm, $signupForm].forEach($form => {
   $form.onsubmit = submit;
