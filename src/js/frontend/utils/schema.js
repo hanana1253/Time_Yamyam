@@ -45,7 +45,7 @@ const newstudySchema = {
       return this.value.length <= 7 && !!this.value;
     },
 
-    error: '스터디 이름을 입력해주세요',
+    error: '스터디 이름을 7글자까지만 입력해주세요',
   },
   'group-introduction': {
     value: '',

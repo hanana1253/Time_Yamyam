@@ -30,7 +30,7 @@
     <main class="main group">
       <div class="group-tabs swiper">
         <div class="tab-header">
-          <h2 class="group-title">자바스크립트 뿌시기</h2>
+          <h2 class="group-title">스터디 그룹명</h2>
           <div role="tablist" class="group-tabList" aria-label="Sample Tabs">
             <button
               class="group-tab active"
@@ -54,32 +54,32 @@
           <ul class="filters-weeks">
             <li class="filters-weeks">주차별</li>
             <li class="filters-weeks__checkbox hidden">
-              <label><i class="bx bx-check"></i><input type="checkbox" value="0" />1주차</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="1" />2주차</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="2" />3주차</label>
+              <!-- <label><i class="bx bx-check"></i><input type="checkbox" value="week-0" />1주차</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="week-1" />2주차</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="week-2" />3주차</label> -->
             </li>
           </ul>
           <ul class="filters-days">
             <li class="filters-days">요일별</li>
             <li class="filters-days__checkbox hidden">
-              <label><i class="bx bx-check"></i><input type="checkbox" value="0" />일요일</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="1" />월요일</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="2" />화요일</label>
+              <!-- <label><i class="bx bx-check"></i><input type="checkbox" value="day-0" />일요일</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="day-1" />월요일</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="day-2" />화요일</label> -->
             </li>
           </ul>
           <ul class="filters-member">
             <li class="filters-member">Nickname</li>
             <li class="filters-member__checkbox hidden">
-              <label> <i class="bx bx-check"></i><input type="checkbox" value="0" />Shawn</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="1" />Terry</label>
-              <label><i class="bx bx-check"></i><input type="checkbox" value="2" />Moriss</label>
+              <!-- <label> <i class="bx bx-check"></i><input type="checkbox" value="member-0" />Shawn</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="member-1" />Terry</label>
+              <label><i class="bx bx-check"></i><input type="checkbox" value="member-2" />Moriss</label> -->
             </li>
           </ul>
         </div>
         <div class="swiper-wrapper">
           <div class="group-teamFeed swiper-slide" id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
             <ul class="group-teamFeed__list">
-              <li class="group-feed__item" data-id="1" data-week="0" data-day="2" data-member="Shawn">
+              <!-- <li class="group-feed__item" data-id="1" data-week="0" data-day="2" data-member="Shawn">
                 <figure class="group-feed__image">
                   <img src="../images/feedImage.jpeg" alt="" />
                 </figure>
@@ -106,12 +106,12 @@
                     <i class="bx bx-heart"></i>
                   </button>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="group-myFeed swiper-slide" id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
             <ul class="group-myFeed__list">
-              <li class="group-feed__item" data-id="1" data-week="0" data-day="2" data-member="Shawn">
+              <!-- <li class="group-feed__item" data-id="1" data-week="0" data-day="2" data-member="Shawn">
                 <figure class="group-feed__image">
                   <img src="../images/feedImage.jpeg" alt="" />
                 </figure>
@@ -155,7 +155,7 @@
                   </button>
                 </div>
                 <button class="delete">&times;</button>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="group-info swiper-slide" id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
@@ -229,6 +229,15 @@
         </div>
       </div>
     </main>
-    <div class="overlay" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true">
+      <div class="overlay-container">
+        <figure class="overlay-img">
+          <img src="../images/feedImage.jpeg" alt="" />
+        </figure>
+        <h4 class="overlay-title">제목</h4>
+        <p class="overlay-description">설명</p>
+        <button class="overlay-close">닫기</button>
+      </div>
+    </div>
   </body>
 </html>

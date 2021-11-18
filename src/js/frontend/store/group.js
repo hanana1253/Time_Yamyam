@@ -1,31 +1,76 @@
 import axios from 'axios';
 
-let group = [];
+let group = {
+  authDescription: '',
+  date: '',
+  description: '',
+  duration: 0,
+  hashtags: [],
+  id: 0,
+  minLevel: 0,
+  postingDays: [],
+  postingList: [],
+  status: '',
+  teamleader: {},
+  title: '',
+  userList: [],
+};
 let users = [];
 let postings = [];
+
+let userInfo = {
+  nickname: null,
+  point: null,
+  myStudy: [
+    {
+      title: null,
+      description: null,
+      postingDays: null,
+      status: null,
+    },
+  ],
+};
+
+let filterState = {
+  sortOfFilters: ['weeks', 'days', 'member'],
+  isFirst: {
+    weeks: true,
+    days: true,
+    member: true,
+  },
+  weeks: [],
+  days: [],
+  member: [],
+};
 
 const feedState = {
   feedLists: ['teamFeed', 'myFeed', 'info'],
   currentFeed: 'teamFeed',
 };
 
-const feedContents = {
-  teamFeed: '',
-  myFeed: '',
-  info: '',
+const fetchGroupData = () => axios.get('/study/HTML').then(({ data }) => data);
+
+const fetchUserInfo = user => {
+  const { uid: userId } = user;
+
+  return axios.get(`/mypage/${userId}`).then(({ data }) => data);
 };
 
-const filterState = {
-  sortOfFilters: ['weeks', 'days', 'member'],
-  week: [],
-  day: [],
-  memeber: [],
+const sendLikesInfo = (userUid, postingId) => {
+  axios.patch(`/study/${group.id}/posting/`, { userUid, postingId });
 };
 
-const fetchGroups = async () => {
-  group = await axios.get('/study/HTML').then(({ data }) => data);
-  console.log(group);
-  // users = group.userList;
+const sendDeletePosting = postingId => {
+  axios.delete(`/study/${group.id}/posting/${postingId}`);
+};
+
+const initialFilter = () => {
+  const weekNum = group.duration;
+  const memberNum = group.userList.length;
+
+  filterState.weeks = Array(weekNum).fill(1);
+  filterState.days = Array(7).fill(1);
+  filterState.member = Array(memberNum).fill(1);
 };
 
 const stateFunc = {
@@ -34,12 +79,13 @@ const stateFunc = {
   },
   set group(newGroup) {
     group = newGroup;
+    group.date = new Date(group.date);
   },
-  get user() {
+  get users() {
     return users;
   },
-  set user(newUser) {
-    users = newUser;
+  set users(newUsers) {
+    users = newUsers;
   },
   get postings() {
     return postings;
@@ -50,24 +96,6 @@ const stateFunc = {
   get feedLists() {
     return feedState.feedLists;
   },
-  get teamFeed() {
-    return feedContents.teamFeed;
-  },
-  set teamFeed(newFeed) {
-    feedContents.teamFeed = newFeed;
-  },
-  get myFeed() {
-    return feedContents.myFeed;
-  },
-  set myFeed(newFeed) {
-    feedContents.myFeed = newFeed;
-  },
-  get info() {
-    return feedContents.info;
-  },
-  set info(newFeed) {
-    feedContents.info = newFeed;
-  },
   get currentFeed() {
     return feedState.currentFeed;
   },
@@ -77,6 +105,15 @@ const stateFunc = {
   get filterState() {
     return filterState;
   },
+  set filterState(newFilterState) {
+    filterState = newFilterState;
+  },
+  get userInfo() {
+    return userInfo;
+  },
+  set userInfo(newUserInfo) {
+    userInfo = newUserInfo;
+  },
 };
 
-export { stateFunc, fetchGroups };
+export { stateFunc, fetchGroupData, fetchUserInfo, initialFilter, sendLikesInfo, sendDeletePosting };

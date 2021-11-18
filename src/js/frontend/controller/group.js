@@ -1,11 +1,19 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
-// import { render } from '../view/group.js';
-import { stateFunc, fetchGroups } from '../store/group.js';
+import render from '../view/group.js';
+import {
+  stateFunc,
+  fetchGroupData,
+  fetchUserInfo,
+  initialFilter,
+  sendLikesInfo,
+  sendDeletePosting,
+} from '../store/group.js';
 
 initializeApp(firebaseConfig);
 
+const WEEKDAYS = 7 * 86400000;
 const auth = getAuth();
 const swiper = new Swiper('.swiper', {
   // Optional parameters
@@ -25,16 +33,48 @@ const forcedUncheckFilters = () => {
 };
 
 // Event handler
-window.addEventListener('DOMContentLoaded', async () => {
-  $swiper.disable();
+window.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      try {
+        $swiper.disable();
 
-  fetchGroups();
+        // auth info update
+        const userInfo = await fetchUserInfo(user);
+        stateFunc.userInfo = { ...userInfo, uid: auth.currentUser.uid };
 
-  // state.group = await axios.get('/study/HTML').then(({ data }) => data);
-  // state.user = state.group.userList;
-  // state.postings = state.group.postingList;
+        // group, posting, users list update
+        const group = await fetchGroupData();
+        const notiPost = group.postingList.filter(post => post.isNoti);
+        const noneNotiPost = group.postingList.filter(post => !post.isNoti);
 
-  // render.teamFeed();
+        stateFunc.group = group;
+        stateFunc.users = group.userList;
+        stateFunc.postings = [...notiPost, ...noneNotiPost].map(posting => {
+          posting.weeks =
+            Math.ceil(
+              (new Date(posting.createDate).getMilliseconds() - new Date(group.createDate).getMilliseconds()) / WEEKDAYS
+            ) - 1;
+          posting.days = new Date(posting.createDate).getDay();
+          return posting;
+        });
+
+        initialFilter();
+
+        render[stateFunc.currentFeed]();
+        render.filter();
+
+        // console.log(group.postingList);
+
+        document.querySelector('.group-title').textContent = group.title;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      window.location.href = '/';
+      alert('로그인 이후 사용 가능합니다');
+    }
+  });
 });
 
 document.querySelector('.group-tabList').onclick = e => {
@@ -47,8 +87,10 @@ document.querySelector('.group-tabList').onclick = e => {
       $swiper.disable();
 
       document.querySelector('.filters').classList.toggle('hidden', i === 2);
+
       stateFunc.currentFeed = stateFunc.feedLists[i];
-      // render[state.currentFeed]();
+      render[stateFunc.currentFeed]();
+
       forcedUncheckFilters();
     }
   });
@@ -65,6 +107,27 @@ document.querySelector('.swiper-wrapper').onclick = e => {
   const isBx = e.target.classList.contains('bx-heart');
   e.target.classList.toggle('bx-heart', !isBx);
   e.target.classList.toggle('bxs-heart', isBx);
+
+  const $likes = e.target.closest('div').firstElementChild;
+  const content = $likes.textContent;
+  $likes.textContent = isBx ? +content + 1 : +content - 1;
+
+  let { postings } = stateFunc;
+  const $posting = e.target.closest('li');
+
+  postings = postings.map(posting => {
+    if (posting.id === $posting.dataset.post) {
+      posting.likes = isBx ? posting.likes + 1 : posting.likes - 1;
+      isBx
+        ? posting.likedBy.push(auth.currentUser.uid)
+        : posting.likedBy.splice(posting.likedBy.indexOf(auth.currentUser.uid), 1);
+
+      sendLikesInfo(auth.currentUser.uid, posting.id);
+    }
+    return posting;
+  });
+
+  stateFunc.postings = postings;
 };
 
 document.querySelector('.filters').onclick = e => {
@@ -79,12 +142,32 @@ document.querySelector('.filters').onclick = e => {
 document.querySelector('.filters').onchange = e => {
   if (!e.target.matches('.filters label > input')) return;
 
+  const [type, number] = e.target.parentNode.lastElementChild.value.split('-');
+  let filterType = stateFunc.filterState[type];
+  let { isFirst } = stateFunc.filterState;
+
+  if (stateFunc.filterState.isFirst[type]) {
+    filterType = filterType.map(_ => 0);
+    isFirst[type] = false;
+  }
+
   e.target.parentNode.classList.toggle('checked', e.target.checked);
+  filterType[number] = e.target.checked ? 1 : 0;
 
   const isAllUnChecked =
     [...e.target.closest('li').children].filter($label => $label.classList.contains('checked')).length === 0;
 
+  if (isAllUnChecked) {
+    filterType = filterType.map(_ => 1);
+    isFirst = { weeks: true, days: true, member: true };
+    document.querySelector(`.filters-${type}`).setAttribute('color', 'black');
+  }
+
+  stateFunc.filterState[type] = filterType;
+  stateFunc.filterState.isFirst = isFirst;
+
   e.target.closest('li').classList.toggle('hidden', isAllUnChecked);
+  render[stateFunc.currentFeed]();
 };
 
 document.querySelector('.group').onclick = e => {
@@ -94,4 +177,18 @@ document.querySelector('.group').onclick = e => {
   }
 
   forcedUncheckFilters();
+};
+
+document.querySelector('.group-myFeed__list').onclick = e => {
+  if (!e.target.classList.contains('delete')) return;
+
+  const $item = e.target.closest('li');
+
+  // 삭제 요청
+  const { postings } = stateFunc;
+  stateFunc.postings = postings.filter(posting => posting.id !== $item.dataset.post);
+
+  sendDeletePosting($item.dataset.post);
+
+  render[stateFunc.currentFeed]();
 };
