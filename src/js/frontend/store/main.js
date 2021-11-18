@@ -6,6 +6,18 @@ const state = {
   userData: null,
 };
 
+let filterState = {
+  sortOfFilters: ['weeks', 'days', 'level'],
+  isFirst: {
+    weeks: true,
+    days: true,
+    level: true,
+  },
+  weeks: [],
+  days: [],
+  level: [],
+};
+
 export const getAllGroups = () => state.readyGroups;
 export const getMyGroups = () => state.myGroups;
 
@@ -27,3 +39,4 @@ export const setUserData = userData => {
 export const getUserData = () => state.userData;
 
 export const setAnonymous = render.redirectPage;
+

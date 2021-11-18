@@ -74,42 +74,30 @@
       <div class="swiper-wrapper">
         <div class="all-groups swiper-slide" id="all-groups" role="tabpanel" aria-labelledby="all">
           <div class="all-groups__filters filters">
-            <select name="filters-level">
-              <option value="0">레벨</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-            <select name="filters-weeks">
-              <option value="0">기간</option>
-              <option value="1">1주</option>
-              <option value="2">2주</option>
-              <option value="3">3주</option>
-              <option value="4">4주</option>
-              <option value="5">5주</option>
-              <option value="6">6주</option>
-              <option value="7">7주</option>
-              <option value="8">8주</option>
-              <option value="9">9주</option>
-              <option value="10">10주</option>
-            </select>
-            <select name="filters-days">
-              <option value="7">요일</option>
-              <option value="0">일</option>
-              <option value="1">월</option>
-              <option value="2">화</option>
-              <option value="3">수</option>
-              <option value="4">목</option>
-              <option value="5">금</option>
-              <option value="6">토</option>
-            </select>
+            <ul class="filters-weeks">
+              <li class="filters-weeks">기간별</li>
+              <li class="filters-weeks__checkbox hidden">
+                <!-- <label><i class="bx bx-check"></i><input type="checkbox" value="week-0" />1주차</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="week-1" />2주차</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="week-2" />3주차</label> -->
+              </li>
+            </ul>
+            <ul class="filters-days">
+              <li class="filters-days">요일별</li>
+              <li class="filters-days__checkbox hidden">
+                <!-- <label><i class="bx bx-check"></i><input type="checkbox" value="day-0" />일요일</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="day-1" />월요일</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="day-2" />화요일</label> -->
+              </li>
+            </ul>
+            <ul class="filters-level">
+              <li class="filters-level">레벨별</li>
+              <li class="filters-level__checkbox hidden">
+                <!-- <label> <i class="bx bx-check"></i><input type="checkbox" value="member-0" />Shawn</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="member-1" />Terry</label>
+                <label><i class="bx bx-check"></i><input type="checkbox" value="member-2" />Moriss</label> -->
+              </li>
+            </ul>
           </div>
           <ul class="all-groups__list">
           </ul>
