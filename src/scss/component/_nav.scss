@@ -8,6 +8,9 @@
   height: 200px;
   z-index: 999;
   transition: 0.4s;
+  @include mobile {
+    right: calc(50% - 100px);
+  }
 
   &__button {
     //   temp
