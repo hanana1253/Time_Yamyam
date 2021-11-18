@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { setMyGroups, setAllGroups, setAnonymous } from '../store/main.js';
+import { setMyGroups, setAllGroups, setAnonymous, getAllGroups } from '../store/main.js';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
+import { render } from '../view/main.js';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -19,6 +20,7 @@ const swiper = new Swiper('.swiper', {
 });
 
 const $swiper = document.querySelector('.swiper').swiper;
+const $allGroupsList = document.querySelector('.all-groups__list');
 
 document.querySelector('.group-tablist').onclick = e => {
   if (!e.target.matches('button')) return;
@@ -51,3 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+$allGroupsList.onclick = e => {
+  if (!e.target.matches('li > .join')) return;
+  const studyIndex = e.target.closest('li').dataset.index;
+  const study = getAllGroups()[+studyIndex];
+  document.querySelector('.overlay').classList.add('active');
+  render.modal(study);
+};

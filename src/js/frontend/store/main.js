@@ -18,7 +18,7 @@ let filterState = {
   level: [],
 };
 
-export const getAllGroups = () => state.readyGroups;
+export const getAllGroups = () => state.allGroups;
 export const getMyGroups = () => state.myGroups;
 
 export const setAllGroups = (newGroups, userData) => {
