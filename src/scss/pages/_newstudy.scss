@@ -2,6 +2,7 @@
 
 .form-body {
   @include gradient($basic-gradient);
+  opacity: 0;
 }
 .form-main {
   margin: 0 auto;

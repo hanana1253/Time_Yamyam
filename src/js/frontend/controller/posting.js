@@ -13,6 +13,7 @@ import view from '../view/form.js';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
+const $formBody = document.querySelector('.form-body');
 const $approvalTitle = document.querySelector('.approval-title');
 const $submitBtn = document.querySelector('.submit');
 const $errorMsg = document.querySelector('.error');
@@ -22,13 +23,18 @@ const $notice = document.querySelector('.notice');
 const $cancelBtn = document.querySelector('.cancel');
 
 // Functions --------------------------------------------
-function updateThumbnails(dropZoneElement, file) {
+const updateThumbnails = (dropZoneElement, file) => {
   if (dropZoneElement.querySelector('.drop-zone__prompt')) {
     dropZoneElement.querySelector('.drop-zone__prompt').remove();
   }
 
+  if (document.querySelector('.drop-zone__prompt')) {
+    document.querySelector('.drop-zone__prompt').remove();
+  }
+
   const thumbnailElement = document.createElement('div');
   thumbnailElement.classList.add('drop-zone__thumb');
+  thumbnailElement.classList.add('swiper-slide');
   dropZoneElement.appendChild(thumbnailElement);
 
   thumbnailElement.dataset.label = file.name;
@@ -43,13 +49,17 @@ function updateThumbnails(dropZoneElement, file) {
   } else {
     thumbnailElement.style.backgroundImage = null;
   }
-}
+};
 
 // Event bindings----------------------------
 window.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async user => {
     if (user) {
       try {
+        setTimeout(() => {
+          $formBody.style.opacity = 1;
+        }, 300);
+
         const { data } = await store.fetchStudyGroupData(user);
         store.setStudyGroupInfo(data);
         view.render(store.getStudyGroupData());

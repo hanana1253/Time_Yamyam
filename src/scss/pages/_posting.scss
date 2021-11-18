@@ -1,5 +1,6 @@
 @use '../utils' as *;
 .form-body {
+  opacity: 0;
   @include gradient($basic-gradient);
 }
 .form-main {

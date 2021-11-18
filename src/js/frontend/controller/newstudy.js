@@ -11,6 +11,7 @@ let tags = [];
 const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
 
 const $form = document.querySelector('form');
+const $formBody = document.querySelector('.form-body');
 const $tagInput = document.querySelector('.tag-id');
 const $tagList = document.querySelector('.tag-list');
 const $submitBtn = document.querySelector('.submit');
@@ -126,6 +127,10 @@ const setValue = currentInput => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    $formBody.style.opacity = 1;
+  }, 300);
+
   setValue('enter');
   setValue('duration');
 });
