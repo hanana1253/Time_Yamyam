@@ -1,4 +1,4 @@
-import { getLevel, WEEKS, removeActive } from '../utils/helper';
+import { getLevel, removeActive, WEEKS } from '../utils/helper';
 const $loading = document.querySelector('.loading');
 
 export const render = {
@@ -12,7 +12,7 @@ export const render = {
         const isValidLevel = studyGroup.minLevel <= getLevel(userData?.point);
         const shouldDisable = joined || !isValidLevel;
         const leftDates = 7 - Math.round((Date.now() - new Date(studyGroup.createDate)) / (24 * 60 * 60 * 1000));
-        return `<li class="all-groups__item" data-index="${index}">
+        return `<li class="all-groups__item" data-index="${index}" data-id="${studyGroup.id}">
                     <figure class="all-groups__image">
                         <img src="${studyGroup.img?.url || './images/feedImage.jpeg'}" alt="스터디그룹사진" />
                     </figure>
@@ -33,8 +33,6 @@ export const render = {
       '<ul class="my-groups__list">' +
       myGroups
         .map(myGroup => {
-          const expireDate = new Date(myGroup.expireDate);
-          const finishDate = new Date(myGroup.finishDate);
           return `<li class="my-groups__item">
                       <a href="/group.html?studyId=${myGroup.id}">
                       <figure class="my-groups__image">
@@ -43,7 +41,7 @@ export const render = {
                       <h3 class="my-groups__title">${myGroup.title}</h3>
                       <div class="my-groups__detail">
                       <p class="my-groups-duration">${
-                        expireDate.toISOString().slice(0, 10) + ' ~ ' + finishDate.toISOString().slice(0, 10)
+                        myGroup.expireDate.slice(0, 10) + ' ~ ' + myGroup.finishDate.slice(0, 10)
                       }</p>
                       <p class="my-groups__day">${myGroup.postingDays
                         .map(day => WEEKS[day].content + '요일')
@@ -66,14 +64,26 @@ export const render = {
     });
   },
   modal(studyGroup) {
+    if (!studyGroup) {
+      document.querySelector('.study-modal').innerHTML = '';
+      return;
+    }
     const content = `<figure class="study-modal__image">
     <img src="${studyGroup.img?.url || './images/feedImage.jpeg'}" alt="스터디그룹사진" />
 </figure>
+<div class="study-modal__overview">
 <h3 class="study-modal__title">${studyGroup.title}</h3>
-<div class="study-modal__detail">
-<span>#Lv.${studyGroup.minLevel}</span>
-<span>#${studyGroup.duration}주</span></div>
-<button class="join" type="button" >참여하기</button><button class="cancel">취소</button>`;
+<span class="tag">#Lv.${studyGroup.minLevel}</span>
+<span class="tag">#${studyGroup.duration}주</span></div>
+<p>${studyGroup.description}</p>
+<h4 class="study-modal__posting-description">인증 방법</h4>
+<p>${studyGroup.postingDescription}</p>
+<h4 class="study-modal__notice">꼭 알아주세요!</h4>
+<p>기간: ${studyGroup.expireDate.slice(0, 10) + ' ~ ' + studyGroup.finishDate.slice(0, 10)}</p>
+<p>인증: ${studyGroup.postingDays.map(day => `<span>${WEEKS[day].content + '요일'}</span>`).join(', ')}</p>
+<p>레벨: Lv.${studyGroup.minLevel} 이상</p>
+<div class="modal-button"><button class="confirm button" type="button">신청</button><button class="cancel button">나가기</button></div>
+`;
     document.querySelector('.study-modal').innerHTML = content;
   },
 };

@@ -16,7 +16,6 @@ let filterState = {
   weeks: [],
   days: [],
   level: [],
-
 };
 
 export const getAllGroups = () => state.allGroups;
@@ -49,6 +48,6 @@ export const initialFilter = () => {
 
 export const getFilterState = () => filterState;
 
-export const setFilterState = (newFilterState) =>  {
+export const setFilterState = newFilterState => {
   filterState = newFilterState;
-}
+};

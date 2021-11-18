@@ -32,12 +32,11 @@ const setSchedule = () => {
 
     targetGroupsDB.forEach(doc => {
       const finishDate = doc.data().finishDate.toDate();
-      console.log(finishDate);
       if (finishDate < now) {
         doc.ref.update({ status: 'finished' });
 
         doc.data().userList.forEach(userUid => {
-          const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
+          const record = { point: 100, category: '스터디 완료 보너스 점수', date: new Date() };
           db.collection('users').doc(userUid).collection('points').add(record);
         });
       }
@@ -52,7 +51,12 @@ app.get('/:userUid', async (req, res) => {
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
   const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    readyStudyGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
   const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
@@ -135,7 +139,6 @@ app.get('/mypage/:userUid', async (req, res) => {
 app.get('/mypoints/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const total = (await db.collection('users').doc(userUid).get()).data().point;
-  console.log(total);
   const targetUserPointsDB = await db
     .collection('users')
     .doc(userUid)
@@ -193,7 +196,7 @@ app.post('/study', async (req, res) => {
     status: 'ready',
     postingList: [],
   });
-  res.send('success');
+  res.send(studyDB.id);
 });
 
 // POST '/posting' { userUid: uid string, newPosting: 새로운 스터디 객체 }
@@ -217,7 +220,7 @@ app.post('/study/:id/posting', async (req, res) => {
   const createDate = new Date();
   const studyGroupDB = db.collection('studyGroups').doc(id);
   const POSTING_POINT = 10;
-  const record = { point: POSTING_POINT, category: '인증추가점수', date: new Date() };
+  const record = { point: POSTING_POINT, category: '인증 완료', date: new Date() };
 
   authorUserDB.update({
     point: admin.firestore.FieldValue.increment(POSTING_POINT),
@@ -300,7 +303,6 @@ app.delete('/study/:groupId/member/:userUid', async (req, res) => {
 app.delete('/study/:groupId/posting/:postingId', async (req, res) => {
   const { groupId, postingId } = req.params;
   const postingDB = db.collection(`studyGroups/${groupId}/postings`).doc(postingId);
-  console.log(postingDB);
   await postingDB.delete();
   res.send('success');
 });
