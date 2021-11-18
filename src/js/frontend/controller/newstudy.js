@@ -11,6 +11,7 @@ let tags = [];
 const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
 
 const $form = document.querySelector('form');
+const $formBody = document.querySelector('.form-body');
 const $tagInput = document.querySelector('.tag-id');
 const $tagList = document.querySelector('.tag-list');
 const $submitBtn = document.querySelector('.submit');
@@ -126,6 +127,10 @@ const setValue = currentInput => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    $formBody.style.opacity = 1;
+  }, 300);
+
   setValue('enter');
   setValue('duration');
 });
@@ -142,7 +147,7 @@ $cancelBtn.onclick = () => {
 };
 
 // send data to server ----------------------------
-$form.onsubmit = e => {
+$form.onsubmit = async e => {
   e.preventDefault();
   const newStudy = {};
   newStudy.title = $form.querySelector('.group-name').value;
@@ -154,7 +159,8 @@ $form.onsubmit = e => {
     .filter(input => input.checked)
     .map(input => +input.dataset.id);
   newStudy.minLevel = $form.querySelector('.minLevel').value;
-  axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
+  const studyId = await axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
+  console.log(studyId);
   // query string으로 study id 보내기
-  window.location.href = '/group.html';
+  window.location.href = `/group.html?studyId=${studyId}`;
 };
