@@ -15,6 +15,7 @@ module.exports = {
     posting: './src/js/frontend/controller/posting.js',
     mypage: './src/js/frontend/controller/mypage.js',
     point: './src/js/frontend/controller/point.js',
+    nav: './src/js/frontend/controller/nav.js',
   },
   // 번들링된 js 파일의 이름(filename)과 저장될 경로(path)를 지정
   // https://webpack.js.org/configuration/output/#outputpath
@@ -26,7 +27,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      chunks: ['app', 'main'],
+      chunks: ['app', 'main', 'nav'],
     }),
     new HtmlWebpackPlugin({
       filename: 'login.html',
@@ -36,27 +37,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'newstudy.html',
       template: 'src/template/newstudy.html',
-      chunks: ['app', 'newstudy'],
+      chunks: ['app', 'newstudy', 'nav'],
     }),
     new HtmlWebpackPlugin({
       filename: 'posting.html',
       template: 'src/template/posting.html',
-      chunks: ['app', 'posting'],
+      chunks: ['app', 'posting', 'nav'],
     }),
     new HtmlWebpackPlugin({
       filename: 'group.html',
       template: 'src/template/group.html',
-      chunks: ['app', 'group'],
+      chunks: ['app', 'group', 'nav'],
     }),
     new HtmlWebpackPlugin({
       filename: 'mypage.html',
       template: 'src/template/mypage.html',
-      chunks: ['app', 'mypage'],
+      chunks: ['app', 'mypage', 'nav'],
     }),
     new HtmlWebpackPlugin({
       filename: 'point.html',
       template: 'src/template/point.html',
-      chunks: ['app', 'point'],
+      chunks: ['app', 'point', 'nav'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
