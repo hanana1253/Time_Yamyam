@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const admin = require('firebase-admin');
 const schedule = require('node-schedule');
 const serviceAccount = require('./secretKey.json');
@@ -99,6 +100,34 @@ const setSchedule = () => {
 };
 
 setSchedule();
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/index.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/login.html'));
+});
+
+app.get('/group', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/group.html'));
+});
+
+app.get('/mypage', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/mypage.html'));
+});
+
+app.get('/newstudy', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/newstudy.html'));
+});
+
+app.get('/posting', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/posting.html'));
+});
+
+app.get('/point', (req, res) => {
+  res.sendFile(path.join(__dirname, './../../../public/point.html'));
+});
 
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;

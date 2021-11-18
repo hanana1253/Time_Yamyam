@@ -6,6 +6,8 @@
   opacity: 0;
 
   .header {
+    display: flex;
+    gap: 10px;
     justify-content: center;
     padding-top: 50px;
     position: static;
