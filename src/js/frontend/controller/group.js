@@ -11,6 +11,8 @@ import {
   sendDeletePosting,
 } from '../store/group.js';
 
+import { removeActive } from '../utils/helper';
+
 initializeApp(firebaseConfig);
 
 const WEEKDAYS = 7 * 86400000;
@@ -44,7 +46,8 @@ window.addEventListener('DOMContentLoaded', () => {
         stateFunc.userInfo = { ...userInfo, uid: auth.currentUser.uid };
 
         // group, posting, users list update
-        const group = await fetchGroupData();
+        const studyId = new URL(window.location.href).searchParams.get('studyId');
+        const group = await fetchGroupData(studyId);
         const notiPost = group.postingList.filter(post => post.isNoti);
         const noneNotiPost = group.postingList.filter(post => !post.isNoti);
 
@@ -132,11 +135,15 @@ const activeModal = target => {
   const posting = postings.filter(posting => posting.id === postingId)[0];
 
   document.querySelector('.overlay').classList.add('active');
-  document.querySelector('.overlay-container').classList.remove('hidden');
+  document.querySelector('.modal-container').classList.remove('hidden');
+  document.querySelector('.modal-img > img').src = posting.img.url ? posting.img.url : '../../images/feedImage.jpeg';
+  document.querySelector('.modal-title').textContent = posting.title;
+  document.querySelector('.modal-description').textContent = posting.description;
+};
 
-  document.querySelector('.overlay-img > img').src = posting.img.url ? posting.img.url : '../../images/feedImage.jpeg';
-  document.querySelector('.overlay-title').textContent = posting.title;
-  document.querySelector('.overlay-description').textContent = posting.description;
+const deactiveModal = () => {
+  document.querySelector('.overlay').classList.remove('active');
+  document.querySelector('.modal-container').classList.add('hidden');
 };
 
 document.querySelector('.swiper-wrapper').onclick = e => {
@@ -145,17 +152,14 @@ document.querySelector('.swiper-wrapper').onclick = e => {
   e.target.matches('i') ? changeHeartNum(e.target) : activeModal(e.target);
 };
 
-// document.querySelector('.overlay-close').onclick = e => {
-//   document.querySelector('.overlay').classList.remove('active');
-//   document.querySelector('.overlay-container').classList.add('hidden');
-// };
+document.querySelector('.overlay').onclick = e => {
+  deactiveModal();
+  removeActive([document.querySelector('.nav'), document.body, document.querySelector('.overlay')]);
+};
 
-// document.querySelector('.overlay').onclick = e => {
-//   document.querySelector('.overlay-container').classList.add('hidden');
-
-//   if (e.target.classList.contains('.overlay-close')) return;
-//   document.querySelector('.overlay').classList.remove('active');
-// };
+document.querySelector('.modal-close').onclick = () => {
+  deactiveModal();
+};
 
 document.querySelector('.filters').onclick = e => {
   if (!(e.target.matches('ul') || e.target.matches('li'))) return;

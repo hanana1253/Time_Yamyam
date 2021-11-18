@@ -409,6 +409,67 @@ li.filters-member {
 .overlay {
   display: flex;
 
+  @include mobile {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &-container {
+      height: 60%;
+      width: 70%;
+      background-color: #f0eeee;
+      position: relative;
+      border-radius: rem(10px);
+      box-shadow: 1px 1px 10px 10px rgb(0 0 0 / 50%);
+    }
+
+    &-img {
+      background-color: $white;
+      width: 100%;
+      height: 50%;
+      border-radius: rem(10px);
+    }
+
+    &-img img {
+      border-radius: rem(10px) rem(10px) 0 0;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    &-title {
+      position: absolute;
+      top: rem(20px);
+      left: 0;
+      font-size: rem(20px);
+      overflow: hidden;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      font-weight: 700;
+    }
+
+    &-description {
+      position: absolute;
+      top: rem(60px);
+      left: 0;
+      max-width: 40%;
+      word-break: break-all;
+    }
+
+    &-close {
+      position: absolute;
+      bottom: 5%;
+      left: 0;
+      width: 45%;
+      padding: rem(10px);
+      border-radius: rem(5px);
+      border: 1px solid #5d5fef;
+      background-color: #5d5fef;
+      color: $white;
+    }
+  }
+
   @include desktop {
     justify-content: center;
     align-items: center;
@@ -416,7 +477,7 @@ li.filters-member {
 
     &-container {
       height: 60%;
-      width: 90%;
+      width: 80%;
       background-color: #f0eeee;
       position: relative;
       border-radius: rem(10px);
@@ -463,6 +524,130 @@ li.filters-member {
       bottom: 5%;
       left: 53%;
       width: 45%;
+      padding: rem(10px);
+      border-radius: rem(5px);
+      border: 1px solid #5d5fef;
+      background-color: #5d5fef;
+      color: $white;
+    }
+  }
+}
+
+.modal {
+  @include desktop {
+    &-container {
+      max-width: rem(1000px);
+      height: 60%;
+      width: 80%;
+      background-color: #f0eeee;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: rem(10px);
+      box-shadow: 1px 1px 10px 10px rgb(0 0 0 / 50%);
+      z-index: 100;
+    }
+
+    &-img {
+      background-color: $white;
+      width: 50%;
+      height: 100%;
+      border-radius: rem(10px);
+    }
+
+    &-img img {
+      border-radius: rem(10px) 0 0 rem(10px);
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    &-title {
+      position: absolute;
+      top: rem(20px);
+      left: 53%;
+      font-size: rem(20px);
+      overflow: hidden;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      font-weight: 700;
+    }
+
+    &-description {
+      position: absolute;
+      top: rem(60px);
+      left: 54%;
+      max-width: 40%;
+      word-break: break-all;
+    }
+
+    &-close {
+      position: absolute;
+      bottom: 5%;
+      left: 53%;
+      width: 45%;
+      padding: rem(10px);
+      border-radius: rem(5px);
+      border: 1px solid #5d5fef;
+      background-color: #5d5fef;
+      color: $white;
+    }
+  }
+
+  @include mobile {
+    &-container {
+      max-width: rem(1000px);
+      height: 80%;
+      width: 80%;
+      background-color: #f0eeee;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: rem(10px);
+      box-shadow: 1px 1px 10px 10px rgb(0 0 0 / 50%);
+      z-index: 100;
+    }
+
+    &-img {
+      background-color: $white;
+      width: 100%;
+      height: 40%;
+      border-radius: rem(10px);
+    }
+
+    &-img img {
+      border-radius: rem(10px) rem(10px) 0 0;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+
+    &-title {
+      position: absolute;
+      top: 43%;
+      left: 5%;
+      font-size: rem(20px);
+      overflow: hidden;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      font-weight: 700;
+    }
+
+    &-description {
+      position: absolute;
+      top: 50%;
+      left: 7%;
+      max-width: 80%;
+      word-break: break-all;
+    }
+
+    &-close {
+      position: absolute;
+      bottom: 5%;
+      left: 5%;
+      width: 90%;
       padding: rem(10px);
       border-radius: rem(5px);
       border: 1px solid #5d5fef;
