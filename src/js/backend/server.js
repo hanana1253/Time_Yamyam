@@ -25,17 +25,27 @@ app.get('/:userUid', async (req, res) => {
   const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
   myStudyDB.forEach(doc => {
-    myGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    myGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
-
-  res.send({ readyStudyGroups, myGroups });
+  const userData = (await db.collection('users').doc(userUid).get()).data();
+  res.send({ readyStudyGroups, myGroups, userData });
 });
 
 app.get('/allGroups', async (req, res) => {
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
   const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    readyStudyGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
 
   res.send({ readyStudyGroups });
