@@ -1,5 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
+const schedule = require('node-schedule');
 const serviceAccount = require('./secretKey.json');
 
 admin.initializeApp({
@@ -14,6 +15,37 @@ app.use(express.static('public'));
 app.use(express.json());
 
 // GET '/' { userUid: {string} 또는 null }
+
+const setSchedule = () => {
+  const rule = new schedule.RecurrenceRule();
+  // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
+  rule.hour = 0;
+  // rule.hour = 11;
+  // rule.minute = 46;
+  // rule.second = 30;
+
+  schedule.scheduleJob(rule, async () => {
+    console.log('완료된 스터디그룹 체크 실행');
+    // 스터디그룹 완료 시 포인트 배분 및 상태변경
+    const now = new Date();
+    const targetGroupsDB = await db.collection('studyGroups').where('status', '==', 'started').get();
+
+    targetGroupsDB.forEach(doc => {
+      const finishDate = doc.data().finishDate.toDate();
+      console.log(finishDate);
+      if (finishDate < now) {
+        doc.ref.update({ status: 'finished' });
+
+        doc.data().userList.forEach(userUid => {
+          const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
+          db.collection('users').doc(userUid).collection('points').add(record);
+        });
+      }
+    });
+  });
+};
+
+setSchedule();
 
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;
@@ -61,21 +93,6 @@ app.get('/study/:id', async (req, res) => {
     userList.map(async uid => (await db.collection('users').doc(uid).get()).data())
   );
   // console.log(test);
-  // 스터디그룹 완료 시 포인트 배분 및 상태변경
-  // const now = new Date();
-  // if (now > targetStudy.finishDate.toDate() && !targetStudy.isFinished) {
-  //   db.collection('studyGroups').doc(id).update({
-  //     isFinished: true,
-  //   });
-  //   targetStudy.userList.forEach(async user => {
-  //     const userData = await user.get();
-  //     const record = { point: 100, category: '스터디완료보너스점수', date: new Date() };
-  //     await pointDB.update({
-  //       total: admin.firestore.FieldValue.increment(record.point),
-  //       history: admin.firestore.FieldValue.arrayUnion(record),
-  //     });
-  //   });
-  // }
 
   // 인증글
   // 스터디 피드들을 보여줘야 함 응답으로
