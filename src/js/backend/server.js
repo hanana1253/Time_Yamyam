@@ -7,36 +7,13 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
-const generateNextStudyId = (() => {
-  let num = 0;
-  return () => num++;
-})();
-
-const generateNextPostingId = (() => {
-  let num = 0;
-  return () => num++;
-})();
-
 const app = express();
 const PORT = 3001;
 
 app.use(express.static('public'));
 app.use(express.json());
 
-
-
 // GET '/' { userUid: {string} 또는 null }
-  
-app.get('/', async (req, res) => {
-  const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
-  const readyStudyGroups = [];
-  studyDB.forEach(doc => {
-    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
-  });
-
-  res.send(readyStudyGroups);
-});
 
 app.get('/:userUid', async (req, res) => {
   const { userUid } = req.params;
@@ -54,7 +31,15 @@ app.get('/:userUid', async (req, res) => {
   res.send({ readyStudyGroups, myGroups });
 });
 
+app.get('/allGroups', async (req, res) => {
+  const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
+  const readyStudyGroups = [];
+  studyDB.forEach(doc => {
+    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+  });
 
+  res.send({ readyStudyGroups });
+});
 
 // GET '/study/:id'
 // user정보로 가입되어있는 스터디인 경우 finishedDate 비교 후 처리
@@ -163,21 +148,19 @@ app.post('/signup', async (req, res) => {
 //   minLevel: number,
 //   capacity: number,
 // };
+
 app.post('/study', async (req, res) => {
-  const { user, newStudy } = req.body;
-  const leader = db.collection('users').doc(user.uid);
+  const { userUid, newStudy } = req.body;
   const createDate = new Date();
-
-  const id = generateNextStudyId();
-  const studyDB = db.collection('studyGroups').doc(id);
-
+  const studyDB = db.collection('studyGroups').doc();
   await studyDB.set({
     ...newStudy,
+    id: studyDB.id,
     createDate,
     expireDate: new Date(new Date().setDate(createDate.getDate() + 7)),
     finishDate: new Date(new Date().setDate(createDate.getDate() + 7 + newStudy.duration * 7)),
-    leader,
-    userList: [leader],
+    leader: userUid,
+    userList: [userUid],
     status: 'ready',
     postingList: [],
   });
@@ -292,7 +275,6 @@ app.delete('/study/:groupId/posting/:postingId', async (req, res) => {
   await postingDB.delete();
   res.send('success');
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is listening at http://localhost:${PORT}.`);

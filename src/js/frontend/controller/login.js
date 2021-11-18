@@ -36,19 +36,11 @@ let $currentFailMsg = $loginFailMsg;
 const toggleCurrentForm = () => {
   $currentForm.reset();
   $currentFailMsg.textContent = '';
-
-  if (getCurrentForm() === 'login') {
-    setCurrentForm('signup');
-    $currentForm = $signupForm;
-    $currentFailMsg = $signupFailMsg;
-    $currentFormSubmit = $signupFormSubmit;
-  } else {
-    setCurrentForm('login');
-    $currentFailMsg = $loginFailMsg;
-    $currentForm = $loginForm;
-    $currentFormSubmit = $loginFormSubmit;
-  }
+  setCurrentForm(getCurrentForm() === 'login' ? 'signup' : 'login');
   setCurrentSchema(getCurrentForm());
+  $currentForm = getCurrentForm() === 'login' ? $loginForm : $signupForm;
+  $currentFailMsg = getCurrentForm() === 'login' ? $loginFailMsg : $signupFailMsg;
+  $currentFormSubmit = getCurrentForm() === 'login' ? $loginFormSubmit : $signupFormSubmit;
   document.querySelectorAll('.auth-form').forEach($form => $form.classList.toggle('hidden'));
 };
 
@@ -63,6 +55,7 @@ const activateSubmitButton = () => {
 };
 
 const validate = debounce(e => {
+  $currentFailMsg.textContent = '';
   const { name, value } = e.target;
 
   setSchemaValueByInputName(name, value.trim());
@@ -73,12 +66,8 @@ const validate = debounce(e => {
 const submit = async e => {
   try {
     e.preventDefault();
-
-    const formData = [...new FormData($currentForm)].reduce(
-      // eslint-disable-next-line no-return-assign, no-sequences
-      (obj, [key, value]) => ((obj[key] = value), obj),
-      {}
-    );
+    
+    const formData = [...new FormData($currentForm)].reduce((obj, [key, value]) => ((obj[key] = value), obj), {});
 
     // console.log(`POST /${currentForm}`, formData);
 
@@ -94,8 +83,8 @@ const submit = async e => {
       getCurrentForm() === 'login'
         ? '올바른 로그인 정보가 아닙니다.'
         : e.code === 'auth/email-already-in-use'
-          ? '중복된 이메일입니다.'
-          : '회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.';
+        ? '중복된 이메일입니다.'
+        : '회원가입이 정상적으로 처리되지 않았습니다. 다시 시도해주세요.';
   }
 };
 

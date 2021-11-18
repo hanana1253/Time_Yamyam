@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  onAuthStateChanged,
-} from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { setMyGroups, setAllGroups, setAnonymous } from '../store/main.js';
 import { firebaseConfig } from '../utils/firebaseConfig.js';
 
 const app = initializeApp(firebaseConfig);
@@ -38,13 +36,18 @@ document.querySelector('.group-tablist').onclick = e => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  $swiper.disable();
   onAuthStateChanged(auth, async () => {
-    if (auth) {
-      const { userUid } = auth.currentUser;
-      const data = await axios.get(`${userUid}`).then(({ data }) => data);
-      console.log(data);
+    if (auth.currentUser) {
+      const { uid: userUid } = auth.currentUser;
+      const { readyStudyGroups, myGroups, userData } = await axios.get(`/${userUid}`).then(({ data }) => data);
+      setAllGroups(readyStudyGroups, userData);
+      setMyGroups(myGroups);
     } else {
-      console.log('로그인해주세요');
+      const { readyStudyGroups } = await axios.get('/allGroups').then(({ data }) => data);
+      setAllGroups(readyStudyGroups);
+      setAnonymous();
     }
   });
 });
+
