@@ -73,11 +73,13 @@ const submit = async e => {
 
     if (getCurrentForm() === 'login') {
       const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      window.location.href = '/';
     } else {
       const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const { data } = await axios.post('/signup', { ...formData, userUid: user.uid });
+      window.alert('성공적으로 가입되었습니다. 로그인해주세요.');
+      window.location.href = '/login.html';
     }
-    window.location.href = '/';
   } catch (e) {
     $currentFailMsg.textContent =
       getCurrentForm() === 'login'

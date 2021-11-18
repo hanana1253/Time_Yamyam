@@ -142,7 +142,12 @@ app.get('/:userUid', async (req, res) => {
   const studyDB = await db.collection('studyGroups').where('status', '==', 'ready').get();
   const readyStudyGroups = [];
   studyDB.forEach(doc => {
-    readyStudyGroups.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
+    readyStudyGroups.push({
+      ...doc.data(),
+      createDate: doc.data().createDate.toDate(),
+      expireDate: doc.data().expireDate.toDate(),
+      finishDate: doc.data().finishDate.toDate(),
+    });
   });
   const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
@@ -198,10 +203,6 @@ app.get('/study/:id', async (req, res) => {
   const targetStudyGroupUserList = await Promise.all(
     userList.map(async uid => (await db.collection('users').doc(uid).get()).data())
   );
-  // console.log(test);
-
-  // 인증글
-  // 스터디 피드들을 보여줘야 함 응답으로
   res.send({ ...targetStudy, userList: targetStudyGroupUserList, postingList });
 });
 
@@ -235,7 +236,6 @@ app.get('/mypage/:userUid', async (req, res) => {
 app.get('/mypoints/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const total = (await db.collection('users').doc(userUid).get()).data().point;
-  console.log(total);
   const targetUserPointsDB = await db
     .collection('users')
     .doc(userUid)
@@ -271,6 +271,7 @@ app.post('/signup', async (req, res) => {
     nickname,
     point: 50,
     myStudy: [],
+    id: userUid
   });
 
   res.send('success');
@@ -328,7 +329,7 @@ app.post('/study/:id/posting', async (req, res) => {
   const createDate = new Date();
   const studyGroupDB = db.collection('studyGroups').doc(id);
   const POSTING_POINT = 10;
-  const record = { point: POSTING_POINT, category: '인증추가점수', date: new Date() };
+  const record = { point: POSTING_POINT, category: '인증 완료', date: new Date() };
 
   authorUserDB.update({
     point: admin.firestore.FieldValue.increment(POSTING_POINT),
@@ -411,7 +412,6 @@ app.delete('/study/:groupId/member/:userUid', async (req, res) => {
 app.delete('/study/:groupId/posting/:postingId', async (req, res) => {
   const { groupId, postingId } = req.params;
   const postingDB = db.collection(`studyGroups/${groupId}/postings`).doc(postingId);
-  console.log(postingDB);
   await postingDB.delete();
   res.send('success');
 });
