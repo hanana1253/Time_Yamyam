@@ -64,7 +64,8 @@ window.addEventListener('DOMContentLoaded', () => {
         console.error(error);
       }
     } else {
-      window.location.href = '/';
+      window.alert('로그인해주세요')
+      window.location.href = '/login.html';
       console.error('사용자정보없음');
     }
   });

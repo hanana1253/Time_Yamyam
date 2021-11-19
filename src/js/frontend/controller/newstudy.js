@@ -8,7 +8,7 @@ import { newstudySchema } from '../utils/schema.js';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 let tags = [];
-const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
+// const colors = ['#ff99c8', '#fec8c3', '#fcf6bd', '#d0f4de', '#a9def9', '#c7d0f9', '#e4c1f9'];
 
 const $form = document.querySelector('form');
 const $formBody = document.querySelector('.form-body');
@@ -22,7 +22,7 @@ const $durationRangeInput = document.querySelector('.duration-range');
 const schema = newstudySchema;
 
 // Functions -------------------------------------------------
-const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+// const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const getErrorMsgByInputName = inputName => schema[inputName].error;
 const getIsValidByInputName = inputName => schema[inputName].isValid;
@@ -35,7 +35,7 @@ const render = () => {
   $tagList.innerHTML = tags
     .map(
       ({ id, content }) => `
-        <li class="item" style="background-color:${getRandomColor()}" data-id="${id}">${content}
+        <li class="item" style="background-color:#5d5fef" data-id="${id}">${content}
           <i class='bx bxs-tag-x' ></i>
         </li>`
     )
@@ -160,7 +160,7 @@ $form.onsubmit = async e => {
     .map(input => +input.dataset.id);
   newStudy.minLevel = $form.querySelector('.minLevel').value;
   const studyId = await axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
-  console.log(studyId);
+  window.alert('스터디그룹이 성공적으로 생성되었습니다.');
   // query string으로 study id 보내기
-  window.location.href = `/group.html?studyId=${studyId}`;
+  window.location.href = '/';
 };

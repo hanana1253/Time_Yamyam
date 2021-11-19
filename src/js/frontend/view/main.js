@@ -29,6 +29,14 @@ export const render = {
       .join('');
   },
   myGroups(myGroups) {
+    if (myGroups.length === 0) {
+      const content =
+        '<div class="anonymous-page"><span class="button anonymous newbie">스터디 그룹에 참여해보세요</span></div>';
+      [...document.querySelectorAll('.my-groups')].forEach($div => {
+        $div.innerHTML = content;
+      });
+      return;
+    }
     const content =
       '<ul class="my-groups__list">' +
       myGroups
@@ -36,7 +44,7 @@ export const render = {
           return `<li class="my-groups__item">
                       <a href="/group.html?studyId=${myGroup.id}">
                       <figure class="my-groups__image">
-                          <img src="/images/feedImage.jpeg" alt="스터디그룹사진" />
+                          <img src="${myGroup.img?.url || './images/feedImage.jpeg'}" alt="스터디그룹사진" />
                       </figure>
                       <h3 class="my-groups__title">${myGroup.title}</h3>
                       <div class="my-groups__detail">

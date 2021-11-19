@@ -32,9 +32,9 @@ const render = ({ nickname, point, myStudy }) => {
 
     $container.innerHTML = filterArray
       .map(
-        ({ title, description, postingDays }) => `
+        ({ title, description, postingDays, id }) => `
           <li>
-            <a href="#">
+            <a href="./group.html?studyId=${id}">
               <div class="study-info">
                 <div class="study-info__wrap">
                   <span class="study-info__label">스터디 이름</span>
