@@ -17,6 +17,8 @@ app.use(express.json());
 
 // GET '/' { userUid: {string} 또는 null }
 
+const diffDays = (from, to) => Math.abs(to - from) / (24 * 60 * 60 * 1000);
+
 const setSchedule = () => {
   const rule = new schedule.RecurrenceRule();
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
@@ -160,11 +162,21 @@ app.get('/:userUid', async (req, res) => {
     });
   });
   const userData = (await db.collection('users').doc(userUid).get()).data();
-  // const { attend } = (await db.collection('users').doc(userUid).get()).data();
-  // if (userData.attend) {
-  //   const pointRecord = { point: 1, category: '출석체크', date: new Date() };
-  //   db.collection('users').doc(userUid).collection('points').add(pointRecord);
-  // }
+
+  // 출석체크
+  const user = await db.collection('users').where('id', '==', userUid).get();
+
+  user.forEach(doc => {
+    // console.log(doc.data().attend.toDate());
+
+    const lastAttend = new Date(doc.data().attend.toDate());
+
+    // console.log(diffDays(lastAttend, new Date()));
+    if (diffDays(lastAttend, new Date()) > 1) {
+      const pointRecord = { point: 1, category: '출석체크', date: new Date() };
+      db.collection('users').doc(userUid).collection('points').add(pointRecord);
+    }
+  });
 
   res.send({ readyStudyGroups, myGroups, userData });
 });
@@ -271,7 +283,7 @@ app.post('/signup', async (req, res) => {
     nickname,
     point: 50,
     myStudy: [],
-    id: userUid
+    id: userUid,
   });
 
   res.send('success');
