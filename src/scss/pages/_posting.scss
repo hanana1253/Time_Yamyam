@@ -12,7 +12,7 @@
   padding: rem(60px) rem(120px);
 
   @include mobile {
-    padding: rem(30px) rem(30px);
+    padding: rem(50px) rem(30px);
   }
 }
 .form-container div {
@@ -45,6 +45,14 @@
 .approval-container {
   position: relative;
 }
+#group-list {
+  padding: 0;
+  text-indent: 19px;
+
+  @include desktop {
+    text-indent: 10px;
+  }
+}
 .group-list,
 .url,
 .approval-title {
@@ -57,7 +65,8 @@
 
   @include mobile {
     height: rem(30px);
-    padding: rem(15px);
+    padding: rem(20px);
+    margin-top: rem(25px);
     font-size: rem(16px);
   }
 }
@@ -69,13 +78,14 @@
   background-image: url('../images/megaphoneBlack.png');
   position: absolute;
   right: 2%;
-  top: 13%;
+  top: 20%;
+  padding: 0;
   cursor: pointer;
 
   @include mobile {
     width: rem(30px);
     height: rem(30px);
-    top: 2%;
+    top: 30%;
   }
 }
 .notice:checked {
