@@ -47,6 +47,11 @@
 }
 #group-list {
   padding: 0;
+  text-indent: 19px;
+
+  @include desktop {
+    text-indent: 10px;
+  }
 }
 .group-list,
 .url,
@@ -80,7 +85,7 @@
   @include mobile {
     width: rem(30px);
     height: rem(30px);
-    top: 2%;
+    top: 30%;
   }
 }
 .notice:checked {
