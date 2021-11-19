@@ -104,9 +104,11 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', ()=> {
+  if (auth.currentUser) {
+    window.alert('이미 로그인되어 있습니다.');
+  }
   onAuthStateChanged(auth, () => {
     if (auth.currentUser) {
-      window.alert('이미 로그인되어 있습니다.');
       window.location.href = '/';
     }
   })

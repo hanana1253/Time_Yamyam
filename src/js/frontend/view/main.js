@@ -44,7 +44,7 @@ export const render = {
           return `<li class="my-groups__item">
                       <a href="/group.html?studyId=${myGroup.id}">
                       <figure class="my-groups__image">
-                          <img src="/images/feedImage.jpeg" alt="스터디그룹사진" />
+                          <img src="${myGroup.img?.url || './images/feedImage.jpeg'}" alt="스터디그룹사진" />
                       </figure>
                       <h3 class="my-groups__title">${myGroup.title}</h3>
                       <div class="my-groups__detail">

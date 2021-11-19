@@ -160,7 +160,7 @@ $form.onsubmit = async e => {
     .map(input => +input.dataset.id);
   newStudy.minLevel = $form.querySelector('.minLevel').value;
   const studyId = await axios.post('/study', { userUid: auth.currentUser.uid, newStudy });
-  console.log(studyId);
+  window.alert('스터디그룹이 성공적으로 생성되었습니다.');
   // query string으로 study id 보내기
-  window.location.href = `/group.html?studyId=${studyId}`;
+  window.location.href = `/`;
 };

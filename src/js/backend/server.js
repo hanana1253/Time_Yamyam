@@ -161,6 +161,7 @@ app.get('/:userUid', async (req, res) => {
   });
   const userData = (await db.collection('users').doc(userUid).get()).data();
   // const { attend } = (await db.collection('users').doc(userUid).get()).data();
+  console.log(userData);
   // if (userData.attend) {
   //   const pointRecord = { point: 1, category: '출석체크', date: new Date() };
   //   db.collection('users').doc(userUid).collection('points').add(pointRecord);
