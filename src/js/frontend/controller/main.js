@@ -59,7 +59,12 @@ $allGroupsList.onclick = async e => {
   const studyId = e.target.closest('li').dataset.id;
   const study = getAllGroups()[+studyIndex];
   
-  document.querySelector('.overlay').classList.add('active');
+  const $overlay = document.querySelector('.overlay');
+  $overlay.classList.add('active');
+  $overlay.onclick = () => {
+    render.modal(null);
+    $overlay.classList.remove('active');
+  }
   render.modal(study);
   document.querySelector('.study-modal .confirm').onclick = async () => {
     await axios.patch(`/study/${studyId}/member/${auth.currentUser.uid}`);

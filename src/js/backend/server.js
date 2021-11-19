@@ -161,7 +161,6 @@ app.get('/:userUid', async (req, res) => {
   });
   const userData = (await db.collection('users').doc(userUid).get()).data();
   // const { attend } = (await db.collection('users').doc(userUid).get()).data();
-  console.log(userData);
   // if (userData.attend) {
   //   const pointRecord = { point: 1, category: '출석체크', date: new Date() };
   //   db.collection('users').doc(userUid).collection('points').add(pointRecord);
@@ -215,6 +214,7 @@ app.get('/posting/:userUid', async (req, res) => {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
+  console.log((await targetUserDB.get()).data());
   res.send({ studyGroup: targetUserStudyGroups });
 });
 
@@ -236,7 +236,6 @@ app.get('/mypage/:userUid', async (req, res) => {
 // GET '/mypoints/:userUid' 포인트 조회페이지, date 기준 내림차순 정렬된 적립 내역 데이터
 app.get('/mypoints/:userUid', async (req, res) => {
   const { userUid } = req.params;
-  const total = (await db.collection('users').doc(userUid).get()).data().point;
   const targetUserPointsDB = await db
     .collection('users')
     .doc(userUid)
@@ -247,6 +246,7 @@ app.get('/mypoints/:userUid', async (req, res) => {
   targetUserPointsDB.forEach(doc => {
     pointHistory.push({ ...doc.data(), date: doc.data().date.toDate() });
   });
+  const total = pointHistory.reduce((acc, cur) => acc + cur.point, 0);
   res.send({ total, pointHistory });
 });
 
@@ -272,7 +272,7 @@ app.post('/signup', async (req, res) => {
     nickname,
     point: 50,
     myStudy: [],
-    id: userUid
+    id: userUid,
   });
 
   res.send('success');
@@ -295,6 +295,10 @@ app.post('/study', async (req, res) => {
   const { userUid, newStudy } = req.body;
   const createDate = new Date();
   const studyDB = db.collection('studyGroups').doc();
+  const userDB = db.collection('users').doc(userUid);
+  userDB.update({ myStudy: admin.firestore.FieldValue.arrayUnion(studyDB.id) });
+  studyDB.collection('postings').add({ checked: true, createDate: new Date() });
+
   await studyDB.set({
     ...newStudy,
     id: studyDB.id,
@@ -345,6 +349,7 @@ app.post('/study/:id/posting', async (req, res) => {
     likes: 0,
     img: { url: null },
     likedBy: [],
+    checked: false,
   });
   authorUserDB.collection('points').add(record);
   postingDB.update({ id: postingDB.id });

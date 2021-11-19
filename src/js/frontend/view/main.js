@@ -74,6 +74,7 @@ export const render = {
   modal(studyGroup) {
     if (!studyGroup) {
       document.querySelector('.study-modal').innerHTML = '';
+      document.querySelector('.study-modal').style.zIndex = '-10';
       return;
     }
     const content = `<figure class="study-modal__image">
@@ -93,5 +94,6 @@ export const render = {
 <div class="modal-button"><button class="confirm button" type="button">신청</button><button class="cancel button">나가기</button></div>
 `;
     document.querySelector('.study-modal').innerHTML = content;
+    document.querySelector('.study-modal').style.zIndex = '9999';
   },
 };
