@@ -175,6 +175,9 @@ app.get('/:userUid', async (req, res) => {
     if (diffDays(lastAttend, new Date()) > 1) {
       const pointRecord = { point: 1, category: '출석체크', date: new Date() };
       db.collection('users').doc(userUid).collection('points').add(pointRecord);
+      db.collection('users')
+        .doc(userUid)
+        .update({ point: admin.firestore.FieldValue.increment(1), attend: new Date() });
     }
   });
 
@@ -276,14 +279,17 @@ app.get('/mynotice/:userUid', async (req, res) => {
 app.post('/signup', async (req, res) => {
   const { email, nickname, userUid } = req.body;
 
+  const temp = new Date(new Date() - 86400000);
+
   const userDB = db.collection('users').doc(userUid);
-  userDB.collection('points').add({ point: 50, category: '회원가입', date: new Date() });
+  userDB.collection('points').add({ point: 25, category: '회원가입', date: new Date() });
   await userDB.set({
     email,
     nickname,
-    point: 50,
+    point: 25,
     myStudy: [],
     id: userUid,
+    attend: temp,
   });
 
   res.send('success');
