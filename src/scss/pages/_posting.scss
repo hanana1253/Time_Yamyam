@@ -12,7 +12,7 @@
   padding: rem(60px) rem(120px);
 
   @include mobile {
-    padding: rem(30px) rem(30px);
+    padding: rem(50px) rem(30px);
   }
 }
 .form-container div {
@@ -57,7 +57,8 @@
 
   @include mobile {
     height: rem(30px);
-    padding: rem(15px);
+    padding: rem(20px);
+    margin-top: rem(15px);
     font-size: rem(16px);
   }
 }
