@@ -214,7 +214,7 @@ app.get('/posting/:userUid', async (req, res) => {
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
-  console.log((await targetUserDB.get()).data());
+  console.log(targetUserData);
   res.send({ studyGroup: targetUserStudyGroups });
 });
 
