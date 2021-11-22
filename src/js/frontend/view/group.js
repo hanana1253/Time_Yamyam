@@ -27,7 +27,7 @@ const render = {
             <li class="group-feed__item" data-id="${i + 1}" data-week="${posting.week}" data-day="${
           posting.day
         }" data-member="${posting.author}" data-post="${posting.id}" style="${
-          posting.isNoti ? 'background-color: pink;' : 'background-color: #f0eeee;'
+          posting.isNoti ? 'background-color: #e9bcd0;' : 'background-color: #f0eeee;'
         }">
                 <figure class="group-feed__image">
                     <img src="${posting.img.url ? posting.img.url : '../../images/feedImage.jpeg'}" alt="이미지" />
@@ -37,7 +37,7 @@ const render = {
                 <p class="group-feed__author">${posting.author}</p>
                 <div class="group-feed__likes">
                     <div class="likes-number">${posting.likes}</div>
-                    <button style="${posting.isNoti ? 'background-color: pink;' : 'background-color: #f0eeee;'}">
+                    <button style="${posting.isNoti ? 'background-color: #e9bcd0;' : 'background-color: #f0eeee;'}">
                         ${
                           posting.likedBy.includes(stateFunc.userInfo.uid)
                             ? '<i class="bx bxs-heart"></i>'

@@ -59,6 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const { data } = await store.fetchStudyGroupData(user);
         store.setStudyGroupInfo(data);
+        console.log(data);
         view.render(store.getStudyGroupData());
       } catch (error) {
         console.error(error);

@@ -24,7 +24,7 @@ const setSchedule = () => {
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
 
   // rule.hour = 0;
-  // rule.minute = 30;
+  // rule.minute = 48;
 
   // test 용
   // rule.hour = 1;
@@ -226,10 +226,11 @@ app.get('/posting/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
+
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
-  console.log(targetUserData);
+  console.log(targetUserStudyGroups);
   res.send({ studyGroup: targetUserStudyGroups });
 });
 
