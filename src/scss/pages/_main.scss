@@ -60,7 +60,7 @@
     & img {
       object-fit: cover;
       width: 100%;
-      height: 100%;
+      height: rem(160px);
     }
   }
   &__date {
@@ -148,6 +148,7 @@
       width: 100%;      
       max-height: rem(200px);
       height: rem(200px);
+      margin-top: rem(28px);
       & img {
         object-fit: cover;
         width: 100%;
@@ -191,9 +192,9 @@
       height: rem(40px);
       border-radius: rem(5px);
       text-align: center;
-      font-size: rem(20px);
+      font-size: rem(16px);
       line-height: rem(30px);
-      margin: 0 rem(30px);
+      margin: 0 rem(16px);
       padding: 0;
     }
   }

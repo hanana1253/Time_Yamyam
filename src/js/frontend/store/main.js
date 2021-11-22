@@ -29,7 +29,7 @@ export const setAllGroups = (newGroups, userData) => {
 
 export const setMyGroups = newMyGroups => {
   state.myGroups = newMyGroups;
-  render.myGroups(state.myGroups.filter(({status}) => status === 'started'));
+  render.myGroups(state.myGroups.filter(({ status }) => status === 'started'));
 };
 
 export const setUserData = userData => {

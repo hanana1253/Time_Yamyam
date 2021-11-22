@@ -11,7 +11,7 @@ export const render = {
         const joined = studyGroup.userList.includes(userData?.id);
         const isValidLevel = studyGroup.minLevel <= getLevel(userData?.point);
         const shouldDisable = joined || !isValidLevel;
-        const leftDates = 7 - Math.round((Date.now() - new Date(studyGroup.createDate)) / (24 * 60 * 60 * 1000));
+        const leftDates = Math.round((new Date(studyGroup.expireDate) - Date.now()) / (24 * 60 * 60 * 1000));
         return `<li class="all-groups__item" data-index="${index}" data-id="${studyGroup.id}">
                     <figure class="all-groups__image">
                         <img src="${studyGroup.img?.url || './images/feedImage.jpeg'}" alt="스터디그룹사진" />

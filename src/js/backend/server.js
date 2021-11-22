@@ -24,7 +24,7 @@ const setSchedule = () => {
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
 
   // rule.hour = 0;
-  // rule.minute = 48;
+  // rule.minute = 0;
 
   // test 용
   // rule.hour = 1;
@@ -151,6 +151,7 @@ app.get('/:userUid', async (req, res) => {
       finishDate: doc.data().finishDate.toDate(),
     });
   });
+  readyStudyGroups.sort((a, b) => a.expireDate - b.expireDate);
   const myGroups = [];
   const myStudyDB = await db.collection('studyGroups').where('userList', 'array-contains', userUid).get();
   myStudyDB.forEach(doc => {
@@ -209,7 +210,7 @@ app.get('/study/:id', async (req, res) => {
     .get()
     .then(res => res.data());
   targetStudy.createDate = targetStudy.createDate.toDate();
-  const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('createDate', 'desc').get();
+  const postingsDB = await db.collection(`studyGroups/${id}/postings`).orderBy('expireDate', 'desc').get();
   const postingList = [];
   postingsDB.forEach(doc => {
     postingList.push({ ...doc.data(), createDate: doc.data().createDate.toDate() });
@@ -226,12 +227,11 @@ app.get('/posting/:userUid', async (req, res) => {
   const { userUid } = req.params;
   const targetUserDB = db.collection('users').doc(userUid);
   const targetUserData = await targetUserDB.get().then(res => res.data());
-
   const targetUserStudyGroups = await Promise.all(
     targetUserData.myStudy.map(async uid => (await db.collection('studyGroups').doc(uid).get()).data())
   );
   console.log(targetUserStudyGroups);
-  res.send({ studyGroup: targetUserStudyGroups });
+  res.send({ studyGroup: targetUserStudyGroups.filter(({ status })=> status === 'started') });
 });
 
 // GET '/mypage/:userUid' 마이페이지
