@@ -23,8 +23,8 @@ const setSchedule = () => {
   const rule = new schedule.RecurrenceRule();
   // rule.dayOfWeek = [4, 5]; // 목요일, 금요일
 
-  // rule.hour = 0;
-  // rule.minute = 0;
+  rule.hour = 0;
+  rule.minute = 0;
 
   // test 용
   // rule.hour = 1;

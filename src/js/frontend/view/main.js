@@ -20,7 +20,9 @@ export const render = {
                     <div class="all-groups__detail">
                     <p class="all-groups__date">${leftDates > 1 ? `${leftDates}일 뒤 시작` : '오늘 시작'}</p>
                     <span>#Lv.${studyGroup.minLevel}</span>
-                    <span>#${studyGroup.duration}주</span></div>
+                    <span>#${studyGroup.duration}주</span>
+                    ${studyGroup.hashtags.map(tag => `<span>#${tag}</span>`).join(' ')}</div>
+          
                     <button class="join" type="button" ${shouldDisable ? 'disabled' : ''}>${
           joined ? '신청완료' : isValidLevel ? '참여하기' : '참여불가'
         }</button>
@@ -83,7 +85,8 @@ export const render = {
 <div class="study-modal__overview">
 <h3 class="study-modal__title">${studyGroup.title}</h3>
 <span class="tag">#Lv.${studyGroup.minLevel}</span>
-<span class="tag">#${studyGroup.duration}주</span></div>
+<span class="tag">#${studyGroup.duration}주</span>
+${studyGroup.hashtags.map(tag => `<span>${tag}</span>`).join('')}</div>
 <p>${studyGroup.description}</p>
 <h4 class="study-modal__posting-description">인증 방법</h4>
 <p>${studyGroup.postingDescription}</p>
