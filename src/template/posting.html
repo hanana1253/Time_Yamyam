@@ -62,12 +62,12 @@
       <form class="posting-container">
         <div class="form-container">
           <h2 class="posting-title">인증 글을 올려주세요</h2>
-          <div>
+          <div class="input-container">
             <label class="questions a11y-hidden" for="group-list">스터디 그룹을 설정해주세요.</label>
             <select class="group-list" name="group-list" id="group-list">
             </select>
           </div>
-          <div class="approval-container">
+          <div class="approval-container input-container">
             <label class="questions a11y-hidden" for="approval-title">인증 글의 제목을 입력해주세요</label>
             <input
               class="approval-title"
@@ -80,7 +80,7 @@
             <input type="checkbox" id="notice" name="notice" class="notice">
             <div class="error"></div>
           </div>
-          <div>
+          <div class="input-container">
             <label class="questions a11y-hidden" for="url">URL을 입력해주세요 (optional)</label>
             <input
               class="url"
@@ -94,7 +94,7 @@
           
           <!-- upload images -->
           <form action="#" method="post" enctype="multipart/form-data">
-            <div class="drop-container">
+            <div class="drop-container input-container">
               <label class="upload-btn" for="myFile" aria-placeholder="사진을 등록해주세요">사진 업로드</label>
               <div class="drop-zone ">
                 <img class="drop-zone__img" src="https://wickedev.com/wp-content/uploads/2021/02/cloud-uploading.png">

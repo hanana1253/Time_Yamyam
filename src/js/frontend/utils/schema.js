@@ -42,10 +42,10 @@ const newstudySchema = {
   'group-name': {
     value: '',
     get isValid() {
-      return this.value.length <= 7 && !!this.value;
+      return this.value.length <= 10 && !!this.value;
     },
 
-    error: '스터디 이름을 7글자까지만 입력해주세요',
+    error: '1글자~10글자로 입력해주세요',
   },
   'group-introduction': {
     value: '',
