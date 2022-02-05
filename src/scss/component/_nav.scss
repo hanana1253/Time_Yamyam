@@ -1,15 +1,17 @@
 @use '../utils/' as *;
 
+$nav-width: 80px;
+
 .nav {
   position: fixed;
-  right: -50px;
-  bottom: -50px;
-  width: 200px;
-  height: 200px;
+  right: 20px;
+  bottom: 0;
+  width: $nav-width;
+  height: 100px;
   z-index: 999;
   transition: 0.4s;
   @include mobile {
-    right: calc(50% - 100px);
+    right: calc(50% - $nav-width / 2);
   }
 
   &__button {
@@ -41,9 +43,8 @@
     //   temp
     // background-color: white;
     // border-radius: 50%;
-
-    height: 200px;
-    width: 200px;
+    height: 50px;
+    width: 50px;
     position: absolute;
     margin: auto;
     left: 0;
@@ -178,5 +179,10 @@
 
   .nav__button {
     background-position: -75px center;
+  }
+
+  .nav__links {
+    height: 200px;
+    width: 200px;
   }
 }

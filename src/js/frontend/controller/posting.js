@@ -102,7 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 $approvalTitle.oninput = e => {
   $submitBtn.disabled = !e.target.value.trim();
-  $errorMsg.textContent = e.target.value.trim() ? '' : '인증글 제목을 선택해주세요';
+  $errorMsg.textContent = e.target.value.trim() ? '' : '제목을 입력해주세요';
 };
 
 $notice.oninput = e => {

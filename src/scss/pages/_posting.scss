@@ -15,11 +15,11 @@
     padding: rem(50px) rem(30px);
   }
 }
-.form-container div {
-  padding-bottom: rem(40px);
+.input-container {
+  padding-bottom: rem(50px);
 
   @include mobile {
-    padding-bottom: rem(20px);
+    padding-bottom: rem(50px);
   }
 }
 .posting-title {
@@ -78,14 +78,14 @@
   background-image: url('../images/megaphoneBlack.png');
   position: absolute;
   right: 2%;
-  top: 20%;
+  top: 15%;
   padding: 0;
   cursor: pointer;
 
   @include mobile {
     width: rem(30px);
     height: rem(30px);
-    top: 30%;
+    top: 25%;
   }
 }
 .notice:checked {
